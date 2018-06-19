@@ -32,7 +32,7 @@ public class CharacterController {
         model.addAttribute("characters", characterDao.findAll());
         model.addAttribute("title", "My Characters");
 
-        return "character/character-list";
+        return "character/index";
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
@@ -66,7 +66,7 @@ public class CharacterController {
         List<PlayerCharacter> playerCharacters = race.getPlayerCharacters();
         model.addAttribute("characters", playerCharacters);
         model.addAttribute("title", race.getName() + " Characters");
-        return "Character/index";
+        return "character/index";
     }
 
 }

@@ -22,7 +22,7 @@ public class Race {
     private int id;
 
     @NotNull
-    @Size(min=3, max=15)
+    @Size(min=2, max=50)
     private String name;
 
     @OneToMany

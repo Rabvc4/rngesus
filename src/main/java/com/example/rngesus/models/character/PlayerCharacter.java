@@ -17,7 +17,7 @@ public class PlayerCharacter {
     private int id;
 
     @NotNull
-    @Size(min=3, max=15)
+    @Size(min=2, max=50)
     private String name;
 
     @ManyToOne
