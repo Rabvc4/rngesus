@@ -23,7 +23,7 @@ public class Race {
     private String name;
 
     @OneToMany
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "race_id")
     private List<PlayerCharacter> playerCharacters = new ArrayList<>();
 
     public Race() {}
