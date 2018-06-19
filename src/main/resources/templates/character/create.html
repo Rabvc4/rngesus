@@ -13,8 +13,16 @@
             <input class="form-control" th:field="*{name}" />
             <span th:errors="*{name}" class="error"></span>
         </div>
+        <div class="form-group">
+            <label th:for="race">Race</label>
+            <select name="raceId">
+                <option th:each="race : ${races}"
+                        th:text="${race.name}"
+                        th:value="${race.id}"></option>
+            </select>
+        </div>
 
-        <input type="submit" value="Create Character" />
+        <input type="submit" class="btn btn-primary" value="Create Character" />
     </form>
 
 

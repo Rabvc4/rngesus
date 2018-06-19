@@ -7,10 +7,11 @@
 
     <h1 th:text="${title}">Default Title</h1>
 
-    <ul th:if="${playerCharacters} and ${playerCharacters.size()}">
-        <li th:each="playerCharacter : ${playerCharacters}">
+    <ul th:if="${characters} and ${characters.size()}">
+        <li th:each="character : ${characters}">
             <!--<a th:href="'/playerCharacter?id=' + ${playerCharacter.id}" th:text="${playerCharacter.name}"></a>-->
-            <div th:text="${playerCharacter.name}"></div>
+            <div class="characterName" th:text="${character.name}"></div>
+            <div class="characterRace" th:text="'Race: ' + ${character.race.name}"></div>
         </li>
     </ul>
 

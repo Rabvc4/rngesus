@@ -1,6 +1,7 @@
 package com.example.rngesus.models.races;
 
 import com.example.rngesus.models.character.PlayerCharacter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +16,9 @@ import java.util.List;
 public class Race {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
     @NotNull

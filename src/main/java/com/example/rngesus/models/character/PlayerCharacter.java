@@ -1,11 +1,9 @@
 package com.example.rngesus.models.character;
 
 import com.example.rngesus.models.races.Race;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,40 +11,23 @@ import javax.validation.constraints.Size;
 public class PlayerCharacter {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
     @NotNull
-    @Size(min=1, message = "You are not Clint Eastwood, your character must have a name")
+    @Size(min=3, max=15)
     private String name;
 
     @ManyToOne
     private Race race;
 
-//    private String characterClass;
-//
-//    private Integer health;
-//    private ArrayList proficiencies;
-//
-//    private Integer level;
-//    private ArrayList stats;
-//
-//    private ArrayList skills;
-//    private ArrayList features;
-//    private ArrayList abilities;
-//
-//    private ArrayList background;
-//    private ArrayList inventory;
-//
-//    private Integer armor;
-//    private String weapon;
-
-    public PlayerCharacter() {  }
-
-    public PlayerCharacter(String name, Race race) {
+    public PlayerCharacter(String name) {
         this.name = name;
-        this.race = race;
     }
+
+    public PlayerCharacter() { }
 
     public int getId() {
         return id;
@@ -67,20 +48,4 @@ public class PlayerCharacter {
     public void setRace(Race race) {
         this.race = race;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PlayerCharacter playerCharacter = (PlayerCharacter) o;
-
-        return id == playerCharacter.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
-    }
-
 }

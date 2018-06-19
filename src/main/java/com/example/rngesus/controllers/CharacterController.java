@@ -48,7 +48,7 @@ public class CharacterController {
                                        Errors errors, @RequestParam int raceId, Model model) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Create Character");
+            model.addAttribute("title", "Character Creator");
             model.addAttribute("races", raceDao.findAll());
             return "character/create";
         }
