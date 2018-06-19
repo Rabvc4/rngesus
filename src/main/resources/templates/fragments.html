@@ -1,21 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:fragment="head">
-    <meta charset="UTF-8"/>
-    <title th:text="${title}">RNGesus</title>
 
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/script.js}"></script>
+
+    <title th:text="${title}">RNGesus</title>
 
 </head>
 <body>
 
-    <nav th:fragment="navigation">
-        <a href="/">Home</a> |
-        <a href="/character">Characters</a> |
-        <a href="/character/create">Character Creator</a> |
+    <nav th:fragment="navigation" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" th:href="@{/}">RNGesus</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/character}">Characters</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/character/create}">Character Creator</a>
+                </li>
+            </ul>
+            <form class="form-inline mt-2 mt-md-0" action="https://roll20.net/compendium/dnd5e/searchbook/" method="GET" target="_blank">
+                <input class="form-control mr-sm-2" type="text" name="terms" placeholder="Search Roll20" aria-label="Search"></input>
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
     </nav>
+
+    <section th:fragment="scripts">
+        <!-- Bootstrap core JavaScript
+================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script th:src="@{/bootstrap/assets/js/vendor/popper.min.js}"></script>
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/bootstrap/assets/js/vendor/holder.min.js}"></script>
+    </section>
 
 </body>
 </html>
