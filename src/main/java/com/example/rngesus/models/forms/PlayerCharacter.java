@@ -1,19 +1,13 @@
-package com.example.rngesus.models.races;
+package com.example.rngesus.models.forms;
 
-import com.example.rngesus.models.character.PlayerCharacter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by LaunchCode
- */
 @Entity
-public class Race {
+public class PlayerCharacter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -25,15 +19,14 @@ public class Race {
     @Size(min=2, max=50)
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "race_id")
-    private List<PlayerCharacter> playerCharacters = new ArrayList<>();
+    @ManyToOne
+    private Race race;
 
-    public Race() {}
-
-    public Race(String name) {
+    public PlayerCharacter(String name) {
         this.name = name;
     }
+
+    public PlayerCharacter() { }
 
     public int getId() {
         return id;
@@ -47,7 +40,11 @@ public class Race {
         this.name = name;
     }
 
-    public List<PlayerCharacter> getPlayerCharacters() {
-        return playerCharacters;
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
     }
 }

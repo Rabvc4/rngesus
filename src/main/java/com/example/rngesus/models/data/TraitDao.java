@@ -1,6 +1,6 @@
 package com.example.rngesus.models.data;
 
-import com.example.rngesus.models.forms.PlayerCharacter;
+import com.example.rngesus.models.forms.Trait;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +8,5 @@ import javax.transaction.Transactional;
 
 @Transactional
 @Repository
-public interface CharacterDao extends CrudRepository<PlayerCharacter, Integer> {
+public interface TraitDao extends CrudRepository<Trait, Integer> {
 }

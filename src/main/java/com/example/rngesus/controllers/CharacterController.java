@@ -1,9 +1,9 @@
 package com.example.rngesus.controllers;
 
-import com.example.rngesus.models.character.PlayerCharacter;
+import com.example.rngesus.models.forms.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.RaceDao;
-import com.example.rngesus.models.races.Race;
+import com.example.rngesus.models.forms.Race;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

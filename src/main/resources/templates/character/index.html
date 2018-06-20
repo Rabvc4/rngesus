@@ -12,6 +12,7 @@
             <!--<a th:href="'/playerCharacter?id=' + ${playerCharacter.id}" th:text="${playerCharacter.name}"></a>-->
             <div class="characterName" th:text="${character.name}"></div>
             <div class="characterRace" th:text="'Race: ' + ${character.race.name}"></div>
+            <div class="characterRace" th:text="'Size: ' + ${character.race.size}"></div>
         </li>
     </ul>
 

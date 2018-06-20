@@ -12,6 +12,26 @@
             <input class="form-control" th:field="*{name}" />
             <span th:errors="*{name}" class="error"></span>
         </div>
+        <div class="form-group">
+            <label th:for="size">Size</label>
+            <input class="form-control" th:field="*{size}" />
+            <span th:errors="*{size}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="speed">Speed</label>
+            <input class="form-control" th:field="*{speed}" />
+            <span th:errors="*{speed}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="traits">Traits</label>
+            <input class="form-control" th:field="*{traits}" />
+            <span th:errors="*{traits}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="languages">Languages</label>
+            <input class="form-control" th:field="*{languages}" />
+            <span th:errors="*{languages}" class="error"></span>
+        </div>
 
         <input type="submit" value="Create Race" />
     </form>
