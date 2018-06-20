@@ -18,7 +18,7 @@ public class HomeController {
     public String create(Model model) {
         model.addAttribute("title", "Create");
 
-        return "create/index";
+        return "create";
     }
 
 }
