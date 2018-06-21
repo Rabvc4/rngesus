@@ -1,6 +1,5 @@
 package com.example.rngesus.models.forms;
 
-import com.example.rngesus.models.forms.PlayerCharacter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
@@ -46,7 +45,7 @@ public class Race {
 
     public Race() {}
 
-    public Race(@NotNull @Size(min = 2, max = 50) String name, @NotNull @Size(min = 1) String size, @NotNull @Length(min = 1) Integer speed, @NotNull @Length(min = 1) String traits, @NotNull @Size(min = 2, max = 100) String languages) {
+    public Race(String name, String size, Integer speed, String traits, String languages) {
         this.name = name;
         this.size = size;
         this.speed = speed;
