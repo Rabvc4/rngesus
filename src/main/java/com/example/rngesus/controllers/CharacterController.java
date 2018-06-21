@@ -1,5 +1,7 @@
 package com.example.rngesus.controllers;
 
+import com.example.rngesus.models.data.ClassDao;
+import com.example.rngesus.models.forms.CharacterClass;
 import com.example.rngesus.models.forms.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.RaceDao;
@@ -22,6 +24,9 @@ public class CharacterController {
 
     @Autowired
     CharacterDao characterDao;
+
+    @Autowired
+    ClassDao classDao;
 
     @Autowired
     RaceDao raceDao;
@@ -67,6 +72,16 @@ public class CharacterController {
         model.addAttribute("characters", playerCharacters);
         model.addAttribute("title", race.getName() + " Characters");
         return "character/index";
+    }
+
+    @RequestMapping(value = "class", method = RequestMethod.GET)
+    public String characterClass(Model model, @RequestParam int id) {
+
+        CharacterClass aClass = classDao.findById(id).orElse(null);
+        List<PlayerCharacter> playerCharacters = aClass.getPlayerCharacters();
+        model.addAttribute("characters", playerCharacters);
+        model.addAttribute("title", aClass.getName() + " Characters");
+        return "class/index";
     }
 
 }
