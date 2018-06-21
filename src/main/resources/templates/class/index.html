@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+    <h1 th:text="${title}">Default Title</h1>
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <ul>
+        <li th:each="class : ${classes}">
+            <a th:href="'/character/class?id=' + ${class.id}" th:text="${class.name}"></a>
+        </li>
+    </ul>
+
+    <p><a href="/class/create">Create Class</a></p>
+
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>
