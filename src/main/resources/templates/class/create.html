@@ -16,8 +16,8 @@
             <label th:for="hitDice">Hit Dice</label>
             <select class="form-control" th:field="*{hitDice}">
                 <option th:each="hitDie : ${hitDiceTypes}"
-                        th:text="${hitDie.dieType}"
-                        th:value="${hitDie.id}"></option>
+                        th:text="${hitDie}"
+                        th:value="${hitDie}"></option>
             </select>
             <span th:errors="*{hitDice}" class="error"></span>
         </div>

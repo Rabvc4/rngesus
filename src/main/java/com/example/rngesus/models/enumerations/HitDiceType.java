@@ -8,13 +8,13 @@ public enum HitDiceType {
     D10 (10),
     D12 (12);
 
-    private final int dieType;
+    private final Integer dieType;
 
-    HitDiceType(int dieType) {
+    HitDiceType(Integer dieType) {
         this.dieType = dieType;
     }
 
-    public int getDieType() {
+    public Integer getDieType() {
         return dieType;
     }
 

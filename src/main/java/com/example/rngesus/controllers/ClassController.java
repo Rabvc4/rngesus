@@ -41,6 +41,7 @@ public class ClassController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Create Class");
+            model.addAttribute("hitDiceTypes", HitDiceType.values());
             return "class/create";
         }
 

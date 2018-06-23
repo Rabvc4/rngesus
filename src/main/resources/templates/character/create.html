@@ -14,22 +14,22 @@
             <span th:errors="*{name}" class="error"></span>
         </div>
         <div class="form-group">
-            <label th:for="raceId">Race</label>
+            <label th:for="race">Race</label>
             <select name="raceId">
                 <option th:each="race : ${races}"
                         th:text="${race.name}"
                         th:value="${race.id}"></option>
             </select>
-            <span th:errors="*{raceId}" class="error"></span>
+            <span th:errors="*{race}" class="error"></span>
         </div>
         <div class="form-group">
-            <label th:for="classId">Class</label>
+            <label th:for="class">Class</label>
             <select name="classId">
                 <option th:each="class : ${classes}"
                         th:text="${class.name}"
                         th:value="${class.id}"></option>
             </select>
-            <span th:errors="*{classId}" class="error"></span>
+            <span th:errors="*{class}" class="error"></span>
         </div>
 
         <input type="submit" class="btn btn-primary" value="Create Character" />
