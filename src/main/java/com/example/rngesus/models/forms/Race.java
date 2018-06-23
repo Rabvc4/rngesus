@@ -4,6 +4,8 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -27,7 +29,8 @@ public class Race {
     private String size;
 
     @NotNull
-    @Length(min=1)
+    @Max(value = 50,message = "Quit being lazy, well made characters can move faster than a railgun. Why does your BASE speed need to be so high?")
+    @Min(value = 5,message = "Houseflies have a walking speed of 5. Are you playing a game at the atomic level?")
     private Integer speed;
 
 //    TODO: make trait object

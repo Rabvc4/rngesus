@@ -1,6 +1,7 @@
 package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.data.ClassDao;
+import com.example.rngesus.models.enumerations.HitDiceType;
 import com.example.rngesus.models.forms.CharacterClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ public class ClassController {
     public String create(Model model) {
         model.addAttribute(new CharacterClass());
         model.addAttribute("title", "Create Class");
+        model.addAttribute("hitDiceTypes", HitDiceType.values());
         return "class/create";
     }
 

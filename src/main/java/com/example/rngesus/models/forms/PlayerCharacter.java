@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 public class PlayerCharacter {
@@ -21,6 +22,9 @@ public class PlayerCharacter {
 
     @ManyToOne
     private Race race;
+
+    @ManyToMany
+    private List<CharacterClass> classes;
 
     public PlayerCharacter(String name) {
         this.name = name;
@@ -47,4 +51,13 @@ public class PlayerCharacter {
     public void setRace(Race race) {
         this.race = race;
     }
+
+    public List<CharacterClass> getClasses() {
+        return classes;
+    }
+
+    public void addClass(CharacterClass aClass) {
+        this.classes.add(aClass);
+    }
+
 }

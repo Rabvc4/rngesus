@@ -45,20 +45,25 @@ public class CharacterController {
         model.addAttribute("title", "Create Character");
         model.addAttribute(new PlayerCharacter());
         model.addAttribute("races", raceDao.findAll());
+        model.addAttribute("classes", classDao.findAll());
+
         return "character/create";
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String processCreateCharacterForm(@ModelAttribute  @Valid PlayerCharacter newPlayerCharacter, Errors errors, @RequestParam int raceId, Model model) {
+    public String processCreateCharacterForm(@ModelAttribute  @Valid PlayerCharacter newPlayerCharacter, Errors errors, @RequestParam int raceId,@RequestParam int classId, Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Character Creator");
             model.addAttribute("races", raceDao.findAll());
+            model.addAttribute("classes", classDao.findAll());
             return "character/create";
         }
 
         Race race = raceDao.findById(raceId).orElse(null);
+        CharacterClass aClass = classDao.findById(classId).orElse(null);
         newPlayerCharacter.setRace(race);
+        newPlayerCharacter.addClass(aClass);
         characterDao.save(newPlayerCharacter);
         return "redirect:";
     }

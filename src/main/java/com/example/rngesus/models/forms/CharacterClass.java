@@ -1,13 +1,11 @@
 package com.example.rngesus.models.forms;
 
+import com.example.rngesus.models.enumerations.HitDiceType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,10 +21,7 @@ public class CharacterClass {
     @Size(min=2, max=50)
     private String name;
 
-    @NotNull
-    @Max(12)
-    @Min(6)
-    private Integer hitPoints;
+    private HitDiceType hitDice;
 
     @NotNull
     @Size(min=3, max=100)
@@ -48,15 +43,13 @@ public class CharacterClass {
     @Size(min=3, max=100)
     private String skills;
 
-    @OneToMany
-    @JoinColumn(name = "characterClass_id")
-    private List<PlayerCharacter> playerCharacters = new ArrayList<>();
+    @ManyToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    private List<PlayerCharacter> playerCharacters;
 
     public CharacterClass() {  }
 
-    public CharacterClass(String name, Integer hitPoints, String armorProficiency, String weaponProficiency, String tools, String savingThrows, String skills) {
+    public CharacterClass(String name, String armorProficiency, String weaponProficiency, String tools, String savingThrows, String skills) {
         this.name = name;
-        this.hitPoints = hitPoints;
         this.armorProficiency = armorProficiency;
         this.weaponProficiency = weaponProficiency;
         this.tools = tools;
@@ -74,14 +67,6 @@ public class CharacterClass {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getHitPoints() {
-        return hitPoints;
-    }
-
-    public void setHitPoints(Integer hitPoints) {
-        this.hitPoints = hitPoints;
     }
 
     public String getArmorProficiency() {
@@ -122,6 +107,14 @@ public class CharacterClass {
 
     public void setSkills(String skills) {
         this.skills = skills;
+    }
+
+    public HitDiceType getHitDice() {
+        return hitDice;
+    }
+
+    public void setHitDice(HitDiceType hitDice) {
+        this.hitDice = hitDice;
     }
 
     public List<PlayerCharacter> getPlayerCharacters() {
