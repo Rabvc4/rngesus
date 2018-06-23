@@ -49,8 +49,7 @@ public class CharacterController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String processCreateCharacterForm(@ModelAttribute  @Valid PlayerCharacter newPlayerCharacter,
-                                       Errors errors, @RequestParam int raceId, Model model) {
+    public String processCreateCharacterForm(@ModelAttribute  @Valid PlayerCharacter newPlayerCharacter, Errors errors, @RequestParam int raceId, Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Character Creator");
