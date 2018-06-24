@@ -3,20 +3,11 @@
   height: 5rem;
 }
 
-.App-header {
-  background-color: #222;
-  height: 10rem;
-  padding: 1.5rem;
+.main {
+  background-color:black !important;
   color: white;
   text-align: center;
-}
-
-.App-title {
-  font-size: 1.5rem;
-}
-
-.App-intro {
-  font-size: large;
+  border-radius: 0;
 }
 
 @keyframes App-logo-spin {

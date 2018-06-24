@@ -5,10 +5,16 @@
 
     <nav th:replace="fragments :: navigation"></nav>
 
-    <header class="App-header">
-        <img src="https://cdn1.iconfinder.com/data/icons/sin-city-memories/128/dice-red-256.png" class="App-logo" alt="logo" />
-        <h1 class="App-title">Welcome to RNGesus</h1>
-    </header>
+
+    <main role="main">
+
+        <section class="jumbotron text-center main">
+            <div class="container">
+                <img src="https://cdn1.iconfinder.com/data/icons/sin-city-memories/128/dice-red-256.png" class="App-logo" alt="logo" />
+                <h1 class="jumbotron-heading" th:text="${title}">Default Title</h1>
+            </div>
+        </section>
+    </main>
 
 
 
