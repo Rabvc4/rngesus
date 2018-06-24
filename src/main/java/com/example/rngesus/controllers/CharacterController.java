@@ -1,11 +1,12 @@
 package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.data.ClassDao;
-import com.example.rngesus.models.forms.CharacterClass;
-import com.example.rngesus.models.forms.PlayerCharacter;
+import com.example.rngesus.models.CharacterClass;
+import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.RaceDao;
-import com.example.rngesus.models.forms.Race;
+import com.example.rngesus.models.Race;
+import com.example.rngesus.models.forms.CreateCharacterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,29 +42,40 @@ public class CharacterController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String displayCreateCharacterForm(Model model) {
+    public String addClass(Model model) {
+
         model.addAttribute("title", "Create Character");
-        model.addAttribute(new PlayerCharacter());
-        model.addAttribute("races", raceDao.findAll());
-        model.addAttribute("classes", classDao.findAll());
+        PlayerCharacter playerCharacter = new PlayerCharacter();
+        CreateCharacterForm form = new CreateCharacterForm(playerCharacter, raceDao.findAll(), classDao.findAll());
+        model.addAttribute("form", form);
 
         return "character/create";
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String processCreateCharacterForm(@ModelAttribute  @Valid PlayerCharacter newPlayerCharacter, Errors errors, @RequestParam int raceId,@RequestParam int classId, Model model) {
+    public String processCreateCharacterForm(@ModelAttribute  @Valid CreateCharacterForm form, Errors errors, Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Character Creator");
-            model.addAttribute("races", raceDao.findAll());
-            model.addAttribute("classes", classDao.findAll());
+            model.addAttribute("form", form);
             return "character/create";
         }
 
-        Race race = raceDao.findById(raceId).orElse(null);
-        CharacterClass aClass = classDao.findById(classId).orElse(null);
-        newPlayerCharacter.setRace(race);
-        newPlayerCharacter.addClass(aClass);
+        System.out.println("Character Id: " + form.getCharacterId());
+        System.out.println("playerCharacter Name: " + form.getPlayerCharacter().getName());
+
+        PlayerCharacter newPlayerCharacter = characterDao.findById(form.getCharacterId()).orElse(null);
+        Race race = raceDao.findById(form.getRaceId()).orElse(null);
+        CharacterClass aClass = classDao.findById(form.getClassId()).orElse(null);
+
+
+        if(race != null) {
+            newPlayerCharacter.setRace(race);
+        }
+        if(aClass != null) {
+            newPlayerCharacter.addClass(aClass);
+        }
+
         characterDao.save(newPlayerCharacter);
         return "redirect:";
     }

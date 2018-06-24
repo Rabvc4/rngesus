@@ -1,4 +1,4 @@
-package com.example.rngesus.models.forms;
+package com.example.rngesus.models;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;

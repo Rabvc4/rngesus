@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body>
+<body class="container">
 
     <nav th:replace="fragments :: navigation"></nav>
 
@@ -11,8 +11,13 @@
         <li th:each="character : ${characters}">
             <!--<a th:href="'/playerCharacter?id=' + ${playerCharacter.id}" th:text="${playerCharacter.name}"></a>-->
             <div class="characterName" th:text="${character.name}"></div>
-            <div class="characterRace" th:text="'Race: ' + ${character.race.name}"></div>
-            <div class="characterRace" th:text="'Size: ' + ${character.race.size}"></div>
+            <!--<div class="characterRace" th:text="'Race: ' + ${character.race.name}"></div>-->
+            <!--<div class="characterRace" th:text="'Size: ' + ${character.race.size}"></div>-->
+            <div th:unless="${character.classes} and ${character.classes.size()}" class="characterClass">
+                <ul>
+                    <li th:each="class : ${character.classes}" th:text="${class.name}"></li>
+                </ul>
+            </div>
         </li>
     </ul>
 

@@ -1,6 +1,6 @@
 package com.example.rngesus.models.data;
 
-import com.example.rngesus.models.forms.PlayerCharacter;
+import com.example.rngesus.models.PlayerCharacter;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

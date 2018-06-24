@@ -1,7 +1,7 @@
 package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.data.RaceDao;
-import com.example.rngesus.models.forms.Race;
+import com.example.rngesus.models.Race;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package com.example.rngesus.models.forms;
+package com.example.rngesus.models;
 
 import com.example.rngesus.models.enumerations.HitDiceType;
 import org.hibernate.annotations.GenericGenerator;
@@ -43,7 +43,7 @@ public class CharacterClass {
     @Size(min=3, max=100)
     private String skills;
 
-    @ManyToMany(mappedBy = "classes", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "classes")
     private List<PlayerCharacter> playerCharacters;
 
     public CharacterClass() {  }

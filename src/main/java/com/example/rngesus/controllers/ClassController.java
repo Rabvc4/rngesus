@@ -2,7 +2,7 @@ package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.data.ClassDao;
 import com.example.rngesus.models.enumerations.HitDiceType;
-import com.example.rngesus.models.forms.CharacterClass;
+import com.example.rngesus.models.CharacterClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

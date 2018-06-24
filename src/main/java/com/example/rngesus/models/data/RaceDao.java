@@ -1,6 +1,6 @@
 package com.example.rngesus.models.data;
 
-import com.example.rngesus.models.forms.Race;
+import com.example.rngesus.models.Race;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
