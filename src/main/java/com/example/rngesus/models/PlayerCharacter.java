@@ -27,6 +27,9 @@ public class PlayerCharacter {
     @ManyToMany
     private List<CharacterClass> classes = new ArrayList<CharacterClass>();
 
+    @ManyToMany
+    private List<AbilityScore> abilityScores = new ArrayList<AbilityScore>();
+
     public PlayerCharacter(String name) {
         this.name = name;
     }
@@ -55,6 +58,10 @@ public class PlayerCharacter {
 
     public List<CharacterClass> getClasses() {
         return classes;
+    }
+
+    public void addClass(CharacterClass aClass) {
+        this.classes.add(aClass);
     }
 
     public void addClass(CharacterClass aClass) {
