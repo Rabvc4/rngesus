@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,7 @@ public class PlayerCharacter {
     private Race race;
 
     @ManyToMany
-    private List<CharacterClass> classes;
+    private List<CharacterClass> classes = new ArrayList<CharacterClass>();
 
     public PlayerCharacter(String name) {
         this.name = name;

@@ -14,15 +14,15 @@
             <span th:errors="*{characterId}" class="error"></span>
             <input type="hidden" name="characterId" th:value="*{playerCharacter.id}" />
         </div>
-        <div class="form-group">
-            <label th:for="raceId">Race</label>
-            <select name="raceId" class="form-control">
-                <option th:each="race : ${form.races}"
-                        th:text="${race.name}"
-                        th:value="${race.id}"></option>
-            </select>
-            <span th:errors="*{raceId}" class="error"></span>
-        </div>
+        <!--<div class="form-group">-->
+            <!--<label th:for="raceId">Race</label>-->
+            <!--<select name="raceId" class="form-control">-->
+                <!--<option th:each="race : ${form.races}"-->
+                        <!--th:text="${race.name}"-->
+                        <!--th:value="${race.id}"></option>-->
+            <!--</select>-->
+            <!--<span th:errors="*{raceId}" class="error"></span>-->
+        <!--</div>-->
         <div class="form-group">
             <label th:for="classId">Hit Dice</label>
             <select name="classId" class="form-control">
