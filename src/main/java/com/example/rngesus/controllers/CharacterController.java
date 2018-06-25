@@ -46,7 +46,7 @@ public class CharacterController {
 
         model.addAttribute("title", "Create Character");
         PlayerCharacter playerCharacter = new PlayerCharacter();
-        CreateCharacterForm form = new CreateCharacterForm(playerCharacter, classDao.findAll());
+        CreateCharacterForm form = new CreateCharacterForm(playerCharacter, raceDao.findAll(), classDao.findAll());
         model.addAttribute("form", form);
 
         return "character/create";
@@ -61,15 +61,14 @@ public class CharacterController {
             return "character/create";
         }
 
-        System.out.println("Character Id: " + form.getCharacterId());
-        System.out.println("playerCharacter Name: " + form.getPlayerCharacter().getName());
-
         PlayerCharacter newPlayerCharacter = form.getPlayerCharacter();
+        Race race = raceDao.findById(form.getRaceId()).orElse(null);
         CharacterClass aClass = classDao.findById(form.getClassId()).orElse(null);
 
+        newPlayerCharacter.setRace(race);
         newPlayerCharacter.addClass(aClass);
-
         characterDao.save(newPlayerCharacter);
+
         return "redirect:";
     }
 

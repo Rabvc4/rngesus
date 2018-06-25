@@ -12,18 +12,23 @@ public class CreateCharacterForm {
     private int characterId;
 
     @NotNull
+    private int raceId;
+
+    @NotNull
     private int classId;
 
     private PlayerCharacter playerCharacter;
 
+    private Iterable<Race> races;
 
     private Iterable<CharacterClass> classes;
 
     public CreateCharacterForm() {
     }
 
-    public CreateCharacterForm(PlayerCharacter playerCharacter, Iterable<CharacterClass> classes) {
+    public CreateCharacterForm(PlayerCharacter playerCharacter, Iterable<Race> races ,Iterable<CharacterClass> classes) {
         this.playerCharacter = playerCharacter;
+        this.races = races;
         this.classes = classes;
     }
 
@@ -33,6 +38,14 @@ public class CreateCharacterForm {
 
     public void setCharacterId(int characterId) {
         this.characterId = characterId;
+    }
+
+    public int getRaceId() {
+        return raceId;
+    }
+
+    public void setRaceId(int raceId) {
+        this.raceId = raceId;
     }
 
     public int getClassId() {
@@ -49,6 +62,10 @@ public class CreateCharacterForm {
 
     public void setPlayerCharacter(PlayerCharacter playerCharacter) {
         this.playerCharacter = playerCharacter;
+    }
+
+    public Iterable<Race> getRaces() {
+        return races;
     }
 
     public Iterable<CharacterClass> getClasses() {
