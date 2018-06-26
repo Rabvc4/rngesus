@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="userSignup">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <body>
+        <form class="form-signin" method="post">
+            <div class="text-center mb-4">
+                <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+                <h1 class="h3 mb-3 font-weight-normal" th:text="${title}">Default Title</h1>
+                <p>Build form controls with floating labels via the <code>:placeholder-shown</code> pseudo-element. <a href="https://caniuse.com/#feat=css-placeholder-shown">Works in latest Chrome, Safari, and Firefox.</a></p>
+            </div>
+
+            <div class="form-label-group">
+                <input type="text" id="username" class="form-control" placeholder="Username" required autofocus th:value="${username}" />
+                <label for="username">Username</label>
+                <span class="error" th:text="${username}"></span>
+            </div>
+
+            <div class="form-label-group">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus th:value="${email}" />
+                <label for="inputEmail">Email address</label>
+                <span class="error" th:text="${email}"></span>
+            </div>
+
+            <div class="form-label-group">
+                <input type="password" id="password" class="form-control" placeholder="Password" required>
+                <label th:for="password">Password</label>
+                <span class="error" th:text="${password}"></span>
+            </div>
+
+            <div class="form-label-group">
+                <input type="password" id="verify" class="form-control" placeholder="Verify Password" required>
+                <label th:for="verify">Password</label>
+                <span class="error" th:text="${verify}"></span>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+    </body>
+
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>

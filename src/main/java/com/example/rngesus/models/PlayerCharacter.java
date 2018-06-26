@@ -22,6 +22,9 @@ public class PlayerCharacter {
     private String name;
 
     @ManyToOne
+    private User user;
+
+    @ManyToOne
     private Race race;
 
     @ManyToMany
@@ -61,4 +64,11 @@ public class PlayerCharacter {
         this.classes.add(aClass);
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
