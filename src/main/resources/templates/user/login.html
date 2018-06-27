@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="userSignup">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <form class="form-signin" method="post" th:object="${user}">
+        <div class="text-center mb-4">
+            <img class="App-logo mb-4"  src="https://cdn1.iconfinder.com/data/icons/sin-city-memories/128/dice-red-256.png" alt="logo" height="72">
+            <h1 class="h3 mb-3 font-weight-normal" th:text="${title}">Default Title</h1>
+            <p>Roll the dice and see what happens.</p>
+        </div>
+
+        <span th:text="${message}" class="error"></span>
+        <div class="form-label-group">
+            <input type="email" class="form-control" th:field="*{email}" placeholder="Email address" required autofocus />
+            <label th:for="email">Email Address</label>
+        </div>
+        <div class="form-label-group">
+            <input type="password" class="form-control" th:field="*{password}" placeholder="Password" required />
+            <label th:for="password">Password</label>
+        </div>
+
+        <input class="btn btn-lg btn-danger btn-block" type="submit" value="Sign In" />
+
+        <div class="mt-3">Don't have an account? <a th:href="@{/user/create}">Create one</a></div>
+
+
+
+
+    </form>
+
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>

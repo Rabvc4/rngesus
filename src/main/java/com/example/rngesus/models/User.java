@@ -19,19 +19,18 @@ public class User {
     private int id;
 
     @NotNull
-    @Size(min=3, max=20)
+    @Size(min=3, max=30, message = "Usernames must be between 3 and 30 characters")
     @Column(unique = true)
     private String username;
 
     @NotNull
-    @Size(min=8, max=20)
     @Email(message = "Please use a valid email address")
-    @Column(unique = true, length = 20, nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @NotNull
-    @Size(min=8, max=20, message = "Password must be between 8 and 20 characters long")
-    @Column(length = 20, nullable = false)
+    @Size(min=8, max=100, message = "Password must be between 8 and 50 characters long")
+    @Column(length = 100, nullable = false)
     private String password;
 
     @OneToMany

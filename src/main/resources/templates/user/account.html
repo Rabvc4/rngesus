@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
-<body>
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h1 th:text="${account.name}">Default Title</h1>
+
+    <p th:unless="${account.playerCharacters} and ${account.playerCharacters.size()}">no cheese :(</p>
+
+    <ul>
+        <li th:each="character : ${account.playerCharacters}" th:text="${character.name}"></li>
+    </ul>
+
+    <p><a th:href="@{/character/create}">Create Character</a></p>
 
 </body>
 </html>

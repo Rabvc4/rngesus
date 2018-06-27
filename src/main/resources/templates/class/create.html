@@ -46,6 +46,7 @@
             <input class="form-control" th:field="*{skills}" />
             <span th:errors="*{skills}" class="error"></span>
         </div>
+        <span class="error" th:text="${message}"></span>
 
         <input type="submit" class="btn btn-primary" value="Create Class" />
     </form>
