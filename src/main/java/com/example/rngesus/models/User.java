@@ -29,8 +29,8 @@ public class User {
     private String email;
 
     @NotNull
-    @Size(min=8, max=100, message = "Password must be between 8 and 50 characters long")
-    @Column(length = 100, nullable = false)
+    @Size(min=6, message = "Password must be at least 6 characters long")
+    @Column(nullable = false)
     private String password;
 
     @OneToMany

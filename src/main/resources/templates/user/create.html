@@ -5,7 +5,7 @@
 
     <nav th:replace="fragments :: navigation"></nav>
 
-    <form class="form-signin" method="post" th:object="${user}">
+    <form class="form-signin" method="post" th:action="@{/user/create}" th:object="${user}">
         <div class="text-center mb-4">
             <img class="App-logo mb-4"  src="https://cdn1.iconfinder.com/data/icons/sin-city-memories/128/dice-red-256.png" alt="logo" height="72">
             <h1 class="h3 mb-3 font-weight-normal" th:text="${title}">Default Title</h1>

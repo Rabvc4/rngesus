@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:fragment="head">
 
     <meta charset="UTF-8"/>
@@ -39,19 +38,19 @@
 
                 <ul class="navbar-nav mr-auto float-right">
 
-                    <div th:if="${user.username}">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/account}" th:text="${username}"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/logout}">Logout</a>
-                        </li>
-                    </div>
-                    <div th:unless="${user.username}">
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/login}">Login</a>
-                        </li>
-                    <div>
+                    <!--<div th:if="${user.username}">-->
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link" th:href="@{/user/account}" th:text="${username}"></a>-->
+                        <!--</li>-->
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link" th:href="@{/user/logout}">Logout</a>-->
+                        <!--</li>-->
+                    <!--</div>-->
+                    <!--<div th:unless="${user.username}">-->
+                        <!--<li class="nav-item">-->
+                            <!--<a class="nav-link" th:href="@{/user/login}">Login</a>-->
+                        <!--</li>-->
+                    <!--</div>-->
                 </ul>
                 <input class="form-control mr-sm-2" type="text" name="terms" placeholder="Search Roll20" aria-label="Search" />
                 <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
