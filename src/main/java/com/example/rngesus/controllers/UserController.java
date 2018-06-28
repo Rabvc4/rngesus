@@ -78,29 +78,39 @@ public class UserController {
 
 
     @RequestMapping(value = "login")
-    public String loginForm(Model model) {
+    public String login(Model model) {
         model.addAttribute("title", "Login");
         model.addAttribute(new User());
         return "user/login";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String processLogin(Model model, @ModelAttribute User user, HttpServletResponse response) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public String login(Model model, @ModelAttribute User user, HttpServletResponse response) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         System.out.println("Login handler used");
 
         List<User> u = userDao.findByEmail(user.getEmail());
         User registeredUser = u.get(0);
+        String username = registeredUser.getUsername();
+
+        System.out.println("User found: " + username);
 
         if (validPassword(user.getPassword(), registeredUser.getPassword())) {
-            Cookie c = new Cookie("user", user.getUsername());
+            System.out.println("Valid Password");
+            Cookie c = new Cookie("user", registeredUser.getUsername());
             c.setPath("/");
             response.addCookie(c);
-            return "redirect:/user/index";
+            model.addAttribute("user", registeredUser);
+
+            return "redirect:/user/" + registeredUser.getId();
+
         } else {
+            System.out.println("Invalid Password");
             model.addAttribute("message", "Invalid Password");
             model.addAttribute("title", "Login");
+
             return "user/login";
+
         }
     }
 
@@ -121,11 +131,12 @@ public class UserController {
 
 
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public String viewAccount(Model model, @PathVariable int userId) {
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
+    public String viewAccount(Model model, @PathVariable String username) {
 
-        User user = userDao.findById(userId).orElse(null);
-        model.addAttribute("user", user);
+        List<User> u = userDao.findByUsername(username);
+        User registeredUser = u.get(0);
+        model.addAttribute("user", registeredUser);
 
         return "user/account";
     }

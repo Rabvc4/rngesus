@@ -6,13 +6,16 @@
 
     <nav th:replace="fragments :: navigation"></nav>
 
-    <h1 th:text="${account.name}">Default Title</h1>
+    <h1 th:text="${user.username}">Default Title</h1>
 
-    <p th:unless="${account.playerCharacters} and ${account.playerCharacters.size()}">no cheese :(</p>
+    <p th:unless="${user.playerCharacters} and ${user.playerCharacters.size()}">no characters :(</p>
 
-    <ul>
-        <li th:each="character : ${account.playerCharacters}" th:text="${character.name}"></li>
+    <ul th:if="${user.playerCharacters} and ${user.playerCharacters.size()}">
+        <li th:each="character : ${user.playerCharacters}">
+            <a th:text="${character.name}"></a>
+        </li>
     </ul>
+
 
     <p><a th:href="@{/character/create}">Create Character</a></p>
 
