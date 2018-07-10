@@ -102,7 +102,7 @@ public class UserController {
             response.addCookie(c);
             model.addAttribute("user", registeredUser);
 
-            return "redirect:/user/" + registeredUser.getId();
+            return "redirect:/user/" + registeredUser.getUsername();
 
         } else {
             System.out.println("Invalid Password");
