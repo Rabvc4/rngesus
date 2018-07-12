@@ -43,23 +43,23 @@ public class UserController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String create(@ModelAttribute @Valid User user, Errors errors, Model model, String verify) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public String create(@ModelAttribute @Valid User user, HttpServletResponse response, Errors errors, Model model, String verify) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         List<User> sameName = userDao.findByUsername(user.getUsername());
         String inputPassword = user.getPassword();
 
         if(!errors.hasErrors() && inputPassword.equals(verify) && sameName.isEmpty()) {
 
-            System.out.println("No errors");
-
             user.setPassword(encryptedPassword(inputPassword));
             userDao.save(user);
 
-            return "user/index";
+            Cookie c = new Cookie("user", user.getUsername());
+            c.setPath("/");
+            response.addCookie(c);
+
+            return "redirect:/user/" + user.getUsername();
 
         } else {
-
-            System.out.println("Errors detected");
 
             model.addAttribute("title", "Join RNGesus");
             model.addAttribute("user", user);
@@ -68,7 +68,7 @@ public class UserController {
                 model.addAttribute("verify", "Passwords do not match");
             }
             if(!sameName.isEmpty()) {
-                model.addAttribute("message", "That username is already taken, please choose another one");
+                model.addAttribute("message", "That username is taken, please choose another one");
             }
 
             return "user/create";
@@ -87,25 +87,19 @@ public class UserController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(Model model, @ModelAttribute User user, HttpServletResponse response) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-        System.out.println("Login handler used");
-
         List<User> u = userDao.findByEmail(user.getEmail());
         User registeredUser = u.get(0);
         String username = registeredUser.getUsername();
 
-        System.out.println("User found: " + username);
-
         if (validPassword(user.getPassword(), registeredUser.getPassword())) {
-            System.out.println("Valid Password");
             Cookie c = new Cookie("user", registeredUser.getUsername());
             c.setPath("/");
             response.addCookie(c);
             model.addAttribute("user", registeredUser);
 
-            return "redirect:/user/" + registeredUser.getUsername();
+            return "redirect:/user/index";
 
         } else {
-            System.out.println("Invalid Password");
             model.addAttribute("message", "Invalid Password");
             model.addAttribute("title", "Login");
 
@@ -117,7 +111,7 @@ public class UserController {
 
 
     @RequestMapping(value = "logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         if(cookies != null) {
             for (Cookie c : cookies) {
@@ -126,6 +120,8 @@ public class UserController {
                 response.addCookie(c);
             }
         }
+        model.addAttribute("message", "Successfully logged out");
+
         return "redirect:/user/login";
     }
 

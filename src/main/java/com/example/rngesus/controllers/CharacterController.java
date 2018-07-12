@@ -41,6 +41,8 @@ public class CharacterController {
         return "character/index";
     }
 
+
+
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String addClass(Model model) {
 
@@ -72,6 +74,8 @@ public class CharacterController {
         return "redirect:";
     }
 
+
+
     @RequestMapping(value = "race", method = RequestMethod.GET)
     public String race(Model model, @RequestParam int id) {
 
@@ -81,6 +85,8 @@ public class CharacterController {
         model.addAttribute("title", race.getName() + " Characters");
         return "character/index";
     }
+
+
 
     @RequestMapping(value = "class", method = RequestMethod.GET)
     public String characterClass(Model model, @RequestParam int id) {
