@@ -30,11 +30,11 @@ public class PlayerCharacter {
     @ManyToMany
     private List<CharacterClass> classes = new ArrayList<CharacterClass>();
 
+    public PlayerCharacter() { }
+
     public PlayerCharacter(String name) {
         this.name = name;
     }
-
-    public PlayerCharacter() { }
 
     public int getId() {
         return id;
