@@ -32,8 +32,10 @@ public class PlayerCharacter {
 
     public PlayerCharacter() { }
 
-    public PlayerCharacter(String name) {
+    public PlayerCharacter(String name, User user, Race race) {
         this.name = name;
+        this.race = race;
+        this.user = user;
     }
 
     public int getId() {

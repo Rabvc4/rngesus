@@ -46,7 +46,7 @@ public class Race {
     @JoinColumn(name = "race_id")
     private List<PlayerCharacter> playerCharacters = new ArrayList<>();
 
-    public Race() {}
+    public Race() { }
 
     public Race(String name, String size, Integer speed, String traits, String languages) {
         this.name = name;

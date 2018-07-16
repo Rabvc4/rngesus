@@ -46,7 +46,7 @@ public class CharacterClass {
     @ManyToMany(mappedBy = "classes")
     private List<PlayerCharacter> playerCharacters;
 
-    public CharacterClass() {  }
+    public CharacterClass() { }
 
     public CharacterClass(String name, String armorProficiency, String weaponProficiency, String tools, String savingThrows, String skills) {
         this.name = name;
