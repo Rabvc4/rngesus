@@ -30,7 +30,7 @@ public class RaceController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute(new Race());
-        model.addAttribute("title", "Create CharacterClass");
+        model.addAttribute("title", "Create Race");
         return "race/create";
     }
 
@@ -38,7 +38,7 @@ public class RaceController {
     public String create(Model model, @ModelAttribute @Valid Race race, Errors errors) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Create CharacterClass");
+            model.addAttribute("title", "Create Race");
             return "race/create";
         }
 

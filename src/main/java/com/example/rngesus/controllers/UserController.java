@@ -97,7 +97,7 @@ public class UserController {
             response.addCookie(c);
             model.addAttribute("user", registeredUser);
 
-            return "redirect:/user/index";
+            return "redirect:/character";
 
         } else {
             model.addAttribute("message", "Invalid Password");
@@ -120,7 +120,6 @@ public class UserController {
                 response.addCookie(c);
             }
         }
-        model.addAttribute("message", "Successfully logged out");
 
         return "redirect:/user/login";
     }

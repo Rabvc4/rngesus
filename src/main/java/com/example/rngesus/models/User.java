@@ -34,7 +34,7 @@ public class User {
     private String password;
 
     @OneToMany
-    @JoinColumn(name = "character_id")
+    @JoinColumn(name = "player_characters_id")
     private List<PlayerCharacter> playerCharacters = new ArrayList<>();
 
     public User() { }

@@ -1,20 +1,19 @@
 package com.example.rngesus.controllers;
 
+import com.example.rngesus.models.User;
 import com.example.rngesus.models.data.ClassDao;
 import com.example.rngesus.models.CharacterClass;
 import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.RaceDao;
 import com.example.rngesus.models.Race;
+import com.example.rngesus.models.data.UserDao;
 import com.example.rngesus.models.forms.CreateCharacterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,6 +30,11 @@ public class CharacterController {
 
     @Autowired
     RaceDao raceDao;
+
+    @Autowired
+    UserDao userDao;
+
+
 
     @RequestMapping(value = "")
     public String index(Model model) {
@@ -55,7 +59,7 @@ public class CharacterController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String processCreateCharacterForm(@ModelAttribute  @Valid CreateCharacterForm form, Errors errors, Model model) {
+    public String processCreateCharacterForm(@CookieValue("user") String username, @ModelAttribute  @Valid CreateCharacterForm form, Errors errors, Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Character Creator");
@@ -63,10 +67,13 @@ public class CharacterController {
             return "character/create";
         }
 
+        User user = userDao.findByUsername(username).get(0);
+
         PlayerCharacter newPlayerCharacter = form.getPlayerCharacter();
         Race race = raceDao.findById(form.getRaceId()).orElse(null);
         CharacterClass aClass = classDao.findById(form.getClassId()).orElse(null);
 
+        newPlayerCharacter.setUser(user);
         newPlayerCharacter.setRace(race);
         newPlayerCharacter.addClass(aClass);
         characterDao.save(newPlayerCharacter);
