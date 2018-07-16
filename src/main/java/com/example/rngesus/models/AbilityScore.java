@@ -2,11 +2,14 @@ package com.example.rngesus.models;
 
 public class AbilityScore {
 
-
     private Integer value;
-    private Integer modifier;
+    private int id;
+    private static int nextId = 1;
 
-    public AbilityScore() { }
+    public AbilityScore() {
+        id = nextId;
+        nextId++;
+    }
 
     public AbilityScore(Integer aValue) {
         this();
@@ -19,6 +22,14 @@ public class AbilityScore {
 
     public void setValue(Integer aValue) {
         value = aValue;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    private void setId(int id) {
+        this.id = id;
     }
 
 }
