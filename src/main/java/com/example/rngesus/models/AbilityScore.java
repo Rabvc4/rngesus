@@ -1,28 +1,23 @@
 package com.example.rngesus.models;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class AbilityScore {
 
-    private int id;
+    @NotNull
+    @Max(value = 30,message = "The gods cannot exceed 30 so neither can you")
+    @Min(value = 1,message = "Cannot be 0 or a negative number (Pretty sure you'd be dead)")
     private Integer value;
+
+    @NotNull
     private Integer modifier;
-    private static int nextId = 1;
 
-    public AbilityScore() {
-        id = nextId;
-        nextId++;
-    }
+    public AbilityScore() { }
 
-    public AbilityScore(Integer aValue) {
-        this();
-        value = aValue;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    private void setId(int id) {
-        this.id = id;
+    public AbilityScore(Integer value) {
+        setValue(value);
     }
 
     public Integer getValue() {
