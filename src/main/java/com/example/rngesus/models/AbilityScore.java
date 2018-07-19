@@ -40,4 +40,18 @@ public class AbilityScore {
         return modifier;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbilityScore)) return false;
+
+        AbilityScore that = (AbilityScore) o;
+
+        return value.equals(that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

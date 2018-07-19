@@ -1,4 +1,4 @@
-package com.example.rngesus.models;
+package com.example.rngesus.models.enumerations;
 
 public enum AbilityScoreType {
 
