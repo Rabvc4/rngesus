@@ -15,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -37,12 +40,21 @@ public class CharacterController {
 
 
     @RequestMapping(value = "")
-    public String index(Model model) {
+    public String index(Model model, @CookieValue("user") String username) {
 
-        model.addAttribute("characters", characterDao.findAll());
-        model.addAttribute("title", "My Characters");
 
-        return "character/index";
+        if(username != null) {
+
+            User user = userDao.findByUsername(username).get(0);
+            model.addAttribute("characters", characterDao.findByUserId(user.getId()));
+            model.addAttribute("title", "My Characters");
+
+            return "character/index";
+        }
+
+        model.addAttribute("message", "You'll need to login to view characters");
+
+        return "redirect:/user/login";
     }
 
 
