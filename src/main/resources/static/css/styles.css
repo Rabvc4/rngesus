@@ -90,3 +90,30 @@ body .userSignup{
   font-size: 12px;
   color: #777;
 }
+
+/* Create Character Styles */
+.container {
+  max-width: 960px;
+}
+
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+.border-top-gray { border-top-color: #adb5bd; }
+
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+.lh-condensed { line-height: 1.25; }
+
+.badge.badge-outlined.badge-secondary {
+  border-color: #323a45;
+  color: #323a45
+}
+
+.badge {
+  border: 1px solid transparent;
+}
+
+.badge.badge-outlined {
+  background-color: transparent
+}
+/* End Create Character Styles */

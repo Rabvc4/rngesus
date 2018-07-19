@@ -48,8 +48,9 @@ public class CharacterClass {
 
     public CharacterClass() { }
 
-    public CharacterClass(String name, String armorProficiency, String weaponProficiency, String tools, String savingThrows, String skills) {
+    public CharacterClass(String name, HitDiceType hitDice, String armorProficiency, String weaponProficiency, String tools, String savingThrows, String skills) {
         this.name = name;
+        this.hitDice = hitDice;
         this.armorProficiency = armorProficiency;
         this.weaponProficiency = weaponProficiency;
         this.tools = tools;

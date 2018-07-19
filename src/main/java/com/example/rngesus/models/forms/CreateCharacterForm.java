@@ -1,10 +1,14 @@
 package com.example.rngesus.models.forms;
 
+import com.example.rngesus.models.AbilityScore;
 import com.example.rngesus.models.CharacterClass;
 import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.Race;
+import com.example.rngesus.models.enumerations.AbilityScoreType;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateCharacterForm {
 
@@ -17,11 +21,16 @@ public class CreateCharacterForm {
     @NotNull
     private int classId;
 
+    @NotNull
+    private List<AbilityScore> abilityScores = new ArrayList<AbilityScore>();
+
     private PlayerCharacter playerCharacter;
 
     private Iterable<Race> races;
 
     private Iterable<CharacterClass> classes;
+
+    private AbilityScoreType[] abilities = AbilityScoreType.values();
 
     public CreateCharacterForm() {
     }
@@ -72,4 +81,19 @@ public class CreateCharacterForm {
         return classes;
     }
 
+    public List<AbilityScore> getAbilityScores() {
+        return abilityScores;
+    }
+
+    public void setAbilityScores(List<AbilityScore> abilityScores) {
+        this.abilityScores = abilityScores;
+    }
+
+    public AbilityScoreType[] getAbilities() {
+        return abilities;
+    }
+
+    public void setAbilities(AbilityScoreType[] abilities) {
+        this.abilities = abilities;
+    }
 }

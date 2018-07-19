@@ -1,43 +1,91 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+<body class="bg-light">
 
     <nav th:replace="fragments :: navigation"></nav>
 
-    <h1 th:text="${title}">Default Title</h1>
-
-    <form method="post" style="max-width:600px;" th:object="${form}">
-        <div class="form-group">
-            <label th:for="playerCharacter.name">Name</label>
-            <input class="form-control" th:field="*{playerCharacter.name}" />
-            <span th:errors="*{characterId}" class="error"></span>
-            <input type="hidden" name="characterId" th:value="*{playerCharacter.id}" />
-        </div>
-        <div class="form-group">
-            <label th:for="raceId">Race</label>
-            <select name="raceId" class="form-control">
-                <option th:each="race : ${form.races}"
-                        th:value="${race.id}"
-                        th:text="${race.name}"></option>
-            </select>
-            <span th:errors="*{raceId}" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label th:for="classId">Class</label>
-            <select name="classId" class="form-control">
-                <option th:each="class : ${form.classes}"
-                        th:value="${class.id}"
-                        th:text="${class.name}"></option>
-            </select>
-            <span th:errors="*{classId}" class="error"></span>
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2 th:text="${title}">Default Title</h2>
         </div>
 
-        <input type="submit" class="btn btn-primary" value="Create Character" />
-    </form>
+        <form class="needs-validation" method="post" style="max-width:600px;" th:object="${form}" novalidate>
+            <div class="row">
+                <div class="col-md-12 order-md-2 mb-4">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <span class="h-4 mb-3">Attributes</span>
+                            <span class="badge badge-secondary badge-pill">3</span>
+                        </div>
+                    </h4>
+                    <ul class="list-group mb-3 flex-row text-center">
+                        <li th:each="ability : ${form.abilities}" class="text-muted list-group-item d-flex justify-content-between lh-condensed">
+                            <div>
+                                <label th:text="${ability.name}" class="h-6 my-0">Strength</label>
+                                <h3 th:text="${ability}" class="font-weight-bold text-dark">-1</span></h3>
+                                <span class="badge badge-secondary badge-pill badge-outlined">8</span>
+                            </div>
+                            <span th:errors="*{classId}" class="error"></span>
+                        </li>
+                    </ul>
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Create Character</button>
+                </div>
+
+                <div class="col-md-8 order-md-1">
+                    <h4 class="mb-3">Background</h4>
+                    <div class="row">
+                        <div class="col-md-7 mb-3">
+                            <label th:for="playerCharacter.name">Name</label>
+                            <input type="text" class="form-control" th:field="*{playerCharacter.name}" id="characterId" placeholder="" value="" required />
+                            <div th:errors="*{characterId}" class="invalid-feedback">
+                                Valid name is required.
+                            </div>
+                            <input type="hidden" name="characterId" th:value="*{playerCharacter.id}" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label th:for="raceId">Race</label>
+                            <select class="custom-select d-block w-100" name="raceId" id="raceId" required>
+                                <option th:each="race : ${form.races}"
+                                        th:value="${race.id}"
+                                        th:text="${race.name}"></option>
+                            </select>
+                            <div th:errors="*{raceId}" class="invalid-feedback">
+                                Please select a valid race.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label th:for="classId">Class</label>
+                            <select class="custom-select d-block w-100" name="classId" id="classId" required>
+                                <option th:each="class : ${form.classes}"
+                                        th:value="${class.id}"
+                                        th:text="${class.name}"></option>
+                            </select>
+                            <div th:errors="*{classId}" class="invalid-feedback">
+                                Please select a valid class.
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+
+                </div>
+            </div>
+        </form>
 
 
+        <footer class="my-5 pt-5 text-muted text-center text-small">
 
+        </footer>
+
+    </div>
 
 
     <section th:replace="fragments :: scripts"></section>
