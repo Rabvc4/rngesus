@@ -32,6 +32,8 @@ public class PlayerCharacter {
     @ManyToMany
     private List<CharacterClass> classes = new ArrayList<CharacterClass>();
 
+//    TODO - Make ability scores into their own class to clear up PlayerCharacter
+
     @Embedded
     @Target(Strength.class)
     private AbilityScore strength;
@@ -58,10 +60,10 @@ public class PlayerCharacter {
 
     public PlayerCharacter() { }
 
-    public PlayerCharacter(String name, User user, Race race) {
+    public PlayerCharacter(@NotNull @Size(min = 2, max = 50) String name, User user, Race race) {
         this.name = name;
-        this.race = race;
         this.user = user;
+        this.race = race;
     }
 
     public int getId() {
