@@ -5,6 +5,7 @@ import com.example.rngesus.models.CharacterClass;
 import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.Race;
 import com.example.rngesus.models.enumerations.AbilityScoreType;
+import com.example.rngesus.models.stats.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -22,7 +23,22 @@ public class CreateCharacterForm {
     private int classId;
 
     @NotNull
-    private List<AbilityScore> abilityScores = new ArrayList<AbilityScore>();
+    private int strength;
+
+    @NotNull
+    private int dexterity;
+
+    @NotNull
+    private int constitution;
+
+    @NotNull
+    private int wisdom;
+
+    @NotNull
+    private int intelligence;
+
+    @NotNull
+    private int charisma;
 
     private PlayerCharacter playerCharacter;
 
@@ -81,19 +97,59 @@ public class CreateCharacterForm {
         return classes;
     }
 
-    public List<AbilityScore> getAbilityScores() {
-        return abilityScores;
-    }
-
-    public void setAbilityScores(List<AbilityScore> abilityScores) {
-        this.abilityScores = abilityScores;
-    }
-
     public AbilityScoreType[] getAbilities() {
         return abilities;
     }
 
     public void setAbilities(AbilityScoreType[] abilities) {
         this.abilities = abilities;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public int getConstitution() {
+        return constitution;
+    }
+
+    public void setConstitution(int constitution) {
+        this.constitution = constitution;
+    }
+
+    public int getWisdom() {
+        return wisdom;
+    }
+
+    public void setWisdom(int wisdom) {
+        this.wisdom = wisdom;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public void setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    public int getCharisma() {
+        return charisma;
+    }
+
+    public void setCharisma(int charisma) {
+        this.charisma = charisma;
     }
 }

@@ -9,10 +9,12 @@ import com.example.rngesus.models.data.RaceDao;
 import com.example.rngesus.models.Race;
 import com.example.rngesus.models.data.UserDao;
 import com.example.rngesus.models.forms.CreateCharacterForm;
+import com.example.rngesus.models.stats.Strength;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -62,7 +64,7 @@ public class CharacterController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String addClass(Model model) {
 
-        model.addAttribute("title", "Create Character");
+        model.addAttribute("title", "Character Creator");
         PlayerCharacter playerCharacter = new PlayerCharacter();
         CreateCharacterForm form = new CreateCharacterForm(playerCharacter, raceDao.findAll(), classDao.findAll());
         model.addAttribute("form", form);
@@ -74,10 +76,29 @@ public class CharacterController {
     public String processCreateCharacterForm(@CookieValue("user") String username, @ModelAttribute  @Valid CreateCharacterForm form, Errors errors, Model model) {
 
         if (errors.hasErrors()) {
+            int i = 0;
+            System.out.println("----------------- Had errors -----------------\n");
+
+            for (ObjectError error : errors.getAllErrors()) {
+                i++;
+                System.out.println("Error " + i + ":-----------------\n" + error.toString() + "\nError " + i + ":-----------------\n");
+            }
+
             model.addAttribute("title", "Character Creator");
             model.addAttribute("form", form);
             return "character/create";
         }
+
+//        Test stuff
+
+        System.out.println("Made it past errors");
+
+        Strength strength = new Strength(form.getStrength());
+
+        System.out.println("Strength: " + strength.getValue());
+        System.out.println("Strength Mod: " + strength.getModifier());
+
+//        End Test stuff
 
         User user = userDao.findByUsername(username).get(0);
 

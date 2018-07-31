@@ -16,6 +16,8 @@
             <div th:if="${character.classes} and ${character.classes.size()}" class="characterClass">
                 <div class="list-group" th:each="class : ${character.classes}" th:text="'Class: ' + ${class.name}"></div>
             </div>
+            <div th:if="${character.strength}" class="characterClass">
+                <div class="list-group" th:text="'Strength: ' + ${character.strength}"></div>
         </li>
     </ul>
 
