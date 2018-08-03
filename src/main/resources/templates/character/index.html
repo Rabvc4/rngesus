@@ -16,8 +16,17 @@
             <div th:if="${character.classes} and ${character.classes.size()}" class="characterClass">
                 <div class="list-group" th:each="class : ${character.classes}" th:text="'Class: ' + ${class.name}"></div>
             </div>
-            <div th:if="${character.strength}" class="characterClass">
-                <div class="list-group" th:text="'Strength: ' + ${character.strength}"></div>
+            <div th:if="${character.abilityScores}" class="characterClass">
+                <div class="list-group" th:text="'Strength: ' + ${character.strength.value}"></div>
+                <div class="list-group" th:text="'Dexterity: ' + ${character.dexterity.value}"></div>
+                <div class="list-group" th:text="'Constitution: ' + ${character.constitution.value}"></div>
+                <div class="list-group" th:text="'Wisdom: ' + ${character.wisdom.value}"></div>
+                <div class="list-group" th:text="'Intelligence: ' + ${character.intelligence.value}"></div>
+                <div class="list-group" th:text="'Charisma: ' + ${character.charisma.value}"></div>
+            </div>
+            <div th:if="${character.abilityScores}" class="characterClass">
+                <div class="list-group" th:text="${character.abilityScores}" ></div>
+            </div>
         </li>
     </ul>
 

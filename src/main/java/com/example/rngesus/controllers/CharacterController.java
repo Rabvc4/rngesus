@@ -1,15 +1,12 @@
 package com.example.rngesus.controllers;
 
-import com.example.rngesus.models.User;
+import com.example.rngesus.models.*;
 import com.example.rngesus.models.data.ClassDao;
-import com.example.rngesus.models.CharacterClass;
-import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.RaceDao;
-import com.example.rngesus.models.Race;
 import com.example.rngesus.models.data.UserDao;
 import com.example.rngesus.models.forms.CreateCharacterForm;
-import com.example.rngesus.models.stats.Strength;
+import com.example.rngesus.models.stats.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -93,7 +90,12 @@ public class CharacterController {
 
         System.out.println("Made it past errors");
 
-        Strength strength = new Strength(form.getStrength());
+        Strength strength = new Strength(8);
+        Dexterity dexterity = new Dexterity(8);
+        Constitution constitution = new Constitution(8);
+        Wisdom wisdom = new Wisdom(8);
+        Intelligence intelligence = new Intelligence(8);
+        Charisma charisma = new Charisma(8);
 
         System.out.println("Strength: " + strength.getValue());
         System.out.println("Strength Mod: " + strength.getModifier());
@@ -106,9 +108,17 @@ public class CharacterController {
         Race race = raceDao.findById(form.getRaceId()).orElse(null);
         CharacterClass aClass = classDao.findById(form.getClassId()).orElse(null);
 
+        AbilityScores abilityScores = new AbilityScores(strength, dexterity, constitution, wisdom, intelligence, charisma);
+
         newPlayerCharacter.setUser(user);
         newPlayerCharacter.setRace(race);
         newPlayerCharacter.addClass(aClass);
+        newPlayerCharacter.setAbilityScores(abilityScores);
+
+
+
+        System.out.println("Character Strength: " + newPlayerCharacter.getStrength());
+
         characterDao.save(newPlayerCharacter);
 
         return "redirect:";

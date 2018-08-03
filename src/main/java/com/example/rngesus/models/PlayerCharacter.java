@@ -35,28 +35,7 @@ public class PlayerCharacter {
 //    TODO - Make ability scores into their own class to clear up PlayerCharacter
 
     @Embedded
-    @Target(Strength.class)
-    private AbilityScore strength;
-
-    @Embedded
-    @Target(Dexterity.class)
-    private AbilityScore dexterity;
-
-    @Embedded
-    @Target(Constitution.class)
-    private AbilityScore constitution;
-
-    @Embedded
-    @Target(Intelligence.class)
-    private AbilityScore intelligence;
-
-    @Embedded
-    @Target(Wisdom.class)
-    private AbilityScore wisdom;
-
-    @Embedded
-    @Target(Charisma.class)
-    private AbilityScore charisma;
+    private AbilityScores abilityScores;
 
     public PlayerCharacter() { }
 
@@ -102,51 +81,83 @@ public class PlayerCharacter {
         this.user = user;
     }
 
-    public AbilityScore getStrength() {
-        return strength;
+    public AbilityScores getAbilityScores() {
+        return abilityScores;
     }
 
-    public void setStrength(AbilityScore strength) {
-        this.strength = strength;
+    public void setAbilityScores(AbilityScores abilityScores) {
+        this.abilityScores = abilityScores;
     }
 
-    public AbilityScore getDexterity() {
-        return dexterity;
+    public Strength getStrength() {
+        return this.abilityScores.getStrength();
     }
 
-    public void setDexterity(AbilityScore dexterity) {
-        this.dexterity = dexterity;
+    public void setStrength(Integer integer) {
+        this.abilityScores.setStrength(integer);
     }
 
-    public AbilityScore getConstitution() {
-        return constitution;
+    public void setStrength(Strength strength) {
+        this.abilityScores.setStrength(strength);
     }
 
-    public void setConstitution(AbilityScore constitution) {
-        this.constitution = constitution;
+    public Dexterity getDexterity() {
+        return this.abilityScores.getDexterity();
     }
 
-    public AbilityScore getIntelligence() {
-        return intelligence;
+    public void setDexterity(Integer integer) {
+        this.abilityScores.setDexterity(integer);
     }
 
-    public void setIntelligence(AbilityScore intelligence) {
-        this.intelligence = intelligence;
+    public void setDexterity(Dexterity dexterity) {
+        this.abilityScores.setDexterity(dexterity);
     }
 
-    public AbilityScore getWisdom() {
-        return wisdom;
+    public Constitution getConstitution() {
+        return this.abilityScores.getConstitution();
     }
 
-    public void setWisdom(AbilityScore wisdom) {
-        this.wisdom = wisdom;
+    public void setConstitution(Integer integer) {
+        this.abilityScores.setConstitution(integer);
     }
 
-    public AbilityScore getCharisma() {
-        return charisma;
+    public void setConstitution(Constitution constitution) {
+        this.abilityScores.setConstitution(constitution);
     }
 
-    public void setCharisma(AbilityScore charisma) {
-        this.charisma = charisma;
+    public Wisdom getWisdom() {
+        return this.abilityScores.getWisdom();
+    }
+
+    public void setWisdom(Integer integer) {
+        this.abilityScores.setWisdom(integer);
+    }
+
+    public void setWisdom(Wisdom wisdom) {
+        this.abilityScores.setWisdom(wisdom);
+    }
+
+    public Intelligence getIntelligence() {
+        return this.abilityScores.getIntelligence();
+    }
+
+    public void setIntelligence(Integer integer) {
+        this.abilityScores.setIntelligence(integer);
+    }
+
+    public void setIntelligence(Intelligence intelligence) {
+        this.abilityScores.setIntelligence(intelligence);
+    }
+
+    public Charisma getCharisma() {
+        return this.abilityScores.getCharisma();
+    }
+
+    public void setCharisma(Integer integer) {
+        this.abilityScores.setCharisma(integer);
+    }
+
+    public void setCharisma(Charisma charisma) {
+        this.abilityScores.setCharisma(charisma);
     }
 }

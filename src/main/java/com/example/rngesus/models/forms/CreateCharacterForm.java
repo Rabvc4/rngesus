@@ -1,15 +1,11 @@
 package com.example.rngesus.models.forms;
 
-import com.example.rngesus.models.AbilityScore;
 import com.example.rngesus.models.CharacterClass;
 import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.Race;
 import com.example.rngesus.models.enumerations.AbilityScoreType;
-import com.example.rngesus.models.stats.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CreateCharacterForm {
 
