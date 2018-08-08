@@ -17,8 +17,11 @@ import javax.validation.Valid;
 @RequestMapping("race")
 public class RaceController {
 
+
     @Autowired
     RaceDao raceDao;
+
+
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model, @RequestParam(defaultValue = "0") int id) {
@@ -27,23 +30,5 @@ public class RaceController {
         return "race/index";
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create(Model model) {
-        model.addAttribute(new Race());
-        model.addAttribute("title", "Create Race");
-        return "race/create";
-    }
-
-    @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String create(Model model, @ModelAttribute @Valid Race race, Errors errors) {
-
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Create Race");
-            return "race/create";
-        }
-
-        raceDao.save(race);
-        return "redirect:";
-    }
 
 }

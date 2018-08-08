@@ -18,8 +18,11 @@ import javax.validation.Valid;
 @RequestMapping("class")
 public class ClassController {
 
+
     @Autowired
     ClassDao classDao;
+
+
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model, @RequestParam(defaultValue = "0") int id) {
@@ -28,24 +31,4 @@ public class ClassController {
         return "class/index";
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create(Model model) {
-        model.addAttribute(new CharacterClass());
-        model.addAttribute("title", "Create Class");
-        model.addAttribute("hitDiceTypes", HitDiceType.values());
-        return "class/create";
-    }
-
-    @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String create(Model model, @ModelAttribute @Valid CharacterClass characterClass, Errors errors) {
-
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Create Class");
-            model.addAttribute("hitDiceTypes", HitDiceType.values());
-            return "class/create";
-        }
-
-        classDao.save(characterClass);
-        return "redirect:";
-    }
 }

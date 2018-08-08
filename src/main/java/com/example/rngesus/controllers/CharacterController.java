@@ -24,6 +24,7 @@ import java.util.List;
 @RequestMapping("character")
 public class CharacterController {
 
+
     @Autowired
     CharacterDao characterDao;
 
@@ -54,74 +55,6 @@ public class CharacterController {
         model.addAttribute("message", "You'll need to login to view characters");
 
         return "redirect:/user/login";
-    }
-
-
-
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String addClass(Model model) {
-
-        model.addAttribute("title", "Character Creator");
-        PlayerCharacter playerCharacter = new PlayerCharacter();
-        CreateCharacterForm form = new CreateCharacterForm(playerCharacter, raceDao.findAll(), classDao.findAll());
-        model.addAttribute("form", form);
-
-        return "character/create";
-    }
-
-    @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String processCreateCharacterForm(@CookieValue("user") String username, @ModelAttribute  @Valid CreateCharacterForm form, Errors errors, Model model) {
-
-        if (errors.hasErrors()) {
-            int i = 0;
-            System.out.println("----------------- Had errors -----------------\n");
-
-            for (ObjectError error : errors.getAllErrors()) {
-                i++;
-                System.out.println("Error " + i + ":-----------------\n" + error.toString() + "\nError " + i + ":-----------------\n");
-            }
-
-            model.addAttribute("title", "Character Creator");
-            model.addAttribute("form", form);
-            return "character/create";
-        }
-
-//        Test stuff
-
-        System.out.println("Made it past errors");
-
-        Strength strength = new Strength(8);
-        Dexterity dexterity = new Dexterity(8);
-        Constitution constitution = new Constitution(8);
-        Wisdom wisdom = new Wisdom(8);
-        Intelligence intelligence = new Intelligence(8);
-        Charisma charisma = new Charisma(8);
-
-        System.out.println("Strength: " + strength.getValue());
-        System.out.println("Strength Mod: " + strength.getModifier());
-
-//        End Test stuff
-
-        User user = userDao.findByUsername(username).get(0);
-
-        PlayerCharacter newPlayerCharacter = form.getPlayerCharacter();
-        Race race = raceDao.findById(form.getRaceId()).orElse(null);
-        CharacterClass aClass = classDao.findById(form.getClassId()).orElse(null);
-
-        AbilityScores abilityScores = new AbilityScores(strength, dexterity, constitution, wisdom, intelligence, charisma);
-
-        newPlayerCharacter.setUser(user);
-        newPlayerCharacter.setRace(race);
-        newPlayerCharacter.addClass(aClass);
-        newPlayerCharacter.setAbilityScores(abilityScores);
-
-
-
-        System.out.println("Character Strength: " + newPlayerCharacter.getStrength());
-
-        characterDao.save(newPlayerCharacter);
-
-        return "redirect:";
     }
 
 
