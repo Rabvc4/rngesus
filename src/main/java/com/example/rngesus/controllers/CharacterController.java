@@ -42,9 +42,7 @@ public class CharacterController {
     @RequestMapping(value = "")
     public String index(Model model, @CookieValue("user") String username) {
 
-
         if(username != null) {
-
             User user = userDao.findByUsername(username).get(0);
             model.addAttribute("characters", characterDao.findByUserId(user.getId()));
             model.addAttribute("title", "My Characters");
