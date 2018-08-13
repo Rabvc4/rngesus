@@ -78,18 +78,18 @@ public class UserController {
 
 
     @RequestMapping(value = "login")
-    public String login(Model model) {
+    public String newLogin(Model model, HttpServletRequest request) {
         model.addAttribute("title", "Login");
         model.addAttribute(new User());
+        model.addAttribute("message", request.getAttribute("message"));
+
         return "user/login";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(Model model, @ModelAttribute User user, HttpServletResponse response) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public String processLogin(Model model, @ModelAttribute User user, HttpServletResponse response) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-        List<User> u = userDao.findByEmail(user.getEmail());
-        User registeredUser = u.get(0);
-        String username = registeredUser.getUsername();
+        User registeredUser = userDao.findByEmail(user.getEmail()).get(0);
 
         if (validPassword(user.getPassword(), registeredUser.getPassword())) {
             Cookie c = new Cookie("user", registeredUser.getUsername());

@@ -50,8 +50,6 @@ public class CharacterController {
             return "character/index";
         }
 
-        model.addAttribute("message", "You'll need to login to view characters");
-
         return "redirect:/user/login";
     }
 
