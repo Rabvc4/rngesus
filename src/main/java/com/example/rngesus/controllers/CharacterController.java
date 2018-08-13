@@ -1,23 +1,21 @@
 package com.example.rngesus.controllers;
 
-import com.example.rngesus.models.*;
-import com.example.rngesus.models.data.ClassDao;
+import com.example.rngesus.models.CharacterClass;
+import com.example.rngesus.models.PlayerCharacter;
+import com.example.rngesus.models.Race;
+import com.example.rngesus.models.User;
 import com.example.rngesus.models.data.CharacterDao;
+import com.example.rngesus.models.data.ClassDao;
 import com.example.rngesus.models.data.RaceDao;
 import com.example.rngesus.models.data.UserDao;
-import com.example.rngesus.models.forms.CreateCharacterForm;
-import com.example.rngesus.models.stats.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller

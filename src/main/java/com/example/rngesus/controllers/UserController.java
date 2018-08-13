@@ -19,7 +19,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 
-
 import static com.example.rngesus.controllers.Encryption.encryptedPassword;
 import static com.example.rngesus.controllers.Encryption.validPassword;
 
