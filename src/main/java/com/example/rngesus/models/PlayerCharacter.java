@@ -39,10 +39,11 @@ public class PlayerCharacter {
 
     public PlayerCharacter() { }
 
-    public PlayerCharacter(@NotNull @Size(min = 2, max = 50) String name, User user, Race race) {
+    public PlayerCharacter(@NotNull @Size(min = 2, max = 50) String name, User user, Race race, AbilityScores abilityScores) {
         this.name = name;
         this.user = user;
         this.race = race;
+        this.abilityScores = abilityScores;
     }
 
     public int getId() {

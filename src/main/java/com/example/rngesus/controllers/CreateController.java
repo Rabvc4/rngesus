@@ -73,41 +73,18 @@ public class CreateController {
 
             model.addAttribute("title", "Character Creator");
             model.addAttribute("form", form);
+
             return "create/character";
         }
 
-//        Test stuff
-
-        System.out.println("Made it past errors");
-
-        Strength strength = new Strength(8);
-        Dexterity dexterity = new Dexterity(8);
-        Constitution constitution = new Constitution(8);
-        Wisdom wisdom = new Wisdom(8);
-        Intelligence intelligence = new Intelligence(8);
-        Charisma charisma = new Charisma(8);
-
-        System.out.println("Strength: " + strength.getValue());
-        System.out.println("Strength Mod: " + strength.getModifier());
-
-//        End Test stuff
-
-        User user = userDao.findByUsername(username).get(0);
-
         PlayerCharacter newPlayerCharacter = form.getPlayerCharacter();
+        User user = userDao.findByUsername(username).get(0);
         Race race = raceDao.findById(form.getRaceId()).orElse(null);
         CharacterClass aClass = classDao.findById(form.getClassId()).orElse(null);
-
-        AbilityScores abilityScores = new AbilityScores(strength, dexterity, constitution, wisdom, intelligence, charisma);
 
         newPlayerCharacter.setUser(user);
         newPlayerCharacter.setRace(race);
         newPlayerCharacter.addClass(aClass);
-        newPlayerCharacter.setAbilityScores(abilityScores);
-
-
-
-        System.out.println("Character Strength: " + newPlayerCharacter.getStrength());
 
         characterDao.save(newPlayerCharacter);
 
@@ -121,6 +98,7 @@ public class CreateController {
         model.addAttribute(new CharacterClass());
         model.addAttribute("title", "Create Class");
         model.addAttribute("hitDiceTypes", HitDiceType.values());
+
         return "create/class";
     }
 
@@ -130,10 +108,12 @@ public class CreateController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Create Class");
             model.addAttribute("hitDiceTypes", HitDiceType.values());
+
             return "create/class";
         }
 
         classDao.save(characterClass);
+
         return "redirect:/class";
     }
 
@@ -152,6 +132,7 @@ public class CreateController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Create Race");
+
             return "create/race";
         }
 

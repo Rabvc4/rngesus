@@ -18,9 +18,7 @@
                         <div class="col-md-7 mb-3">
                             <label th:for="playerCharacter.name">Name</label>
                             <input type="text" class="form-control" th:field="*{playerCharacter.name}" id="characterId" placeholder="" value="" required />
-                            <div th:errors="*{characterId}" class="invalid-feedback">
-                                Valid name is required.
-                            </div>
+                            <span th:errors="*{playerCharacter.name}" class="error"></span>
                             <input type="hidden" name="characterId" th:value="*{playerCharacter.id}" />
                         </div>
                     </div>
@@ -33,9 +31,7 @@
                                         th:value="${race.id}"
                                         th:text="${race.name}"></option>
                             </select>
-                            <div th:errors="*{raceId}" class="invalid-feedback">
-                                Please select a valid race.
-                            </div>
+                            <span th:errors="*{raceId}" class="error"></span>
                         </div>
                     </div>
 
@@ -47,9 +43,7 @@
                                         th:value="${class.id}"
                                         th:text="${class.name}"></option>
                             </select>
-                            <div th:errors="*{classId}" class="invalid-feedback">
-                                Please select a valid class.
-                            </div>
+                            <span th:errors="*{classId}" class="error"></span>
                         </div>
                     </div>
                     <hr class="mb-4">
@@ -68,11 +62,18 @@
                         <li th:each="ability : ${form.abilities}" class="text-muted list-group-item d-flex justify-content-between lh-condensed">
                             <div>
                                 <label th:for="${#strings.toLowerCase(ability.name)}" th:text="${ability.name}" class="h-6 my-0">Strength</label>
+                                <!-- TODO - Delete Comments-->
+
                                 <h3 th:text="${ability}" class="font-weight-bold text-dark">-1</span></h3>
-                                <input type="number" th:field="*{__${#strings.toLowerCase(ability.name)}__}" th:id="${#strings.toLowerCase(ability.name)}" class="badge badge-secondary badge-pill badge-outlined" readonly>8</input>
-                                <div th:errors="*{__${#strings.toLowerCase(ability.name)}__}" class="invalid-feedback">
-                                    Valid attribute required
-                                </div>
+                                <!--<input type="number" th:field="*{playerCharacter.abilityScores.__${#strings.toLowerCase(ability.name)}__}" th:id="${#strings.toLowerCase(ability.name)}" class="badge badge-secondary badge-pill badge-outlined">8</input>-->
+
+                                <input type="number" th:field="*{playerCharacter.abilityScores.__${#strings.toLowerCase(ability.name)}__.value}" th:id="${#strings.toLowerCase(ability.name)}" />
+
+
+                                <!-- TODO - Delete Comments-->
+
+                                <span th:errors="*{__${#strings.toLowerCase(ability.name)}__}" class="error"></span>
+
                             </div>
                         </li>
                     </ul>

@@ -5,6 +5,7 @@ import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.Race;
 import com.example.rngesus.models.enumerations.AbilityScoreType;
 
+import javax.persistence.Embedded;
 import javax.validation.constraints.NotNull;
 
 public class CreateCharacterForm {
@@ -36,6 +37,7 @@ public class CreateCharacterForm {
     @NotNull
     private int charisma;
 
+    @Embedded
     private PlayerCharacter playerCharacter;
 
     private Iterable<Race> races;
