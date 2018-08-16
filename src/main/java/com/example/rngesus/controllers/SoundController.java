@@ -4,7 +4,6 @@ import javax.sound.sampled.*;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 public class SoundController extends JFrame {
 
@@ -13,25 +12,22 @@ public class SoundController extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Test Sound Clip");
         this.setSize(300, 200);
-        this.setVisible(true);
+        this.setVisible(false);
 
         try {
-            // Open an audio input stream.
-
-
-
             ClassLoader classLoader = getClass().getClassLoader();
             File file = new File(classLoader.getResource("static/audio/till-with-bell.wav").getFile());
 
-//            String audioURL = "*/static/audio/till-with-bell.wav";
-//
-//            URL url = new URL(audioURL);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+            AudioFormat format = audioInputStream.getFormat();
+            long frames = audioInputStream.getFrameLength();
+            double durationInSeconds = (frames+0.0) / format.getFrameRate();
 
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
-            // Get a sound clip resource.
+            System.out.println("Duration in seconds:" + durationInSeconds);
+
             Clip clip = AudioSystem.getClip();
-            // Open audio clip and load samples from the audio input stream.
-            clip.open(audioIn);
+
+            clip.open(audioInputStream);
             clip.start();
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
