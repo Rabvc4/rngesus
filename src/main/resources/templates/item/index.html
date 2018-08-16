@@ -8,7 +8,7 @@
 
     <ul>
         <li th:each="item : ${items}">
-            <a th:href="@{/item/${field})}" th:text="${item.name}"></a>
+            <a th:href="@{'/item/' + ${item.name}}" th:text="${item.name}"></a>
         </li>
     </ul>
 
