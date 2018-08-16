@@ -77,7 +77,15 @@ public class CharacterController {
     @RequestMapping(value = "inventory", method = RequestMethod.GET)
     public String characterInventory(Model model, @RequestParam int id, @CookieValue("user") String username) {
 
+//            TODO - Delete test code
+        System.out.println("Inventory ran!");
+//            TODO - Delete test code
+
         if(username != null) {
+
+//            TODO - Delete test code
+            System.out.println("Username not null");
+//            TODO - Delete test code
 
             User user = userDao.findByUsername(username).get(0);
 
@@ -91,7 +99,7 @@ public class CharacterController {
 
             }
             model.addAttribute("title", "404 Not Found");
-            model.addAttribute("content", "You can't edit an inventory that doesn't exist.");
+            model.addAttribute("message", "You can't edit an inventory that doesn't exist.");
 
             return "error";
 

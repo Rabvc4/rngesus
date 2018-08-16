@@ -6,7 +6,6 @@ import com.example.rngesus.models.enumerations.HitDiceType;
 import com.example.rngesus.models.enumerations.ItemType;
 import com.example.rngesus.models.enumerations.RarityType;
 import com.example.rngesus.models.forms.CreateCharacterForm;
-import com.example.rngesus.models.stats.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -146,11 +145,12 @@ public class CreateController {
 
     @RequestMapping(value = "item", method = RequestMethod.GET)
     public String createItem(Model model) {
-        model.addAttribute(new CharacterClass());
-        model.addAttribute("title", "Create Class");
-        model.addAttribute("hitDiceTypes", HitDiceType.values());
+        model.addAttribute(new Item());
+        model.addAttribute("title", "Create Item");
+        model.addAttribute("itemTypes", ItemType.values());
+        model.addAttribute("rarityTypes", RarityType.values());
 
-        return "create/class";
+        return "create/item";
     }
 
     @RequestMapping(value = "item", method = RequestMethod.POST)
@@ -161,7 +161,7 @@ public class CreateController {
             model.addAttribute("itemTypes", ItemType.values());
             model.addAttribute("rarityTypes", RarityType.values());
 
-            return "create/class";
+            return "create/item";
         }
 
         itemDao.save(item);
