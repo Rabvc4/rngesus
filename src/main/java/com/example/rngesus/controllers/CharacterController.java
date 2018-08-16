@@ -1,20 +1,11 @@
 package com.example.rngesus.controllers;
 
-import com.example.rngesus.models.CharacterClass;
-import com.example.rngesus.models.PlayerCharacter;
-import com.example.rngesus.models.Race;
-import com.example.rngesus.models.User;
-import com.example.rngesus.models.data.CharacterDao;
-import com.example.rngesus.models.data.ClassDao;
-import com.example.rngesus.models.data.RaceDao;
-import com.example.rngesus.models.data.UserDao;
+import com.example.rngesus.models.*;
+import com.example.rngesus.models.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +25,10 @@ public class CharacterController {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    InventoryDao inventoryDao;
+
 
 
 
@@ -60,7 +55,8 @@ public class CharacterController {
         List<PlayerCharacter> playerCharacters = race.getPlayerCharacters();
         model.addAttribute("characters", playerCharacters);
         model.addAttribute("title", race.getName() + " Characters");
-        return "character/index";
+
+        return "race/index";
     }
 
 
@@ -72,7 +68,37 @@ public class CharacterController {
         List<PlayerCharacter> playerCharacters = aClass.getPlayerCharacters();
         model.addAttribute("characters", playerCharacters);
         model.addAttribute("title", aClass.getName() + " Characters");
+
         return "class/index";
     }
+
+
+
+    @RequestMapping(value = "inventory", method = RequestMethod.GET)
+    public String characterInventory(Model model, @RequestParam int id, @CookieValue("user") String username) {
+
+        if(username != null) {
+
+            User user = userDao.findByUsername(username).get(0);
+
+            if (id == user.getId()) {
+                Inventory inventory = inventoryDao.findById(id).orElse(null);
+                List<Item> items = inventory.getItems();
+                model.addAttribute("items", items);
+                model.addAttribute("title", inventory.getPlayerCharacter() + "'s Inventory");
+
+                return "inventory/details";
+
+            }
+            model.addAttribute("title", "404 Not Found");
+            model.addAttribute("content", "You can't edit an inventory that doesn't exist.");
+
+            return "error";
+
+        }
+
+        return "redirect:/user/login";
+    }
+
 
 }

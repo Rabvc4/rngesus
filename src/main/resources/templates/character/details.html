@@ -7,8 +7,7 @@
 
     <h1 th:text="${title}">Default Title</h1>
 
-    <ul th:if="${characters} and ${characters.size()}" class="list-group">
-        <li class="list-group-item" th:each="character : ${characters}">
+    <div th:if="${character}" class="list-group">
             <!--<a th:href="'/playerCharacter?id=' + ${playerCharacter.id}" th:text="${playerCharacter.name}"></a>-->
             <div class="font-weight-bold list-group" th:text="${character.name}"></div>
             <div th:if="${character.race}" class="list-group" th:text="'Race: ' + ${character.race.name}"></div>
@@ -27,13 +26,10 @@
             <div th:if="${character.abilityScores}" class="characterClass">
                 <div class="list-group" th:text="${character.abilityScores}" ></div>
             </div>
-        </li>
-    </ul>
+    </div>
 
-    <p>
-        <a href="/create/character">Create New Character</a>
-        <!--<a th:href="'/inventory?id=' + ${playerCharacter.id}" th:text="Edit Inventory"></a>-->
-    </p>
+    <p><a href="/inventory">Edit Inventory</a></p>
+    <p><a href="/character/delete">Delete Character</a></p>
 
 
 

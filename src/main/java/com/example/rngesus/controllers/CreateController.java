@@ -1,11 +1,10 @@
 package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.*;
-import com.example.rngesus.models.data.CharacterDao;
-import com.example.rngesus.models.data.ClassDao;
-import com.example.rngesus.models.data.RaceDao;
-import com.example.rngesus.models.data.UserDao;
+import com.example.rngesus.models.data.*;
 import com.example.rngesus.models.enumerations.HitDiceType;
+import com.example.rngesus.models.enumerations.ItemType;
+import com.example.rngesus.models.enumerations.RarityType;
 import com.example.rngesus.models.forms.CreateCharacterForm;
 import com.example.rngesus.models.stats.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +36,8 @@ public class CreateController {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    ItemDao itemDao;
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -139,6 +140,33 @@ public class CreateController {
         raceDao.save(race);
 
         return "redirect:/race";
+    }
+
+
+
+    @RequestMapping(value = "item", method = RequestMethod.GET)
+    public String createItem(Model model) {
+        model.addAttribute(new CharacterClass());
+        model.addAttribute("title", "Create Class");
+        model.addAttribute("hitDiceTypes", HitDiceType.values());
+
+        return "create/class";
+    }
+
+    @RequestMapping(value = "item", method = RequestMethod.POST)
+    public String processCreateItem(Model model, @ModelAttribute @Valid Item item, Errors errors) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Create Class");
+            model.addAttribute("itemTypes", ItemType.values());
+            model.addAttribute("rarityTypes", RarityType.values());
+
+            return "create/class";
+        }
+
+        itemDao.save(item);
+
+        return "redirect:/item";
     }
 
 }

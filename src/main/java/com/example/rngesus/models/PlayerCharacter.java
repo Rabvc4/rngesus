@@ -37,6 +37,9 @@ public class PlayerCharacter {
     @Embedded
     private AbilityScores abilityScores;
 
+    @OneToOne
+    private Inventory inventory;
+
     public PlayerCharacter() { }
 
     public PlayerCharacter(@NotNull @Size(min = 2, max = 50) String name, User user, Race race, AbilityScores abilityScores) {
@@ -161,4 +164,21 @@ public class PlayerCharacter {
     public void setCharisma(Charisma charisma) {
         this.abilityScores.setCharisma(charisma);
     }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
+    }
+
+    public void addItem(Item item) {
+        this.inventory.addItem(item);
+    }
+
+    public void removeItem(Item item) {
+        this.inventory.removeItem(item);
+    }
+
 }
