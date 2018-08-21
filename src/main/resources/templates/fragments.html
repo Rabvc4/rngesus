@@ -69,7 +69,13 @@
         <!-- Bootstrap core JavaScript
 ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+            window.jQuery || document.write('<script th:src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"><\/script>')
+        /*]]>*/
+        </script>
+
         <script th:href="@{/bootstrap/assets/js/vendor/popper.min.js}"></script>
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
         <script th:src="@{/bootstrap/assets/js/vendor/holder.min.js}"></script>
