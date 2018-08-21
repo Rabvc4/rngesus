@@ -9,8 +9,8 @@
 
     <ul th:if="${characters} and ${characters.size()}" class="list-group">
         <li class="list-group-item" th:each="character : ${characters}">
-            <a th:href="'/inventory?id=' + ${character.id}">Edit Inventory</a>
-            <!--<a th:href="'/playerCharacter?id=' + ${playerCharacter.id}" th:text="${playerCharacter.name}"></a>-->
+            <!--<a th:href="'/inventory?id=' + ${character.id}">Edit Inventory</a>-->
+            <a th:href="'/character/inventory/' + ${character.id}" >Edit Inventory</a>
             <div class="font-weight-bold list-group" th:text="${character.name}"></div>
             <div th:if="${character.race}" class="list-group" th:text="'Race: ' + ${character.race.name}"></div>
             <div th:if="${character.race}" class="list-group" th:text="'Size: ' + ${character.race.size}"></div>
@@ -32,7 +32,7 @@
     </ul>
 
     <p>
-        <a href="/create/character">Create New Character</a>
+        <a th:href="@{/create/character}">Create New Character</a>
     </p>
 
 

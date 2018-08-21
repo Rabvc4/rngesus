@@ -17,6 +17,8 @@ public class ItemController {
     @Autowired
     ItemDao itemDao;
 
+
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("title", "Items");
@@ -28,33 +30,19 @@ public class ItemController {
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public String viewAccount(Model model, @PathVariable String name) {
 
-
-//            TODO - Delete Test Code
-        System.out.println("Item path used");
-//            TODO - Delete Test Code
-
-        Item item = itemDao.findByName(name).get(0);
-        if (item != null) {
-
-//            TODO - Delete Test Code
-            System.out.println("Item not null");
-//            TODO - Delete Test Code
-
+        try {
+            Item item = itemDao.findByName(name).get(0);
             model.addAttribute("item", item);
             model.addAttribute("title", item.getName());
 
             return "item/details";
+
+        } catch (IndexOutOfBoundsException e) {
+            model.addAttribute("title", "Go Home, You're Drunk");
+            model.addAttribute("message", "What do you think this is, Google? Get it together and try again.");
+
+            return "error";
         }
-
-//            TODO - Delete Test Code
-        System.out.println("Item null");
-//            TODO - Delete Test Code
-
-        model.addAttribute("title", "Da Fuq?");
-        model.addAttribute("message", "What do you think this is, Google? Get your shit together and try again.");
-
-
-        return "error";
     }
 
 }

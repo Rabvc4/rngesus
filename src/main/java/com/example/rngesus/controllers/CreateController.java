@@ -38,6 +38,9 @@ public class CreateController {
     @Autowired
     ItemDao itemDao;
 
+    @Autowired
+    InventoryDao inventoryDao;
+
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String create(Model model) {
@@ -47,6 +50,7 @@ public class CreateController {
     }
 
 
+//    TODO - Add inventoryDAO to controller
 
     @RequestMapping(value = "character", method = RequestMethod.GET)
     public String createCharacter(Model model) {
@@ -59,18 +63,12 @@ public class CreateController {
         return "create/character";
     }
 
+//    TODO - Add inventoryDAO to controller
+
     @RequestMapping(value = "character", method = RequestMethod.POST)
     public String processCreateCharacterForm(@CookieValue("user") String username, @ModelAttribute @Valid CreateCharacterForm form, Errors errors, Model model) {
 
         if (errors.hasErrors()) {
-            int i = 0;
-            System.out.println("----------------- Had errors -----------------\n");
-
-            for (ObjectError error : errors.getAllErrors()) {
-                i++;
-                System.out.println("Error " + i + ":-----------------\n" + error.toString() + "\nError " + i + ":-----------------\n");
-            }
-
             model.addAttribute("title", "Character Creator");
             model.addAttribute("form", form);
 

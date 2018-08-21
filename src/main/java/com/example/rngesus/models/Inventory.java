@@ -4,53 +4,74 @@ import com.example.rngesus.models.enumerations.CurrencyType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @Entity
 public class Inventory {
 
-//  Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
-    private HashMap<CurrencyType, Integer> currency;
+    private HashMap<CurrencyType, Integer> currency = new HashMap<>();
 
-    @ManyToMany
-    private List<Item> items;
+//    @ManyToMany
+//    private List<Item> items = new ArrayList<>();
 
-    private Integer weight;
+    private Double weight;
 
-    @OneToOne(mappedBy = "inventory")
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private PlayerCharacter playerCharacter;
 
-//  Constructors
+
     public Inventory() {
     }
 
 
 
-//  Getters and setters
     public long getId() {
         return id;
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
+//    public HashMap<Item, Integer> getItems() {
+//        return items;
+//    }
 
-    public void addItem(Item item) {
-        this.items.add(item);
-        this.weight += item.getWeight();
-    }
+//    public void addItem(Item item) {
+//        this.items.put(item, items.getOrDefault(item, 1));
+////        this.weight += item.getWeight();
+//        this.weight = calculateWeight(items);
+//    }
+//
+//    public void addItem(Item item, Integer x) {
+//        this.items.put(item, items.getOrDefault(item, 0) + x);
+////        this.weight += item.getWeight();
+//        this.weight = calculateWeight(items);
+//    }
+//
+//    public void removeItem(Item item) {
+//        this.items.remove(item);
+////        this.weight -= item.getWeight();
+//        this.weight = calculateWeight(items);
+//    }
+//
+//    public void removeItem(Item item, Integer x) {
+//        this.items.put(item, items.getOrDefault(item, 0) + x);
+//        this.weight = calculateWeight(items);
+//    }
 
-    public void removeItem(Item item) {
-        this.items.remove(item);
-        this.weight -= item.getWeight();
-    }
+
+//    public List<Item> getItems() {
+//        return items;
+//    }
+//
+//    public void setItems(List<Item> items) {
+//        this.items = items;
+//    }
 
     public HashMap<CurrencyType, Integer> getCurrency() {
         return currency;
@@ -60,11 +81,11 @@ public class Inventory {
         this.currency = currency;
     }
 
-    public Integer getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
@@ -75,4 +96,35 @@ public class Inventory {
     public void setPlayerCharacter(PlayerCharacter playerCharacter) {
         this.playerCharacter = playerCharacter;
     }
+
+
+
+    public Double calculateWeight(HashMap<Item, Integer> mp) {
+        Double newWeight = 0.0;
+        Iterator it = mp.entrySet().iterator();
+        while (it.hasNext()) {
+
+
+            Map.Entry pair = (Map.Entry)it.next();
+            Item eachItem = (Item) pair.getKey();
+            Integer quantity = (Integer) pair.getValue();
+
+//        TODO - Delete Test Code
+            System.out.println("Item: " + eachItem.getName());
+            System.out.println("Item weight: " + eachItem.getWeight());
+            System.out.println("Quantity: " + quantity);
+            System.out.println("Bulk weight: " + eachItem.getWeight() * quantity);
+//        TODO - Delete Test Code
+
+            newWeight += eachItem.getWeight() * quantity;
+            it.remove();
+        }
+
+//        TODO - Delete Test Code
+        System.out.println("New Weight: " + newWeight);
+//        TODO - Delete Test Code
+
+        return newWeight;
+    }
+
 }

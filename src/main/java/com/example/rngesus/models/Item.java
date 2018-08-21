@@ -7,12 +7,12 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Item {
 
-//  Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -30,7 +30,6 @@ public class Item {
     private Integer depth;
 
     private long value;
-    private long quantity;
 
     @NotNull
     private ItemType type;
@@ -41,11 +40,11 @@ public class Item {
     @NotNull
     private String description;
 
-    @ManyToMany(mappedBy = "items", cascade = CascadeType.REMOVE)
-    private List<Inventory> inventories;
+//    @ManyToMany(mappedBy = "items")
+//    private List<Inventory> inventories;
 
 
-//  Constructors
+
     public Item() {
     }
 
@@ -56,7 +55,8 @@ public class Item {
         this.description = description;
     }
 
-    //  Getters and setters
+
+
     public long getId() {
         return id;
     }
@@ -109,14 +109,6 @@ public class Item {
         this.value = value;
     }
 
-    public long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(long quantity) {
-        this.quantity = quantity;
-    }
-
     public ItemType getType() {
         return type;
     }
@@ -140,4 +132,5 @@ public class Item {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

@@ -37,7 +37,7 @@ public class PlayerCharacter {
     @Embedded
     private AbilityScores abilityScores;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Inventory inventory;
 
     public PlayerCharacter() { }
@@ -173,12 +173,19 @@ public class PlayerCharacter {
         this.inventory = inventory;
     }
 
-    public void addItem(Item item) {
-        this.inventory.addItem(item);
-    }
+//    public void addItem(Item item) {
+//        this.inventory.addItem(item);
+//    }
+//
+//    public void addItem(Item item, Integer x) {
+//        this.inventory.addItem(item, x);
+//    }
+//
+//    public void removeItem(Item item) {
+//        this.inventory.removeItem(item);
+//    }
 
-    public void removeItem(Item item) {
-        this.inventory.removeItem(item);
-    }
+
+
 
 }

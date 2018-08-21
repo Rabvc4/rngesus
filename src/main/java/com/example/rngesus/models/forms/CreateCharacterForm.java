@@ -1,6 +1,7 @@
 package com.example.rngesus.models.forms;
 
 import com.example.rngesus.models.CharacterClass;
+import com.example.rngesus.models.Inventory;
 import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.Race;
 import com.example.rngesus.models.enumerations.AbilityScoreType;
@@ -49,7 +50,7 @@ public class CreateCharacterForm {
     public CreateCharacterForm() {
     }
 
-    public CreateCharacterForm(PlayerCharacter playerCharacter, Iterable<Race> races ,Iterable<CharacterClass> classes) {
+    public CreateCharacterForm(PlayerCharacter playerCharacter, Iterable<Race> races, Iterable<CharacterClass> classes) {
         this.playerCharacter = playerCharacter;
         this.races = races;
         this.classes = classes;

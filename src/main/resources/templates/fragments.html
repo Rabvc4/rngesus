@@ -7,10 +7,11 @@
 
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
-    <link rel="stylesheet" th:href="@{/css/home.css}" />
     <script type="text/javascript" th:src="@{/js/script.js}"></script>
 
-    <title th:text="${title}">RNGesus</title>
+    <link th:if="${#httpServletRequest.requestURI} == '/'" rel="stylesheet" th:href="@{/css/home.css}" />
+
+    <title th:if="${title}" th:text="${title}">RNGesus</title>
 
 </head>
 <body>
@@ -22,7 +23,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
 
-            <ul class="navbar-nav mr-auto">
+            <ul id="nav" class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/}">Home</a>
                 </li>
@@ -45,21 +46,18 @@
 
             <form class="form-inline mt-2 mt-md-0" action="https://roll20.net/compendium/dnd5e/searchbook/" method="GET" target="_blank">
 
-                <ul class="navbar-nav mr-auto float-right">
-
-                    <!--<div th:if="${user.username}">-->
-                        <!--<li class="nav-item">-->
-                            <!--<a class="nav-link" th:href="@{/user/account}" th:text="${username}"></a>-->
-                        <!--</li>-->
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/logout}">Logout</a>
-                        </li>
-                    <!--</div>-->
-                    <!--<div th:unless="${user.username}">-->
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/user/login}">Login</a>
-                        </li>
-                    <!--</div>-->
+                <ul th:if="${#httpServletRequest.cookies}" class="navbar-nav mr-auto float-right">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/logout}">Logout</a>
+                    </li>
+                </ul>
+                <ul th:unless="${#httpServletRequest.cookies}" class="navbar-nav mr-auto float-right">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/create}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/login}">Login</a>
+                    </li>
                 </ul>
                 <input class="form-control mr-sm-2" type="text" name="terms" placeholder="Search Roll20" aria-label="Search" />
                 <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
@@ -71,8 +69,8 @@
         <!-- Bootstrap core JavaScript
 ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script th:src="@{https://code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script th:src="@{/bootstrap/assets/js/vendor/popper.min.js}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script th:href="@{/bootstrap/assets/js/vendor/popper.min.js}"></script>
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
         <script th:src="@{/bootstrap/assets/js/vendor/holder.min.js}"></script>
     </section>
