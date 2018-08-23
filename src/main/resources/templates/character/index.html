@@ -7,26 +7,19 @@
 
     <h1 th:text="${title}">Default Title</h1>
 
-    <ul th:if="${characters} and ${characters.size()}" class="list-group">
+    <ul th:if="${characters} and ${characters.size()}" class="list-group col-md-6">
         <li class="list-group-item" th:each="character : ${characters}">
-            <!--<a th:href="'/inventory?id=' + ${character.id}">Edit Inventory</a>-->
-            <a th:href="'/character/inventory/' + ${character.id}" >Edit Inventory</a>
             <div class="font-weight-bold list-group" th:text="${character.name}"></div>
             <div th:if="${character.race}" class="list-group" th:text="'Race: ' + ${character.race.name}"></div>
             <div th:if="${character.race}" class="list-group" th:text="'Size: ' + ${character.race.size}"></div>
             <div th:if="${character.classes} and ${character.classes.size()}" class="characterClass">
-                <div class="list-group" th:each="class : ${character.classes}" th:text="'Class: ' + ${class.name}"></div>
+                <div class="list-group" th:each="class : ${character.classes}" th:text="'Class: ' + ${class.name}" />
             </div>
-            <div th:if="${character.abilityScores}" class="characterClass">
-                <div class="list-group" th:text="'Strength: ' + ${character.strength.value}"></div>
-                <div class="list-group" th:text="'Dexterity: ' + ${character.dexterity.value}"></div>
-                <div class="list-group" th:text="'Constitution: ' + ${character.constitution.value}"></div>
-                <div class="list-group" th:text="'Wisdom: ' + ${character.wisdom.value}"></div>
-                <div class="list-group" th:text="'Intelligence: ' + ${character.intelligence.value}"></div>
-                <div class="list-group" th:text="'Charisma: ' + ${character.charisma.value}"></div>
+            <div class="d-flex justify-content-between">
+                <a th:href="@{/character/equipment(id=${character.id})}" >Edit Inventory</a>
+                <a th:href="@{/character/equipment(id=${character.id})}" >Copy</a>
+                <a th:href="@{/character/equipment(id=${character.id})}" >Delete</a>
             </div>
-            <div th:if="${character.abilityScores}" class="characterClass">
-                <div class="list-group" th:text="${character.abilityScores}" ></div>
             </div>
         </li>
     </ul>
