@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body>
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <main role="main" class="container">
+        <h1 th:text="${title}">Default Title</h1>
+
+        <div class="container-fluid">
+            <div class="circle_container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <img class="transparent_square" src="http://i.stack.imgur.com/5Y4F4.jpg" width="2" height="2" />
+                <div class="central_text text-center">
+                    <!--<h3>Character image?</h3>-->
+                    <h3 th:text="${character.name}">Character Name</h3>
+                    <!--<h5 th:text="${character.race.name}">Race</h5>-->
+                    <div th:each="class : ${character.class}">
+                        <h5>class</h5>
+                        <!--<h5 th:text="${character.class.name}">Class</h5>-->
+                    </div>
+                </div>
+
+                <div class="moon_container moon1"><img class="moon moon1" src="http://letscode.ghost.io/content/images/2015/09/stackoverflow.png"></div>
+                <div class="moon_container moon2"><img class="moon moon2" src="http://letscode.ghost.io/content/images/2015/09/stackoverflow.png"></div>
+                <div class="moon_container moon3"><img class="moon moon3" src="http://letscode.ghost.io/content/images/2015/09/stackoverflow.png"></div>
+                <div class="moon_container moon4"><img class="moon moon4" src="http://letscode.ghost.io/content/images/2015/09/stackoverflow.png"></div>
+                <div class="moon_container moon5"><img class="moon moon5" src="http://letscode.ghost.io/content/images/2015/09/stackoverflow.png"></div>
+                <div class="moon_container moon6"><img class="moon moon6" src="http://letscode.ghost.io/content/images/2015/09/stackoverflow.png"></div>
+                <div class="moon_container moon7"><img class="moon moon7" src="http://letscode.ghost.io/content/images/2015/09/stackoverflow.png"></div>
+                <div class="moon_container moon8"><img class="moon moon8" src="http://letscode.ghost.io/content/images/2015/09/stackoverflow.png"></div>
+            </div>
+            <div class="circle_container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+                <div class="d-flex align-items-center">
+                    <input th:type="number" class="list-group-item" th:number="${currency}" />
+                    <label th:for="weight" class="list-group-item">Currency</label>
+                </div>
+                <div class="d-flex align-items-center">
+                    <input th:type="number" class="list-group-item" th:number="${weight}" th:id="weight" />
+                    <label th:for="weight" class="list-group-item">Weight</label>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>
