@@ -10,6 +10,8 @@
     <script type="text/javascript" th:src="@{/js/script.js}"></script>
 
     <link th:if="${#httpServletRequest.requestURI} == '/'" rel="stylesheet" th:href="@{/css/home.css}" />
+    <link th:if="${#httpServletRequest.requestURI} == ${'/character/equipment'}" rel="stylesheet" th:href="@{/css/equipment.css}" />
+    <link th:if="${#httpServletRequest.requestURI} == '/inventory'" rel="stylesheet" th:href="@{/css/inventory.css}" />
 
     <title th:if="${title}" th:text="${title}">RNGesus</title>
 
@@ -44,8 +46,7 @@
                 </li>
             </ul>
 
-            <form class="form-inline mt-2 mt-md-0" action="https://roll20.net/compendium/dnd5e/searchbook/" method="GET" target="_blank">
-
+            <div class="d-flex flex-column flex-md-row align-items-center">
                 <ul th:if="${#httpServletRequest.cookies}" class="navbar-nav mr-auto float-right">
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/user/logout}">Logout</a>
@@ -59,9 +60,11 @@
                         <a class="nav-link" th:href="@{/user/login}">Login</a>
                     </li>
                 </ul>
-                <input class="form-control mr-sm-2" type="text" name="terms" placeholder="Search Roll20" aria-label="Search" />
-                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
-            </form>
+                <form class="form-inline mt-2 mt-md-0" action="https://roll20.net/compendium/dnd5e/searchbook/" method="GET" target="_blank">
+                    <input class="form-control mr-sm-2" type="text" name="terms" placeholder="Search Roll20" aria-label="Search" />
+                    <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
         </div>
     </nav>
 
@@ -70,11 +73,11 @@
 ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <script th:src="@{//code.jquery.com/jquery-3.3.1.slim.min.js}" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script th:inline="javascript">
-        /*<![CDATA[*/
-            window.jQuery || document.write('<script th:src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"><\/script>')
-        /*]]>*/
-        </script>
+        <script type="text/javascript">
+    //<![CDATA[
+     window.jQuery || document.write("<script src='bootstrap/assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+    //]]>
+</script>
 
         <script th:href="@{/bootstrap/assets/js/vendor/popper.min.js}"></script>
         <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
