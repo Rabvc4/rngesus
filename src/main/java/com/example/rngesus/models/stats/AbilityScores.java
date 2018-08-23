@@ -1,11 +1,6 @@
-package com.example.rngesus.models;
-
-import com.example.rngesus.models.stats.*;
+package com.example.rngesus.models.stats;
 
 import javax.persistence.Embeddable;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 @Embeddable
 public class AbilityScores {
