@@ -7,8 +7,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Item {
@@ -17,7 +15,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id", updatable = false, nullable = false)
-    private long id;
+    private int id;
 
     @NotNull
     @Size(min=3, max=30)
@@ -57,7 +55,7 @@ public class Item {
 
 
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

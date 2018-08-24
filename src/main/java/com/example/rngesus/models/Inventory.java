@@ -1,10 +1,8 @@
 package com.example.rngesus.models;
 
-import com.example.rngesus.models.enumerations.CurrencyType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 @Entity
@@ -14,7 +12,7 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "id", updatable = false, nullable = false)
-    private long id;
+    private int id;
 
 //    private HashMap<CurrencyType, Integer> currency = new HashMap<>();
 
@@ -33,7 +31,7 @@ public class Inventory {
 
 
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
