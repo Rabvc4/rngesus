@@ -5,9 +5,13 @@ import com.example.rngesus.models.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -37,6 +41,7 @@ public class CharacterController {
 
         if(username != null) {
             User user = userDao.findByUsername(username).get(0);
+            ArrayList<PlayerCharacter> playerCharacters;
             model.addAttribute("characters", characterDao.findByUserId(user.getId()));
             model.addAttribute("title", "My Characters");
 
@@ -44,6 +49,22 @@ public class CharacterController {
         }
 
         return "redirect:/user/login";
+    }
+
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    public String processRemoveCharacterForm(@RequestParam Long characterId, @CookieValue("user") String username) {
+
+        User user = userDao.findByUsername(username).get(0);
+        List<PlayerCharacter> playerCharacters = user.getPlayerCharacters();
+
+        Iterator<PlayerCharacter> it = playerCharacters.iterator();
+        while (it.hasNext()) {
+            PlayerCharacter p = it.next();
+            if (p.getId()==characterId) it.remove();
+        }
+
+
+        return "redirect:";
     }
 
 
@@ -70,6 +91,30 @@ public class CharacterController {
         model.addAttribute("title", aClass.getName() + " Characters");
 
         return "character/index";
+    }
+
+
+
+    @RequestMapping(value = "equipment", method = RequestMethod.GET)
+    public String viewEquipment(Model model, @RequestParam int id) {
+
+        PlayerCharacter playerCharacter = characterDao.findById(id).orElseGet(null);
+
+        try {
+            Inventory inventory = inventoryDao.findByPlayerCharacterId(id).get(0);
+            model.addAttribute("title", "Manage Inventory");
+            model.addAttribute("character", playerCharacter);
+            model.addAttribute("inventory", inventory);
+
+            return "character/equipment";
+
+        } catch (IndexOutOfBoundsException e) {
+            model.addAttribute("title", "Starting Inventory");
+            model.addAttribute("character", playerCharacter);
+            model.addAttribute("inventory", new Inventory());
+
+            return "character/equipment";
+        }
     }
 
 }

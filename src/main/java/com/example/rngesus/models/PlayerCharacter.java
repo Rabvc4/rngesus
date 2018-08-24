@@ -2,7 +2,6 @@ package com.example.rngesus.models;
 
 import com.example.rngesus.models.stats.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,6 +28,7 @@ public class PlayerCharacter {
     @ManyToOne
     private Race race;
 
+//    TODO - Add levels to class, add prestige classes
     @ManyToMany
     private List<CharacterClass> classes = new ArrayList<CharacterClass>();
 

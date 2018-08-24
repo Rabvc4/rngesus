@@ -16,7 +16,7 @@ public class Inventory {
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
 
-    private HashMap<CurrencyType, Integer> currency = new HashMap<>();
+//    private HashMap<CurrencyType, Integer> currency = new HashMap<>();
 
 //    @ManyToMany
 //    private List<Item> items = new ArrayList<>();
@@ -73,13 +73,13 @@ public class Inventory {
 //        this.items = items;
 //    }
 
-    public HashMap<CurrencyType, Integer> getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(HashMap<CurrencyType, Integer> currency) {
-        this.currency = currency;
-    }
+//    public HashMap<CurrencyType, Integer> getCurrency() {
+//        return currency;
+//    }
+//
+//    public void setCurrency(HashMap<CurrencyType, Integer> currency) {
+//        this.currency = currency;
+//    }
 
     public Double getWeight() {
         return weight;

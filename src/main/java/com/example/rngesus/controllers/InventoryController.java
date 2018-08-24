@@ -1,9 +1,9 @@
 package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.Inventory;
-import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.InventoryDao;
+import com.example.rngesus.models.data.ItemDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +21,24 @@ public class InventoryController {
     InventoryDao inventoryDao;
 
     @Autowired
+    ItemDao itemDao;
+
+    @Autowired
     CharacterDao characterDao;
 
+
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String index(Model model) {
+
+        model.addAttribute(new Inventory());
+        model.addAttribute("title", "Inventories");
+        model.addAttribute("exchange", "Exchange");
+        model.addAttribute("character", "Character");
+        model.addAttribute("partner", itemDao.findAll());
+
+        return "inventory/index";
+    }
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -41,7 +57,10 @@ public class InventoryController {
 
             return "error";
         }
+
     }
+
+
 
     @RequestMapping(value = "trade/{id}", method = RequestMethod.GET)
     public String trade(Model model, @PathVariable int characterId, @RequestParam int partnerId) {

@@ -1,4 +1,4 @@
-package com.example.rngesus.Security;
+package com.example.rngesus.security;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -13,7 +13,7 @@ public class UserInterceptor extends HandlerInterceptorAdapter {
 
         Cookie[] cookies = request.getCookies();
         if(cookies == null) {
-            request.setAttribute("message", "You need to login to continue");
+//            request.setAttribute("message", "You need to login to continue");
             response.sendRedirect(request.getContextPath() + "/user/login");
 
             return false;
