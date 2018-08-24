@@ -5,10 +5,7 @@ import com.example.rngesus.models.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,20 +48,19 @@ public class CharacterController {
         return "redirect:/user/login";
     }
 
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
-    public String processRemoveCharacterForm(@RequestParam Long characterId, @CookieValue("user") String username) {
+    @RequestMapping(value = "delete/{characterId}", method = RequestMethod.GET)
+    public String removeCharacter(@PathVariable int characterId, @CookieValue("user") String username) {
 
         User user = userDao.findByUsername(username).get(0);
         List<PlayerCharacter> playerCharacters = user.getPlayerCharacters();
 
-        Iterator<PlayerCharacter> it = playerCharacters.iterator();
-        while (it.hasNext()) {
-            PlayerCharacter p = it.next();
-            if (p.getId()==characterId) it.remove();
+        for (PlayerCharacter playerCharacter : playerCharacters) {
+            if (playerCharacter.getId() == characterId) {
+                characterDao.deleteById(characterId);
+            }
         }
 
-
-        return "redirect:";
+        return "redirect:/character";
     }
 
 

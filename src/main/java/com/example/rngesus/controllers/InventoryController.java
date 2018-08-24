@@ -1,6 +1,7 @@
 package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.Inventory;
+import com.example.rngesus.models.Item;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.InventoryDao;
 import com.example.rngesus.models.data.ItemDao;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping("inventory")
@@ -41,13 +44,18 @@ public class InventoryController {
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String viewInventory(Model model, @PathVariable int id) {
+    @RequestMapping(value = "/{characterId}", method = RequestMethod.GET)
+    public String viewInventory(Model model, @PathVariable int characterId, @RequestParam(defaultValue = "0") int id) {
 
         try {
-            Inventory inventory = inventoryDao.findByPlayerCharacterId(id).get(0);
+            Inventory characterInventory = inventoryDao.findByPlayerCharacterId(id).get(0);
+//            Inventory partnerInventory = inventoryDao.findById(id).orElseGet(null);
+
+            Iterable<Item> partnerInventory = itemDao.findAll();
+
             model.addAttribute("title", "Manage Inventory");
-            model.addAttribute("inventory", inventory);
+            model.addAttribute("character", characterInventory);
+            model.addAttribute("partner", partnerInventory);
 
             return "inventory/index";
 

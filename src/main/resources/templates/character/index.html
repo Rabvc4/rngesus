@@ -16,10 +16,10 @@
                 <div class="list-group" th:each="class : ${character.classes}" th:text="'Class: ' + ${class.name}" />
             </div>
             <div class="d-flex justify-content-between">
-                <a th:href="@{/character/equipment(id=${character.id})}" >Inventory</a>
+                <a th:href="@{/character/inventory(id=${character.id})}" >Inventory</a>
                 <a th:href="@{/character/equipment(id=${character.id})}" >Equip Items</a>
                 <a th:href="@{/character/equipment(id=${character.id})}" >Copy</a>
-                <a th:href="@{/character/delete(id=${character.id})}" >Delete</a>
+                <a th:href="@{/character/delete/__${character.id}__}" >Delete</a>
             </div>
             </div>
         </li>
