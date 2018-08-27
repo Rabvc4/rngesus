@@ -29,7 +29,7 @@ public class User {
     private String email;
 
     @NotNull
-    @Size(min=6, message = "Password must be at least 6 characters long")
+    @Size(min=6, max=128, message = "Password must be at least 6 characters long")
     @Column(nullable = false)
     private String password;
 
