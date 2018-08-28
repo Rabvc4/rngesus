@@ -171,8 +171,17 @@ public class PlayerCharacter {
     }
 
     public void setInventory(Inventory inventory) {
+        if (inventory == null) {
+            if (this.inventory != null) {
+                this.inventory.setPlayerCharacter(null);
+            }
+        }
+        else {
+            inventory.setPlayerCharacter(this);
+        }
         this.inventory = inventory;
     }
+
 
 //    public void addItem(Item item) {
 //        this.inventory.addItem(item);
