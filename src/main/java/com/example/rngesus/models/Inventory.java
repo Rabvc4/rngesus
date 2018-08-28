@@ -19,11 +19,11 @@ public class Inventory {
 //    @ManyToMany
 //    private List<Item> items = new ArrayList<>();
 
-    private Double weight;
+    private Double weight = 0.0;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @OneToOne(mappedBy = "inventory", cascade = CascadeType.ALL)
     private PlayerCharacter playerCharacter;
+
 
 
     public Inventory() {
