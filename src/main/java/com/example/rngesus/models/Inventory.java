@@ -21,7 +21,7 @@ public class Inventory {
 
     private Double weight = 0.0;
 
-    @OneToOne(mappedBy = "inventory", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "inventory", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     private PlayerCharacter playerCharacter;
 
 
