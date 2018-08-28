@@ -38,6 +38,7 @@ public class PlayerCharacter {
     private AbilityScores abilityScores;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "inventory_id")
     private Inventory inventory;
 
     public PlayerCharacter() { }
