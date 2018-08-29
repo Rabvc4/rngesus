@@ -7,58 +7,106 @@
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 th:text="${title}" class="display-4">Inventories</h1>
-        <p th:text="${message}" class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>
+        <!--<p th:text="${message}" class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>-->
     </div>
 
-    <form class="container needs-validation" method="post" th:object="${inventory}" novalidate>
+    <div class="container needs-validation">
         <div class="card-deck mb-3 text-center">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 th:text="${character}" class="my-0 font-weight-normal">My Inventory</h4>
+                    <h4 th:text="${character.name}" class="my-0 font-weight-normal">My Inventory</h4>
+                    <div>
+                        <span th:text="${character.inventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
+                        <!--<span th:text="${character.inventory.weight}" class="my-0 mx-3">0</span>-->
+                    </div>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">$0</h1>
                     <ul class="list-unstyled mt-3 mb-4">
-                        <li th:each="item : ${character}">Character Inventory</li>
+                        <li class="item" th:each="item : ${character.inventory.items}">Character Inventory</li>
                     </ul>
                 </div>
             </div>
 
 
 
-            <div class="card mb-4 box-shadow">
+            <form class="card mb-4 box-shadow" method="post" th:action="@{/character/__${character.id}__/exchange}" th:object="${inventory}">
                 <div class="card-header">
                     <h4 th:text="${exchange}" class="my-0 font-weight-normal">Exchange</h4>
+                    <div>
+                        <span th:field=*{weight} th:text="${weight + ' lb.'}" class="my-0 mx-3">0</span>
+                        <!--<span th:text="${character.inventory.weight}" class="my-0 mx-3">0</span>-->
+                    </div>
                 </div>
                 <div class="card-body">
-                    <h1 th:field="*{currency}" class="card-title pricing-card-title">$15</h1>
-                    <!--<ul th:field="*{currency}" class="list-unstyled mt-3 mb-4">-->
+                    <!--<h1 th:field="*{weight}" class="card-title pricing-card-title">15</h1>-->
                     <ul class="list-unstyled mt-3 mb-4">
                     <!--<ul class="list-unstyled mt-3 mb-4">-->
                         <!--<li th:each="coin : ${inventory.currency}" th:field="*{inventory.currency.__${#strings.toLowerCase(ability.name)}__.value}">Currency</li>-->
                         <li>Trade Items</li>
                     </ul>
                     <!--<button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>-->
-                    <button type="button" class="btn btn-lg btn-block btn-primary">Exchange</button>
+                    <button type="submit" class="btn btn-lg btn-block btn-primary">Exchange</button>
                 </div>
-            </div>
+            </form>
 
 
 
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 th:text="Partner" class="my-0 font-weight-normal">Partner Inventory</h4>
+                    <h4 th:text="${partnerName}" class="my-0 font-weight-normal">Partner Inventory</h4>
+                    <div>
+                        <span th:text="${partner.weight + ' lb.'}" class="my-0 mx-3">0</span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h1 class="card-title pricing-card-title">$29</h1>
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <li th:id="${item.id}" th:each="item : ${partner}" th:text="${item.name}">Item</li>
-                    </ul>
-                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Weight</th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${partner.items}" th:with="item=${item.value}" data-toggle='modal' data-target='#itemModal' th:onclick="'showDeleteModal(' + ${something.id} + ')'">
+                            <td th:text="${item.name}">keyvalue</td>
+                            <td th:text="${item.weight + ' lb.'}">num</td>
+                            <td th:text="'$' + ${item.value}">num</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-    </form>
+    </div>
+
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="itemModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    Modal body..
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 
 
     <section th:replace="fragments :: scripts"></section>
