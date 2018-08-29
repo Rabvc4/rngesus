@@ -9,9 +9,9 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <script type="text/javascript" th:src="@{/js/script.js}"></script>
 
-    <link th:if="${#httpServletRequest.requestURI} == '/'" rel="stylesheet" th:href="@{/css/home.css}" />
-    <link th:if="${#httpServletRequest.requestURI} == ${'/character/equipment'}" rel="stylesheet" th:href="@{/css/equipment.css}" />
-    <link th:if="${#httpServletRequest.requestURI} == '/inventory'" rel="stylesheet" th:href="@{/css/inventory.css}" />
+    <link th:if="${#request.requestURI} == '/'" rel="stylesheet" th:href="@{/css/home.css}" />
+    <link th:if="${#request.requestURI} == ${'/character/equipment'}" rel="stylesheet" th:href="@{/css/equipment.css}" />
+    <link th:if="${#request.requestURI} == '/inventory'" rel="stylesheet" th:href="@{/css/inventory.css}" />
 
     <title th:if="${title}" th:text="${title}">RNGesus</title>
 
@@ -25,34 +25,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
 
-            <ul id="nav" class="navbar-nav mr-auto">
+            <ul id="nav" class="navbar-nav mr-auto" th:with="currentUrl=${#request.requestURI}">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}">Home</a>
+                    <a class="nav-link" th:href="@{/}" th:classappend="${#strings.equals(currentUrl, '/')} ? 'active'">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/character}">Characters</a>
+                <li th:each="link : ${T(com.example.rngesus.models.enumerations.NavbarLinks).values()}" class="nav-item">
+                    <a class="nav-link" th:href="@{${link.url}}" th:text="${link.name}" th:classappend="${#strings.equals(currentUrl, link.url)} ? 'active'">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/class}">Classes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/race}">Races</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/item}">Items</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/create}">Create</a>
-                </li>
+
             </ul>
 
             <div class="d-flex flex-column flex-md-row align-items-center">
-                <ul th:if="${#httpServletRequest.cookies}" class="navbar-nav mr-auto float-right">
+                <ul th:if="${#request.cookies}" class="navbar-nav mr-auto float-right">
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/user/logout}">Logout</a>
                     </li>
                 </ul>
-                <ul th:unless="${#httpServletRequest.cookies}" class="navbar-nav mr-auto float-right">
+                <ul th:unless="${#request.cookies}" class="navbar-nav mr-auto float-right">
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/user/create}">Register</a>
                     </li>
