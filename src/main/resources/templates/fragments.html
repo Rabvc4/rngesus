@@ -27,10 +27,10 @@
 
             <ul id="nav" class="navbar-nav mr-auto" th:with="currentUrl=${#request.requestURI}">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/}" th:classappend="${#strings.equals(currentUrl, '/')} ? 'active'">Home</a>
+                    <a class="nav-link" th:href="@{/}" title="Home is where you live" th:classappend="${#strings.equals(currentUrl, '/')} ? 'active'">Home</a>
                 </li>
                 <li th:each="link : ${T(com.example.rngesus.models.enumerations.NavbarLinks).values()}" class="nav-item">
-                    <a class="nav-link" th:href="@{${link.url}}" th:text="${link.name}" th:classappend="${#strings.equals(currentUrl, link.url)} ? 'active'">Home</a>
+                    <a class="nav-link" th:href="@{${link.url}}" th:title="${link.description}" th:text="${link.name}" th:classappend="${#strings.equals(currentUrl, link.url)} ? 'active'">Home</a>
                 </li>
 
             </ul>
