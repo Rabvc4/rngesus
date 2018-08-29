@@ -67,7 +67,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${partner.items}" th:with="item=${item.value}" data-toggle='modal' data-target='#itemModal' th:onclick="'showDeleteModal(' + ${something.id} + ')'">
+                        <tr th:each="item : ${partner.items}" th:with="item=${item.value}" data-toggle='modal' data-target='#itemModal'>
                             <td th:text="${item.name}">keyvalue</td>
                             <td th:text="${item.weight + ' lb.'}">num</td>
                             <td th:text="'$' + ${item.value}">num</td>
