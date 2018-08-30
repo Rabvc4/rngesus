@@ -14,25 +14,31 @@
         </div>
         <div class="form-group">
             <label th:for="type">Type</label>
-            <select class="form-control" th:field="*{type}">
+            <select class="form-control" id="type" name="type">
+                <option value="" selected disabled>Please select</option>
                 <option th:each="type : ${itemTypes}"
                         th:text="${type.name}"
-                        th:value="${type}"></option>
+                        th:value="${type}"
+                        th:selected="${type=='Please select'}">
+                </option>
             </select>
             <span th:errors="*{type}" class="error"></span>
         </div>
         <div class="form-group">
             <label th:for="rarity">Rarity</label>
-            <select class="form-control" th:field="*{rarity}">
+            <select class="form-control" id="rarity" name="rarity">
+                <option value="" selected disabled>Please select</option>
                 <option th:each="rarity : ${rarityTypes}"
                         th:text="${rarity.name}"
-                        th:value="${rarity}"></option>
+                        th:value="${rarity}"
+                        th:selected="${rarity=='Please select'}">
+                </option>
             </select>
             <span th:errors="*{rarity}" class="error"></span>
         </div>
         <div class="form-group">
             <label th:for="description">Description</label>
-            <textarea class="form-control" th:field="*{description}" />
+            <textarea class="form-control" th:field="*{description}" notempty/>
             <span th:errors="*{description}" class="error"></span>
         </div>
         <div class="row">
