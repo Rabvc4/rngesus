@@ -19,6 +19,10 @@ public class Inventory {
 //    @ManyToMany
 //    private List<Item> items = new ArrayList<>();
 
+    @javax.persistence.ManyToMany(cascade = CascadeType.ALL)
+    @javax.persistence.MapKey(name = "name")
+    private Map<String, Item> items = new HashMap<>();
+
     private Double weight = 0.0;
 
     @OneToOne(mappedBy = "inventory", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
@@ -29,16 +33,34 @@ public class Inventory {
     public Inventory() {
     }
 
+    public Inventory(Iterable<Item> items) {
+        for (Item item : items) {
+            addItem(item);
+        }
+        this.weight = calculateWeight(this.items);
+    }
+
 
 
     public int getId() {
         return id;
     }
 
+
+    public Map<String, Item> getItems() {
+        return items;
+    }
+
+    public void addItem(Item item) {
+        this.items.put(item.getName(), item);
+//        this.weight += item.getWeight();
+//        this.weight = calculateWeight(items);
+    }
+
 //    public HashMap<Item, Integer> getItems() {
 //        return items;
 //    }
-
+//
 //    public void addItem(Item item) {
 //        this.items.put(item, items.getOrDefault(item, 1));
 ////        this.weight += item.getWeight();
@@ -96,31 +118,18 @@ public class Inventory {
     }
 
 
-
-    public Double calculateWeight(HashMap<Item, Integer> mp) {
+    public Double calculateWeight(Map<String, Item> mp) {
         Double newWeight = 0.0;
         Iterator it = mp.entrySet().iterator();
         while (it.hasNext()) {
 
-
             Map.Entry pair = (Map.Entry)it.next();
-            Item eachItem = (Item) pair.getKey();
-            Integer quantity = (Integer) pair.getValue();
+            String name = (String) pair.getKey();
+            Item item = (Item) pair.getValue();
 
-//        TODO - Delete Test Code
-            System.out.println("Item: " + eachItem.getName());
-            System.out.println("Item weight: " + eachItem.getWeight());
-            System.out.println("Quantity: " + quantity);
-            System.out.println("Bulk weight: " + eachItem.getWeight() * quantity);
-//        TODO - Delete Test Code
-
-            newWeight += eachItem.getWeight() * quantity;
-            it.remove();
+            newWeight += item.getWeight();
+//            it.remove();
         }
-
-//        TODO - Delete Test Code
-        System.out.println("New Weight: " + newWeight);
-//        TODO - Delete Test Code
 
         return newWeight;
     }
