@@ -1,0 +1,14 @@
+    COMMON ("Common"),
+    UNCOMMON ("Uncommon"),
+    RARE ("Rare"),
+    VERY_RARE ("Very Rare"),
+    LEGENDARY ("Legendary"),
+    ARTIFACT ("Artifact");
+
+.common {
+}
+.uncommon
+.rare
+.very_rare
+.legendary
+.artifact
