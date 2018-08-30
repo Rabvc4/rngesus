@@ -10,7 +10,7 @@
             <h2 th:text="${title}">Default Title</h2>
         </div>
 
-        <form class="needs-validation" method="post" th:object="${form}" novalidate>
+        <form class="needs-validation" method="post" th:object="${form}">
             <div class="row">
                 <div class="col-md-8 order-md-1">
                     <h4 class="mb-3">Background</h4>
@@ -27,9 +27,12 @@
                         <div class="col-md-6 mb-3">
                             <label th:for="raceId">Race</label>
                             <select class="custom-select d-block w-100" name="raceId" id="raceId" required>
+                                <option value="" selected disabled>Please select</option>
                                 <option th:each="race : ${form.races}"
                                         th:value="${race.id}"
-                                        th:text="${race.name}"></option>
+                                        th:text="${race.name}"
+                                        th:selected="${race=='Please select'}">
+                                </option>
                             </select>
                             <span th:errors="*{raceId}" class="error"></span>
                         </div>
@@ -39,9 +42,12 @@
                         <div class="col-md-6 mb-3">
                             <label th:for="classId">Class</label>
                             <select class="custom-select d-block w-100" name="classId" id="classId" required>
+                                <option value="" selected disabled>Please select</option>
                                 <option th:each="class : ${form.classes}"
                                         th:value="${class.id}"
-                                        th:text="${class.name}"></option>
+                                        th:text="${class.name}"
+                                        th:selected="${class=='Please select'}">
+                                </option>
                             </select>
                             <span th:errors="*{classId}" class="error"></span>
                         </div>
@@ -72,7 +78,7 @@
 
                                 <!-- TODO - Delete Comments-->
 
-                                <span th:errors="*{__${#strings.toLowerCase(ability.name)}__}" class="error"></span>
+                                <span th:errors="*{playerCharacter.abilityScores.__${#strings.toLowerCase(ability.name)}__}" class="error"></span>
 
                             </div>
                         </li>
