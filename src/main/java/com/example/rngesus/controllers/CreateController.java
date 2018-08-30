@@ -79,10 +79,13 @@ public class CreateController {
         User user = userDao.findByUsername(username).get(0);
         Race race = raceDao.findById(form.getRaceId()).orElse(null);
         CharacterClass aClass = classDao.findById(form.getClassId()).orElse(null);
+        Inventory inventory = new Inventory();
 
         newPlayerCharacter.setUser(user);
         newPlayerCharacter.setRace(race);
         newPlayerCharacter.addClass(aClass);
+        newPlayerCharacter.setInventory(inventory);
+        inventory.setPlayerCharacter(newPlayerCharacter);
 
         characterDao.save(newPlayerCharacter);
 
@@ -155,7 +158,7 @@ public class CreateController {
     public String processCreateItem(Model model, @ModelAttribute @Valid Item item, Errors errors) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Create Class");
+            model.addAttribute("title", "Create Item");
             model.addAttribute("itemTypes", ItemType.values());
             model.addAttribute("rarityTypes", RarityType.values());
 
