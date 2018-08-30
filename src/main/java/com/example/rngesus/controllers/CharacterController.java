@@ -38,7 +38,6 @@ public class CharacterController {
 
         if(username != null) {
             User user = userDao.findByUsername(username).get(0);
-            ArrayList<PlayerCharacter> playerCharacters;
             model.addAttribute("characters", characterDao.findByUserId(user.getId()));
             model.addAttribute("title", "My Characters");
 
