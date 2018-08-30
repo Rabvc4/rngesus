@@ -1,19 +1,17 @@
 package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.Inventory;
-import com.example.rngesus.models.Item;
+import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.InventoryDao;
 import com.example.rngesus.models.data.ItemDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("inventory")
@@ -44,28 +42,51 @@ public class InventoryController {
     }
 
 
+
     @RequestMapping(value = "/{characterId}", method = RequestMethod.GET)
     public String viewInventory(Model model, @PathVariable int characterId, @RequestParam(defaultValue = "0") int id) {
 
-        try {
-            Inventory characterInventory = inventoryDao.findByPlayerCharacterId(id).get(0);
-//            Inventory partnerInventory = inventoryDao.findById(id).orElseGet(null);
+        PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
+        Inventory partnerInventory;
 
-            Iterable<Item> partnerInventory = itemDao.findAll();
-
-            model.addAttribute("title", "Manage Inventory");
-            model.addAttribute("character", characterInventory);
-            model.addAttribute("partner", partnerInventory);
-
-            return "inventory/index";
-
-        } catch (IndexOutOfBoundsException e) {
-            model.addAttribute("title", "That's Not A Thing");
-            model.addAttribute("message", "I would know if that were a thing...");
+        if (playerCharacter == null) {
+            model.addAttribute("title", "Character Not Found");
+            model.addAttribute("message", "The character you're looking for doesn't exist");
 
             return "error";
         }
 
+        if (id == 0) {
+            partnerInventory = new Inventory(itemDao.findAll());
+            model.addAttribute(new Inventory());
+
+            model.addAttribute("partnerName", "All Items");
+            model.addAttribute("partner", partnerInventory);
+            model.addAttribute("character", playerCharacter);
+            model.addAttribute("title", "Buy Items");
+            model.addAttribute("exchange", "Purchased Goods");
+
+            return "inventory/index";
+        } else {
+            try {
+                partnerInventory = inventoryDao.findById(id).orElseGet(null);
+                String partnerName = partnerInventory.getPlayerCharacter().getName();
+                model.addAttribute(new Inventory());
+
+                model.addAttribute("partnerName", partnerName);
+                model.addAttribute("partner", partnerInventory);
+                model.addAttribute("character", playerCharacter);
+                model.addAttribute("title", "Trade");
+                model.addAttribute("exchange", "Purchased Goods");
+
+                return "inventory/index";
+            } catch (IndexOutOfBoundsException e) {
+                model.addAttribute("title", "Nope");
+                model.addAttribute("message", "You can't trade with someone who doesn't exist");
+
+                return "error";
+            }
+        }
     }
 
 
@@ -96,6 +117,28 @@ public class InventoryController {
 
         return "error";
 
+    }
+
+
+
+    @RequestMapping(value="/{characterId}/exchange", method=RequestMethod.POST)
+    public String processExchange(Model model, @PathVariable int characterId, @ModelAttribute @Valid Inventory inventory, Errors errors) {
+
+        System.out.println("Exchange Path Reached");
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Manage Inventory");
+            model.addAttribute("inventory", inventory);
+
+
+            return "inventory/index";
+        }
+
+        PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
+
+        characterDao.save(playerCharacter);
+
+        return "inventory/index";
     }
 
 }
