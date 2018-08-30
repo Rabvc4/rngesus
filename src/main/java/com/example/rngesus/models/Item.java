@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 public class Item {
@@ -36,10 +37,11 @@ public class Item {
     private RarityType rarity;
 
     @NotNull
+    @Size(min = 3, message = "Description must be at least 3 characters long")
     private String description;
 
-//    @ManyToMany(mappedBy = "items")
-//    private List<Inventory> inventories;
+    @ManyToMany(mappedBy = "items")
+    private List<Inventory> inventories;
 
 
 
@@ -131,4 +133,35 @@ public class Item {
         this.description = description;
     }
 
+    public List<Inventory> getInventories() {
+        return inventories;
+    }
+
+    public void setInventories(List<Inventory> inventories) {
+        this.inventories = inventories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+
+        Item item = (Item) o;
+
+        if (getId() != item.getId()) return false;
+        if (getValue() != item.getValue()) return false;
+        if (!getName().equals(item.getName())) return false;
+        if (getType() != item.getType()) return false;
+        return getRarity() == item.getRarity();
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + (int) (getValue() ^ (getValue() >>> 32));
+        result = 31 * result + getType().hashCode();
+        result = 31 * result + getRarity().hashCode();
+        return result;
+    }
 }
