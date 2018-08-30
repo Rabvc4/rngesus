@@ -5,9 +5,7 @@ import com.example.rngesus.models.data.ItemDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("item")
@@ -27,8 +25,10 @@ public class ItemController {
         return "item/index";
     }
 
+
+
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public String viewAccount(Model model, @PathVariable String name) {
+    public String viewItem(Model model, @PathVariable String name) {
 
         try {
             Item item = itemDao.findByName(name).get(0);
@@ -43,6 +43,14 @@ public class ItemController {
 
             return "error";
         }
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public Item details(@RequestParam int id) {
+
+        return itemDao.findById(id).orElseGet(null);
     }
 
 }
