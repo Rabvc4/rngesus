@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body>
@@ -11,55 +11,16 @@
     </div>
 
     <div class="container needs-validation">
-        <div class="card-deck mb-3 text-center">
+        <form class="card-deck mb-3 text-center" method="post" th:object="${form}">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 th:text="${character.name}" class="my-0 font-weight-normal">My Inventory</h4>
+                    <h4 th:text="${form.characterName}" class="my-0 font-weight-normal">Character Inventory</h4>
                     <div>
-                        <span th:text="${character.inventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
-                        <!--<span th:text="${character.inventory.weight}" class="my-0 mx-3">0</span>-->
+                        <span th:text="${form.characterInventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
                     </div>
                 </div>
-                <div class="card-body">
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <li class="item" th:each="item : ${character.inventory.items}">Character Inventory</li>
-                    </ul>
-                </div>
-            </div>
-
-
-
-            <form class="card mb-4 box-shadow" method="post" th:action="@{/character/__${character.id}__/exchange}" th:object="${inventory}">
-                <div class="card-header">
-                    <h4 th:text="${exchange}" class="my-0 font-weight-normal">Exchange</h4>
-                    <div>
-                        <span th:field=*{weight} th:text="${weight + ' lb.'}" class="my-0 mx-3">0</span>
-                        <!--<span th:text="${character.inventory.weight}" class="my-0 mx-3">0</span>-->
-                    </div>
-                </div>
-                <div class="card-body">
-                    <!--<h1 th:field="*{weight}" class="card-title pricing-card-title">15</h1>-->
-                    <ul class="list-unstyled mt-3 mb-4">
-                    <!--<ul class="list-unstyled mt-3 mb-4">-->
-                        <!--<li th:each="coin : ${inventory.currency}" th:field="*{inventory.currency.__${#strings.toLowerCase(ability.name)}__.value}">Currency</li>-->
-                        <li>Trade Items</li>
-                    </ul>
-                    <!--<button type="button" class="btn btn-lg btn-block btn-outline-primary">Sign up for free</button>-->
-                    <button type="submit" class="btn btn-lg btn-block btn-primary">Exchange</button>
-                </div>
-            </form>
-
-
-
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 th:text="${partnerName}" class="my-0 font-weight-normal">Partner Inventory</h4>
-                    <div>
-                        <span th:text="${partner.weight + ' lb.'}" class="my-0 mx-3">0</span>
-                    </div>
-                </div>
-                <table class="table table-hover">
-                    <thead>
+                <table id="characterTable" class="table table-dark table-striped table-hover">
+                    <thead class="thead-light">
                         <tr>
                             <th>Name</th>
                             <th>Weight</th>
@@ -67,16 +28,74 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${partner.items}" th:with="item=${item.value}" th:href="@{/item/details/(id=${item.id})}" th:class="'item ' + ${item.rarity.name}">
-                            <td th:text="${item.name}">keyvalue</td>
-                            <td th:text="${item.weight + ' lb.'}">num</td>
-                            <td th:text="'$' + ${item.value}">num</td>
+                        <tr th:each="item : ${form.characterInventory.items}" th:with="item=${item.value}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
+                            <td th:text="${item.name}">name</td>
+                            <td th:text="${item.weight + ' lb.'}">weight</td>
+                            <td th:text="'$' + ${item.value}">value</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
 
+
+
+            <div class="card mb-4 box-shadow">
+
+                <div class="card-header">
+                    <h4 th:text="${exchange}" class="my-0 font-weight-normal">Exchange</h4>
+                    <div>
+                        <span class="my-0 mx-3"></span>
+                        <span class="my-0 mx-3">$<span th:field="*{total}" id="total" name="total">0</span></span>
+                    </div>
+                </div>
+                    <table id="tradeTable" class="table table-dark table-striped table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Weight</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item, i : ${form.items}">
+                                <td th:text="${item.name}">name</td>
+                                <td th:text="${item.weight + ' lb.'}">weight</td>
+                                <td th:text="'$' + ${item.value}">value</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <div class="card-body my-0">
+                    <button type="submit" class="btn btn-lg btn-block btn-success" id="exchange" name="exchange"><i class="fa fa-credit-card"> Exchange</i></button>
+                </div>
+            </div>
+
+
+
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 th:text="${form.partnerName}" class="my-0 font-weight-normal">Partner Inventory</h4>
+                    <div>
+                        <span th:text="${form.partnerInventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
+                    </div>
+                </div>
+                <table id="partnerTable" class="table table-dark table-striped table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Weight</th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${form.partnerInventory.items}" th:with="item=${item.value}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
+                            <td th:text="${item.name}">name</td>
+                            <td th:text="${item.weight + ' lb.'}">weight</td>
+                            <td th:text="'$' + ${item.value}">value</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
     </div>
 
 
@@ -89,12 +108,12 @@
                     <div class="modal-content">
 
                         <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="name" name="name">Modal Heading</h4>
-                            <span>
-                                <div id="cost" name="cost" />
-                                <div id="weight" name="weight" />
-                            </span>
+                        <div class="modal-header modal-dark">
+                            <div class="d-flex">
+                                <h4 class="modal-title" id="name" name="name">Modal Heading</h4>
+                                <div id="cost" class="mx-3" name="cost"></div>
+                                <div id="weight" class="mx-3" name="weight"></div>
+                            </div>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
 
@@ -104,8 +123,11 @@
                         </div>
 
                         <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="button" name="button">Close</button>
+                        <div class="modal-footer d-flex justify-content-between">
+
+                            <button class="btn btn-warning" type="submit" data-dismiss="modal" id="addToCart" name="addToCart"><i class="fa fa-cart-plus"> Add to Cart</i></button>
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
 
                     </div>
