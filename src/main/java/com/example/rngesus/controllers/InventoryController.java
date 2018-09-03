@@ -5,6 +5,7 @@ import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.InventoryDao;
 import com.example.rngesus.models.data.ItemDao;
+import com.example.rngesus.models.forms.TradeForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,84 +48,38 @@ public class InventoryController {
     public String viewInventory(Model model, @PathVariable int characterId, @RequestParam(defaultValue = "0") int id) {
 
         PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
-        Inventory partnerInventory;
+        Inventory partnerInventory = inventoryDao.findById(id).orElse(new Inventory(itemDao.findAll()));
+        String partnerName;
 
         if (playerCharacter == null) {
             model.addAttribute("title", "Character Not Found");
             model.addAttribute("message", "The character you're looking for doesn't exist");
 
             return "error";
-        }
-
-        if (id == 0) {
-            partnerInventory = new Inventory(itemDao.findAll());
-            model.addAttribute(new Inventory());
-
-            model.addAttribute("partnerName", "All Items");
-            model.addAttribute("partner", partnerInventory);
-            model.addAttribute("character", playerCharacter);
+        } else if (partnerInventory.getPlayerCharacter() == null) {
+            partnerName = "All Items";
             model.addAttribute("title", "Buy Items");
             model.addAttribute("exchange", "Purchased Goods");
-
-            return "inventory/index";
         } else {
-            try {
-                partnerInventory = inventoryDao.findById(id).orElseGet(null);
-                String partnerName = partnerInventory.getPlayerCharacter().getName();
-                model.addAttribute(new Inventory());
-
-                model.addAttribute("partnerName", partnerName);
-                model.addAttribute("partner", partnerInventory);
-                model.addAttribute("character", playerCharacter);
-                model.addAttribute("title", "Trade");
-                model.addAttribute("exchange", "Purchased Goods");
-
-                return "inventory/index";
-            } catch (IndexOutOfBoundsException e) {
-                model.addAttribute("title", "Nope");
-                model.addAttribute("message", "You can't trade with someone who doesn't exist");
-
-                return "error";
-            }
+            partnerName = partnerInventory.getPlayerCharacter().getName();
+            model.addAttribute("title", "Trade Items");
+            model.addAttribute("exchange", "Trade Offered");
         }
-    }
+
+        TradeForm form = new TradeForm(playerCharacter.getInventory(), partnerInventory, playerCharacter.getName(), partnerName);
+
+        model.addAttribute("form", form);
 
 
+        return "inventory/index";
 
-    @RequestMapping(value = "trade/{id}", method = RequestMethod.GET)
-    public String trade(Model model, @PathVariable int characterId, @RequestParam int partnerId) {
-
-//        PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
-//
-//        try {
-//            Inventory inventory = inventoryDao.findByPlayerCharacterId(id).get(0);
-//            model.addAttribute("title", "Manage Inventory");
-//            model.addAttribute("character", playerCharacter);
-//            model.addAttribute("inventory", inventory);
-//
-//            return "inventory/index";
-//
-//        } catch (IndexOutOfBoundsException e) {
-//            model.addAttribute("title", "Starting Inventory");
-//            model.addAttribute("character", playerCharacter);
-//            model.addAttribute("inventory", new Inventory());
-//
-//            return "inventory/index";
-//        }
-
-        model.addAttribute("title", "Trade Screen");
-        model.addAttribute("message", "Well, you found the trade screen, but it isn't setup yet.");
-
-        return "error";
 
     }
 
+    @RequestMapping(value="/{characterId}/trade", method=RequestMethod.POST)
+    public String processTrade(Model model, @PathVariable int characterId, @ModelAttribute @Valid Inventory inventory, Errors errors) {
 
-
-    @RequestMapping(value="/{characterId}/exchange", method=RequestMethod.POST)
-    public String processExchange(Model model, @PathVariable int characterId, @ModelAttribute @Valid Inventory inventory, Errors errors) {
-
-        System.out.println("Exchange Path Reached");
+        System.out.println("Trade Path Reached");
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Manage Inventory");
