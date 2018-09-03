@@ -22,13 +22,13 @@ public class Item {
     @Size(min=3, max=30)
     private String name;
 
-    private Integer weight;
+    private Double weight;
 
-    private Integer height;
-    private Integer width;
-    private Integer depth;
+    private Double height;
+    private Double width;
+    private Double depth;
 
-    private long value;
+    private Integer value;
 
     @NotNull
     private ItemType type;
@@ -69,43 +69,43 @@ public class Item {
         this.name = name;
     }
 
-    public Integer getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public Integer getHeight() {
+    public Double getHeight() {
         return height;
     }
 
-    public void setHeight(Integer height) {
+    public void setHeight(Double height) {
         this.height = height;
     }
 
-    public Integer getWidth() {
+    public Double getWidth() {
         return width;
     }
 
-    public void setWidth(Integer width) {
+    public void setWidth(Double width) {
         this.width = width;
     }
 
-    public Integer getDepth() {
+    public Double getDepth() {
         return depth;
     }
 
-    public void setDepth(Integer depth) {
+    public void setDepth(Double depth) {
         this.depth = depth;
     }
 
-    public long getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(long value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
@@ -141,27 +141,4 @@ public class Item {
         this.inventories = inventories;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Item)) return false;
-
-        Item item = (Item) o;
-
-        if (getId() != item.getId()) return false;
-        if (getValue() != item.getValue()) return false;
-        if (!getName().equals(item.getName())) return false;
-        if (getType() != item.getType()) return false;
-        return getRarity() == item.getRarity();
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId();
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + (int) (getValue() ^ (getValue() >>> 32));
-        result = 31 * result + getType().hashCode();
-        result = 31 * result + getRarity().hashCode();
-        return result;
-    }
 }
