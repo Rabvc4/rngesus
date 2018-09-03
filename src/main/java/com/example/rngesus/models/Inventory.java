@@ -19,8 +19,8 @@ public class Inventory {
 //    @ManyToMany
 //    private List<Item> items = new ArrayList<>();
 
-    @javax.persistence.ManyToMany(cascade = CascadeType.ALL)
-    @javax.persistence.MapKey(name = "name")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @MapKey(name = "name")
     private Map<String, Item> items = new HashMap<>();
 
     private Double weight = 0.0;
@@ -34,10 +34,7 @@ public class Inventory {
     }
 
     public Inventory(Iterable<Item> items) {
-        for (Item item : items) {
-            addItem(item);
-        }
-        this.weight = calculateWeight(this.items);
+        this.addItem(items);
     }
 
 
@@ -53,9 +50,22 @@ public class Inventory {
 
     public void addItem(Item item) {
         this.items.put(item.getName(), item);
-//        this.weight += item.getWeight();
+        this.weight += item.getWeight();
+    }
+
+    public void addItem(Iterable<Item> items) {
+        for (Item item : items) {
+            addItem(item);
+        }
+//        this.weight = calculateWeight(this.items);
+    }
+
+    public void removeItem(Item item) {
+        this.items.remove(item.getName(), item);
+        this.weight -= item.getWeight();
 //        this.weight = calculateWeight(items);
     }
+
 
 //    public HashMap<Item, Integer> getItems() {
 //        return items;
