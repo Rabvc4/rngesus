@@ -1,14 +1,47 @@
-    COMMON ("Common"),
-    UNCOMMON ("Uncommon"),
-    RARE ("Rare"),
-    VERY_RARE ("Very Rare"),
-    LEGENDARY ("Legendary"),
-    ARTIFACT ("Artifact");
-
 .common {
+  color: #ffffff;
 }
-.uncommon
-.rare
-.very_rare
-.legendary
-.artifact
+
+/* .table .common:hover {
+    background-color: #ffcc80;
+} */
+
+.uncommon {
+    color: #1eff00;
+}
+
+/* .table .uncommon:hover {
+    background-color: #ffcc80;
+} */
+
+.rare {
+    color: #0070dd;
+}
+
+/* .table .rare:hover {
+    background-color: #ffcc80;
+} */
+
+.very_rare {
+    color: #a335ee;
+}
+
+/* .table .very-rare:hover {
+    background-color: #ffcc80;
+} */
+
+.legendary {
+    color: #ff8000;
+}
+
+/* .table .legendary:hover {
+    background-color: #b39ddb;
+} */
+
+.artifact {
+    background-color: #e6cc80;
+}
+
+/* .table .artifact:hover {
+    background-color: #ffcc80;
+} */
