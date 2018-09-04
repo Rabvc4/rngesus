@@ -2,6 +2,7 @@ package com.example.rngesus.models;
 
 import com.example.rngesus.models.enumerations.ItemType;
 import com.example.rngesus.models.enumerations.RarityType;
+import javafx.beans.DefaultProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Item {
     @Size(min=3, max=30)
     private String name;
 
+    @NotNull
     @Column(columnDefinition = "DOUBLE DEFAULT 0.0")
     private Double weight;
 
@@ -29,6 +31,7 @@ public class Item {
     private Double width;
     private Double depth;
 
+    @NotNull
     @Column(columnDefinition = "INTEGER(255) DEFAULT 0")
     private Integer value;
 
@@ -76,7 +79,11 @@ public class Item {
     }
 
     public void setWeight(Double weight) {
-        this.weight = weight;
+        if (weight != null) {
+            this.weight = weight;
+        } else {
+            this.weight = 0.0;
+        }
     }
 
     public Double getHeight() {
@@ -108,7 +115,11 @@ public class Item {
     }
 
     public void setValue(Integer value) {
-        this.value = value;
+        if (value != null) {
+            this.value = value;
+        } else {
+            this.value = 0;
+        }
     }
 
     public ItemType getType() {

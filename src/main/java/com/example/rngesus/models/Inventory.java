@@ -3,6 +3,7 @@ package com.example.rngesus.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -23,6 +24,8 @@ public class Inventory {
     @MapKey(name = "name")
     private Map<String, Item> items = new HashMap<>();
 
+    @NotNull
+    @Column(columnDefinition = "DOUBLE DEFAULT 0.0")
     private Double weight = 0.0;
 
     @OneToOne(mappedBy = "inventory", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
