@@ -22,12 +22,14 @@ public class Item {
     @Size(min=3, max=30)
     private String name;
 
+    @Column(columnDefinition = "DOUBLE DEFAULT 0.0")
     private Double weight;
 
     private Double height;
     private Double width;
     private Double depth;
 
+    @Column(columnDefinition = "INTEGER(255) DEFAULT 0")
     private Integer value;
 
     @NotNull
