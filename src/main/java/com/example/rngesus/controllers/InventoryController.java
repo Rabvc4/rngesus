@@ -77,13 +77,13 @@ public class InventoryController {
     }
 
     @RequestMapping(value="/{characterId}/trade", method=RequestMethod.POST)
-    public String processTrade(Model model, @PathVariable int characterId, @ModelAttribute @Valid Inventory inventory, Errors errors) {
+    public String processTrade(Model model, @PathVariable int characterId, @ModelAttribute @Valid TradeForm tradeForm, Errors errors) {
 
         System.out.println("Trade Path Reached");
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Manage Inventory");
-            model.addAttribute("inventory", inventory);
+            model.addAttribute("form", tradeForm);
 
 
             return "inventory/index";
@@ -91,7 +91,7 @@ public class InventoryController {
 
         PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
 
-        characterDao.save(playerCharacter);
+//        characterDao.save(playerCharacter);
 
         return "inventory/index";
     }
