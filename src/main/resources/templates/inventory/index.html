@@ -10,6 +10,8 @@
         <!--<p th:text="${message}" class="lead">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It's built with default Bootstrap components and utilities with little customization.</p>-->
     </div>
 
+    <div th:each="error : *{errors}" class="error"></div>
+
     <div class="container needs-validation">
         <form class="card-deck mb-3 text-center" method="post" th:object="${form}">
             <div class="card mb-4 box-shadow">
@@ -44,7 +46,7 @@
                 <div class="card-header">
                     <h4 th:text="${exchange}" class="my-0 font-weight-normal">Exchange</h4>
                     <div>
-                        <span class="my-0 mx-3"></span>
+                        <span class="my-0 mx-3"><span id="tradeWeight" name="tradeWeight">0</span> lb.</span>
                         <span class="my-0 mx-3">$<span th:field="*{total}" id="total" name="total">0</span></span>
                     </div>
                 </div>
@@ -65,7 +67,7 @@
                         </tbody>
                     </table>
                 <div class="card-body my-0">
-                    <button type="submit" class="btn btn-lg btn-block btn-success" id="exchange" name="exchange"><i class="fa fa-credit-card"> Exchange</i></button>
+                    <button type="submit" class="btn btn-lg btn-block btn-success" id="exchange" name="exchange"><i class="fa fa-credit-card"></i> Exchange</button>
                 </div>
             </div>
 
