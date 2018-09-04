@@ -62,9 +62,14 @@ $(function(){
     $('#addToCart').click(function(event){
         event.preventDefault();
         var href = '/item/details/?id=' + $(this).val();
-
+//        var total = +($('#total').find('.number').text());
+//        var weight = +($('#tradeWeight').find('.number').text());
+        var total = +($('#total').text());
+        var weight = +($('#tradeWeight').text());
 
         $.get(href, function(item, status){
+            $('#total').text(total + item.value)
+            $('#tradeWeight').text(weight + item.weight)
             $('#tradeTable > tbody')
                 .append($('<tr>')
                     .attr('class', 'item ' + item.rarity.toLowerCase())
