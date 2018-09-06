@@ -19,4 +19,8 @@ public enum RarityType {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }
