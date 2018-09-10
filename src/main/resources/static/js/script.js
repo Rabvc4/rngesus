@@ -46,10 +46,14 @@ $(function(){
         var href = '/item/details/?id=' + $(this).attr('id');
 
         $.get(href, function(item, status){
+            $('.itemForm #header')
+                .attr('class', 'modal-header modal-dark ' + item.rarity.toLowerCase())
             $('.itemForm #name').text(item.name);
+            $('.itemForm #rarityType')
+                .text(item.rarity.charAt(0) + item.rarity.substr(1).toLowerCase() + ' ' + item.type);
             $('.itemForm #description').text(item.description);
             $('.itemForm #weight').text(item.weight + ' lb.');
-            $('.itemForm #cost').text(item.value);
+            $('.itemForm #cost').text('$' + item.value);
             $("#addToCart").val(item.id)
         });
 
@@ -72,7 +76,8 @@ $(function(){
             $('#tradeWeight').text(weight + item.weight)
             $('#tradeTable > tbody')
                 .append($('<tr>')
-                    .attr('class', 'item ' + item.rarity.toLowerCase())
+                    .val(item.id)
+                    .attr('class', 'buy border-warning item ' + item.rarity.toLowerCase())
                     .append($('<td>')
                         .text(item.name)
                 )
@@ -85,4 +90,8 @@ $(function(){
             );
         });
     });
+});
+
+$(function capitalize(string){
+
 });

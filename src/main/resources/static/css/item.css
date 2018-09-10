@@ -1,4 +1,12 @@
-.common {
+.buy td:last-child {
+  color: #ffbb33
+}
+
+.sell {
+  color: #00C851 !important;
+}
+
+.common td:first-child, .modal:first-child {
   color: #ffffff;
 }
 
@@ -6,7 +14,7 @@
     background-color: #ffcc80;
 } */
 
-.uncommon {
+.uncommon td:first-child {
     color: #1eff00;
 }
 
@@ -14,7 +22,7 @@
     background-color: #ffcc80;
 } */
 
-.rare {
+.rare td:first-child {
     color: #0070dd;
 }
 
@@ -22,7 +30,7 @@
     background-color: #ffcc80;
 } */
 
-.very_rare {
+.very_rare td:first-child {
     color: #a335ee;
 }
 
@@ -30,7 +38,7 @@
     background-color: #ffcc80;
 } */
 
-.legendary {
+.legendary td:first-child {
     color: #ff8000;
 }
 
@@ -38,8 +46,8 @@
     background-color: #b39ddb;
 } */
 
-.artifact {
-    background-color: #e6cc80;
+.artifact td:first-child, .artifact h4 {
+    color: #e6cc80;
 }
 
 /* .table .artifact:hover {

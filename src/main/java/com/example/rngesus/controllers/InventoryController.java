@@ -1,6 +1,7 @@
 package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.Inventory;
+import com.example.rngesus.models.Item;
 import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.InventoryDao;
@@ -10,9 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Key;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("inventory")
@@ -68,8 +75,13 @@ public class InventoryController {
 
         TradeForm form = new TradeForm(playerCharacter.getInventory(), partnerInventory, playerCharacter.getName(), partnerName);
 
-        model.addAttribute("form", form);
+        form.addItem(itemDao.findById(1).orElseGet(null));
+        form.addItem(itemDao.findById(2).orElseGet(null));
 
+        model.addAttribute("form", form);
+//        TODO - Uncomment adding new inventory
+//        model.addAttribute(new Inventory());
+//        TODO - Uncomment adding new inventory
 
         return "inventory/index";
 
@@ -77,23 +89,46 @@ public class InventoryController {
     }
 
     @RequestMapping(value="/{characterId}/trade", method=RequestMethod.POST)
-    public String processTrade(Model model, @PathVariable int characterId, @ModelAttribute @Valid TradeForm tradeForm, Errors errors) {
+    public String processTrade(Model model, @PathVariable int characterId, @ModelAttribute @Valid TradeForm form, Errors errors) {
 
         System.out.println("Trade Path Reached");
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Manage Inventory");
-            model.addAttribute("form", tradeForm);
+            System.out.println("Form has errors");
 
+            Integer i = 0;
+
+            System.out.println("-------------- Begin Errors --------------");
+            for (ObjectError error : errors.getAllErrors()) {
+                i += 1;
+                System.out.println("Error" + i + ": " + error);
+            }
+            System.out.println("-------------- End Errors --------------");
+
+
+            model.addAttribute("title", "Manage Inventory");
 
             return "inventory/index";
         }
 
-        PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
+
+        System.out.println("No errors");
+        System.out.println("Inventory size: " + form.getItems().size());
+        Iterator it = form.getItems().iterator();
+        while (it.hasNext()) {
+            Item item = (Item)it.next();
+            System.out.println("Item: " + item.getName());
+//            System.out.println(pair.getKey() + " = " + pair.getValue());
+//            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+        System.out.println("End of item loop");
+//        PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
 
 //        characterDao.save(playerCharacter);
 
-        return "inventory/index";
+        return "redirect:/inventory/" + characterId;
     }
+
 
 }

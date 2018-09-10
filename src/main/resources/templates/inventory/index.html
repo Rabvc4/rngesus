@@ -13,16 +13,17 @@
     <div th:each="error : *{errors}" class="error"></div>
 
     <div class="container needs-validation">
-        <form class="card-deck mb-3 text-center" method="post" th:object="${form}">
-            <div class="card mb-4 box-shadow">
+        <div class="card-deck mb-3 text-center">
+            <div class="card bg-dark text-light mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 th:text="${form.characterName}" class="my-0 font-weight-normal">Character Inventory</h4>
+                    <h4 th:text="${form.characterName}" class="border-bottom my-0 font-weight-normal">Character Inventory</h4>
                     <div>
                         <span th:text="${form.characterInventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
+                        <span class="my-0 mx-3">$0</span>
                     </div>
                 </div>
                 <table id="characterTable" class="table table-dark table-striped table-hover">
-                    <thead class="thead-light">
+                    <thead>
                         <tr>
                             <th>Name</th>
                             <th>Weight</th>
@@ -41,47 +42,54 @@
 
 
 
-            <div class="card mb-4 box-shadow">
-
+            <form class="card bg-dark text-light mb-4 box-shadow" th:object="${form}" method="post" th:action="@{/inventory/__${form.characterInventory.getPlayerCharacter().getId()}__/trade}">
                 <div class="card-header">
-                    <h4 th:text="${exchange}" class="my-0 font-weight-normal">Exchange</h4>
+                    <h4 th:text="${exchange}" class="border-bottom my-0 font-weight-normal">Exchange</h4>
                     <div>
-                        <span class="my-0 mx-3"><span id="tradeWeight" name="tradeWeight">0</span> lb.</span>
-                        <span class="my-0 mx-3">$<span th:field="*{total}" id="total" name="total">0</span></span>
+                        <span class="my-0 mx-3"><span id="tradeWeight" th:name="tradeWeight">0</span> lb.</span>
+                        <span class="my-0 mx-3">$<span id="total" th:name="total">0</span></span>
                     </div>
                 </div>
-                    <table id="tradeTable" class="table table-dark table-striped table-hover">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Name</th>
-                                <th>Weight</th>
-                                <th>Cost</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="item, i : ${form.items}">
-                                <td th:text="${item.name}">name</td>
-                                <td th:text="${item.weight + ' lb.'}">weight</td>
-                                <td th:text="'$' + ${item.value}">value</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <fieldset>
+                        <table id="tradeTable" class="table table-dark table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Weight</th>
+                                    <th>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!--<tr th:unless="${#maps.isEmpty(inventory.items)}">-->
+                                <!--<td><input type="text" name="value" th:value="${pr.key}" readonly="true"/></td>-->
+                                <!--<td><input type="text" name="value" th:field="*{inventory.items[__${pr.key}__]}"/></td>-->
+                            <!--</tr>-->
+                                <tr th:each="item, itemStat : ${form.items}">
+                                    <td><input class="border-0 bg-transparent text-light text-nowrap" th:value="${item.name}" readonly></td>
+                                    <td><input class="border-0 bg-transparent text-light text-nowrap" th:value="${item.weight}" readonly></td>
+                                    <td><input class="border-0 bg-transparent text-light text-nowrap" th:value="${item.value}" readonly></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input type="hidden" th:value="${characterName}" th:field="*{characterName}"/>
+                        <input type="hidden" th:value="${partnerName}" th:field="*{partnerName}"/>
+                    </fieldset>
                 <div class="card-body my-0">
-                    <button type="submit" class="btn btn-lg btn-block btn-success" id="exchange" name="exchange"><i class="fa fa-credit-card"></i> Exchange</button>
+                    <button type="submit" class="btn btn-lg btn-block btn-success" id="exchange" name="exchange"><i class="fas fa-coins"></i> Exchange</button>
                 </div>
-            </div>
+            </form>
 
 
 
-            <div class="card mb-4 box-shadow">
+            <div class="card bg-dark text-light mb-4 box-shadow">
                 <div class="card-header">
                     <h4 th:text="${form.partnerName}" class="my-0 font-weight-normal">Partner Inventory</h4>
                     <div>
-                        <span th:text="${form.partnerInventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
+                        <span th:unless="${form.partnerName == 'All Items'}" th:text="${form.partnerInventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
                     </div>
                 </div>
                 <table id="partnerTable" class="table table-dark table-striped table-hover">
-                    <thead class="thead-light">
+                    <thead>
                         <tr>
                             <th>Name</th>
                             <th>Weight</th>
@@ -97,7 +105,7 @@
                     </tbody>
                 </table>
             </div>
-        </form>
+        </div>
     </div>
 
 
@@ -107,27 +115,26 @@
     <div class="itemForm">
             <div class="modal fade" id="itemModal">
                 <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
+                    <div class="modal-content bg-dark text-light">
 
                         <!-- Modal Header -->
-                        <div class="modal-header modal-dark">
-                            <div class="d-flex">
-                                <h4 class="modal-title" id="name" name="name">Modal Heading</h4>
-                                <div id="cost" class="mx-3" name="cost"></div>
-                                <div id="weight" class="mx-3" name="weight"></div>
-                            </div>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div id="header" class="group modal-header modal-dark">
+                            <h4 class="group-item modal-title" id="name" name="name">Name</h4>
+                            <div class="group-item modal-title my-auto" id="rarityType" name="name">Rarity + Type</div>
                         </div>
 
                         <!-- Modal body -->
                         <div class="modal-body" id="description" name="description">
                             Modal body..
                         </div>
-
+                        <div class="align-bottom d-flex">
+                            <div id="cost" class="mx-3" name="cost"></div>
+                            <div id="weight" class="mx-3" name="weight"></div>
+                        </div>
                         <!-- Modal footer -->
                         <div class="modal-footer d-flex justify-content-between">
 
-                            <button class="btn btn-warning" type="submit" data-dismiss="modal" id="addToCart" name="addToCart"><i class="fa fa-cart-plus"> Add to Cart</i></button>
+                            <button type="submit" class="btn btn-warning" data-dismiss="modal" id="addToCart" name="addToCart"><i class="fa fa-cart-plus"></i> Add to Cart</button>
 
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>

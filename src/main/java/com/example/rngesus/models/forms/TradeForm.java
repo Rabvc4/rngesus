@@ -60,6 +60,10 @@ public class TradeForm {
         this.items = items;
     }
 
+    public void addItem(Item items) {
+        this.items.add(items);
+    }
+
     public Integer getTotal() {
         return total;
     }
