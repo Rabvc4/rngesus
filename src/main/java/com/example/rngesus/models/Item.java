@@ -122,25 +122,17 @@ public class Item {
         }
     }
 
-//    public ItemType getType() {
-//        return type;
-//    }
-
-    public String getType() {
-        return type.getName();
+    public ItemType getType() {
+        return type;
     }
 
     public void setType(ItemType type) {
         this.type = type;
     }
 
-    public String getRarity() {
-        return rarity.getName();
+    public RarityType getRarity() {
+        return rarity;
     }
-
-//    public RarityType getRarity() {
-//        return rarity.getName();
-//    }
 
     public void setRarity(RarityType rarity) {
         this.rarity = rarity;
@@ -161,5 +153,4 @@ public class Item {
     public void setInventories(List<Inventory> inventories) {
         this.inventories = inventories;
     }
-
 }
