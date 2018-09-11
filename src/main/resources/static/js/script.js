@@ -49,8 +49,12 @@ $(function(){
             $('.itemForm #header')
                 .attr('class', 'modal-header modal-dark ' + item.rarity.toLowerCase())
             $('.itemForm #name').text(item.name);
-            $('.itemForm #rarityType')
-                .text(item.rarity.charAt(0) + item.rarity.substr(1).toLowerCase() + ' ' + item.type);
+            var details = item.rarity;
+            details += ' ' + item.type;
+            details = details.replace(/\_/g, ' ').toLowerCase();
+            $('.itemForm #itemDetails')
+                .text(details)
+                .addClass('text-capitalize')
             $('.itemForm #description').text(item.description);
             $('.itemForm #weight').text(item.weight + ' lb.');
             $('.itemForm #cost').text('$' + item.value);
@@ -75,8 +79,8 @@ $(function(){
             $('#total').text(total + item.value)
             $('#tradeWeight').text(weight + item.weight)
             $('#tradeTable > tbody')
-                .append($('tr[class="' + 'buy border-warning item ' + item.rarity.toLowerCase() + '"]')
-//                    .attr('class', 'buy border-warning item ' + item.rarity.toLowerCase())
+                .append($('<tr>')
+                    .attr('class', 'buy border-warning item ' + item.rarity.toLowerCase())
                     .append($('<td>')
                         .text(item.name)
                 )
