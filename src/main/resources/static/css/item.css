@@ -6,7 +6,7 @@
   color: #00C851 !important;
 }
 
-.common td:first-child, .modal:first-child {
+.common td:first-child, .common h4 {
   color: #ffffff;
 }
 
@@ -14,7 +14,7 @@
     background-color: #ffcc80;
 } */
 
-.uncommon td:first-child {
+.uncommon td:first-child, .uncommon h4 {
     color: #1eff00;
 }
 
@@ -22,7 +22,7 @@
     background-color: #ffcc80;
 } */
 
-.rare td:first-child {
+.rare td:first-child, .rare h4 {
     color: #0070dd;
 }
 
@@ -30,7 +30,7 @@
     background-color: #ffcc80;
 } */
 
-.very_rare td:first-child {
+.very_rare td:first-child, .very_rare h4 {
     color: #a335ee;
 }
 
@@ -38,7 +38,7 @@
     background-color: #ffcc80;
 } */
 
-.legendary td:first-child {
+.legendary td:first-child, .legendary h4 {
     color: #ff8000;
 }
 
