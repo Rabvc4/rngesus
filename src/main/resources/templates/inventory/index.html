@@ -16,9 +16,9 @@
         <div class="card-deck mb-3 text-center">
             <div class="card bg-dark text-light mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 th:text="${form.characterName}" class="border-bottom my-0 font-weight-normal">Character Inventory</h4>
+                    <h4 th:text="${character.name}" class="border-bottom my-0 font-weight-normal">Character Inventory</h4>
                     <div>
-                        <span th:text="${form.characterInventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
+                        <span th:text="${character.inventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
                         <span class="my-0 mx-3">$0</span>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${form.characterInventory.items}" th:with="item=${item.value}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
+                        <tr th:each="item : ${character.inventory.items}" th:with="item=${item.value}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
                             <td th:text="${item.name}">name</td>
                             <td th:text="${item.weight + ' lb.'}">weight</td>
                             <td th:text="'$' + ${item.value}">value</td>
@@ -42,7 +42,7 @@
 
 
 
-            <form class="card bg-dark text-light mb-4 box-shadow" th:object="${form}" method="post" th:action="@{/inventory/__${form.characterInventory.getPlayerCharacter().getId()}__/trade}">
+            <form class="card bg-dark text-light mb-4 box-shadow" th:object="${form}" method="post" th:action="@{/inventory/__${characterId}__/trade}">
                 <div class="card-header">
                     <h4 th:text="${exchange}" class="border-bottom my-0 font-weight-normal">Exchange</h4>
                     <div>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                     <fieldset>
-                        <table id="tradeTable" class="table table-dark table-striped table-hover">
+                        <table id="tradeTable" class="table table-responsive table-dark table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -59,20 +59,18 @@
                                     <th>Cost</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            <!--<tr th:unless="${#maps.isEmpty(inventory.items)}">-->
-                                <!--<td><input type="text" name="value" th:value="${pr.key}" readonly="true"/></td>-->
-                                <!--<td><input type="text" name="value" th:field="*{inventory.items[__${pr.key}__]}"/></td>-->
-                            <!--</tr>-->
-                                <tr th:each="item, itemStat : ${form.items}">
-                                    <td><input class="border-0 bg-transparent text-light text-nowrap" th:value="${item.name}" readonly></td>
-                                    <td><input class="border-0 bg-transparent text-light text-nowrap" th:value="${item.weight}" readonly></td>
-                                    <td><input class="border-0 bg-transparent text-light text-nowrap" th:value="${item.value}" readonly></td>
+                            <tbody th:with="items = ${form.items}">
+                                <tr th:each="item, itemStat : ${items}" th:class="'buy border-warning item ' + ${#strings.toLowerCase(#strings.replace(name,' ','_'))}">
+                                    <td th:text="${items[__${itemStat.index}__].name}"></td>
+                                    <input type="hidden" th:field="*{items[__${itemStat.index}__].id}" readonly />
+                                    <td th:text="${items[__${itemStat.index}__].weight}"></td>
+                                    <input type="hidden" th:field="*{items[__${itemStat.index}__].description}" readonly />
+                                    <td th:text="${items[__${itemStat.index}__].value}"></td>
                                 </tr>
                             </tbody>
                         </table>
-                        <input type="hidden" th:value="${characterName}" th:field="*{characterName}"/>
-                        <input type="hidden" th:value="${partnerName}" th:field="*{partnerName}"/>
+                        <input type="hidden" th:value="${characterId}" th:field="*{characterId}"/>
+                        <input type="hidden" th:value="${partnerId}" th:field="*{partnerId}"/>
                     </fieldset>
                 <div class="card-body my-0">
                     <button type="submit" class="btn btn-lg btn-block btn-success" id="exchange" name="exchange"><i class="fas fa-coins"></i> Exchange</button>
@@ -83,9 +81,9 @@
 
             <div class="card bg-dark text-light mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 th:text="${form.partnerName}" class="my-0 font-weight-normal">Partner Inventory</h4>
+                    <h4 th:text="${partnerName}" class="my-0 font-weight-normal">Partner Inventory</h4>
                     <div>
-                        <span th:unless="${form.partnerName == 'All Items'}" th:text="${form.partnerInventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
+                        <span th:unless="${partnerName == 'All Items'}" th:text="${partner.inventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
                     </div>
                 </div>
                 <table id="partnerTable" class="table table-dark table-striped table-hover">
@@ -97,7 +95,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${form.partnerInventory.items}" th:with="item=${item.value}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
+                        <tr th:each="item : ${partnerInventory.items}" th:with="item=${item.value}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
                             <td th:text="${item.name}">name</td>
                             <td th:text="${item.weight + ' lb.'}">weight</td>
                             <td th:text="'$' + ${item.value}">value</td>
