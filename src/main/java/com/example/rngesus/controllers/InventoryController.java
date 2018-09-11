@@ -56,15 +56,14 @@ public class InventoryController {
 
         PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
         Inventory partnerInventory = inventoryDao.findById(id).orElse(new Inventory(itemDao.findAll()));
-        String partnerName;
+        String partnerName = "All Items";
 
         if (playerCharacter == null) {
             model.addAttribute("title", "Character Not Found");
             model.addAttribute("message", "The character you're looking for doesn't exist");
 
             return "error";
-        } else if (partnerInventory.getPlayerCharacter() == null) {
-            partnerName = "All Items";
+        } else if (id == 0) {
             model.addAttribute("title", "Buy Items");
             model.addAttribute("exchange", "Purchased Goods");
         } else {
@@ -73,15 +72,19 @@ public class InventoryController {
             model.addAttribute("exchange", "Trade Offered");
         }
 
-        TradeForm form = new TradeForm(playerCharacter.getInventory(), partnerInventory, playerCharacter.getName(), partnerName);
+        model.addAttribute("character", playerCharacter);
+        model.addAttribute("partnerInventory", partnerInventory);
+        model.addAttribute("partnerName", partnerName);
+        TradeForm form = new TradeForm(characterId, id, new ArrayList<Item>());
 
+//        TODO - Delete test items
         form.addItem(itemDao.findById(1).orElseGet(null));
         form.addItem(itemDao.findById(2).orElseGet(null));
+//        TODO - Delete test items
+
 
         model.addAttribute("form", form);
-//        TODO - Uncomment adding new inventory
-//        model.addAttribute(new Inventory());
-//        TODO - Uncomment adding new inventory
+
 
         return "inventory/index";
 
@@ -117,7 +120,8 @@ public class InventoryController {
         Iterator it = form.getItems().iterator();
         while (it.hasNext()) {
             Item item = (Item)it.next();
-            System.out.println("Item: " + item.getName());
+            System.out.println("Item ID: " + item.getId());
+            System.out.println("Item description: " + item.getDescription());
 //            System.out.println(pair.getKey() + " = " + pair.getValue());
 //            it.remove(); // avoids a ConcurrentModificationException
         }
@@ -129,6 +133,5 @@ public class InventoryController {
 
         return "redirect:/inventory/" + characterId;
     }
-
 
 }
