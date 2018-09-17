@@ -31,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${character.inventory.items}" th:with="item=${item.value}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
+                        <tr th:each="item : ${character.inventory.items}" th:with="item=${item.key}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
                             <td th:text="${item.name}">name</td>
                             <td th:text="${item.weight + ' lb.'}">weight</td>
                             <td th:text="'$' + ${item.value}">value</td>
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                     <fieldset>
-                        <table id="tradeTable" class="table table-responsive table-dark table-striped table-hover">
+                        <table id="tradeTable" class="table table-dark table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -95,7 +95,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${partnerInventory.items}" th:with="item=${item.value}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
+                        <tr th:each="item : ${partnerInventory.items}" th:with="item=${item.key}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
                             <td th:text="${item.name}">name</td>
                             <td th:text="${item.weight + ' lb.'}">weight</td>
                             <td th:text="'$' + ${item.value}">value</td>
@@ -108,7 +108,7 @@
 
 
 
-    <!-- The Modal -->
+    <!------------------ The Modal ------------------->
 
     <div class="itemForm">
             <div class="modal fade" id="itemModal">
