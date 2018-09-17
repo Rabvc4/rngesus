@@ -2,7 +2,6 @@ package com.example.rngesus.models;
 
 import com.example.rngesus.models.enumerations.ItemType;
 import com.example.rngesus.models.enumerations.RarityType;
-import javafx.beans.DefaultProperty;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -152,5 +151,23 @@ public class Item {
 
     public void setInventories(List<Inventory> inventories) {
         this.inventories = inventories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+
+        Item item = (Item) o;
+
+        if (getId() != item.getId()) return false;
+        return getName().equals(item.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getName().hashCode();
+        return result;
     }
 }
