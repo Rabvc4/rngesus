@@ -76,13 +76,6 @@ public class InventoryController {
         model.addAttribute("partnerInventory", partnerInventory);
         model.addAttribute("partnerName", partnerName);
         TradeForm form = new TradeForm(characterId, id, new ArrayList<Item>());
-
-//        TODO - Delete test items
-        form.addItem(itemDao.findById(1).orElseGet(null));
-        form.addItem(itemDao.findById(2).orElseGet(null));
-//        TODO - Delete test items
-
-
         model.addAttribute("form", form);
 
 
