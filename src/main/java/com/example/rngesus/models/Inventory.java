@@ -17,12 +17,11 @@ public class Inventory {
 
 //    private HashMap<CurrencyType, Integer> currency = new HashMap<>();
 
-//    @ManyToMany
-//    private List<Item> items = new ArrayList<>();
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    @MapKey(name = "name")
-    private Map<String, Item> items = new HashMap<>();
+    @ElementCollection
+    @CollectionTable(joinColumns = @JoinColumn(name = "inventories_id"))
+    @MapKeyJoinColumn(name = "item_id")
+    @Column(name = "count")
+    private Map<Item, Integer> items = new HashMap<>();
 
     @NotNull
     @Column(columnDefinition = "DOUBLE DEFAULT 0.0")
@@ -47,12 +46,12 @@ public class Inventory {
     }
 
 
-    public Map<String, Item> getItems() {
+    public Map<Item, Integer> getItems() {
         return items;
     }
 
     public void addItem(Item item) {
-        this.items.put(item.getName(), item);
+        this.items.put(item, items.getOrDefault(item, 0) + 1);
         this.weight += item.getWeight();
     }
 
@@ -64,55 +63,22 @@ public class Inventory {
     }
 
     public void removeItem(Item item) {
-        this.items.remove(item.getName(), item);
+        this.items.remove(item);
         this.weight -= item.getWeight();
 //        this.weight = calculateWeight(items);
     }
 
+    public void removeItem(Item item, Integer integer) {
 
-//    public HashMap<Item, Integer> getItems() {
-//        return items;
-//    }
-//
-//    public void addItem(Item item) {
-//        this.items.put(item, items.getOrDefault(item, 1));
-////        this.weight += item.getWeight();
-//        this.weight = calculateWeight(items);
-//    }
-//
-//    public void addItem(Item item, Integer x) {
-//        this.items.put(item, items.getOrDefault(item, 0) + x);
-////        this.weight += item.getWeight();
-//        this.weight = calculateWeight(items);
-//    }
-//
-//    public void removeItem(Item item) {
-//        this.items.remove(item);
-////        this.weight -= item.getWeight();
-//        this.weight = calculateWeight(items);
-//    }
-//
-//    public void removeItem(Item item, Integer x) {
-//        this.items.put(item, items.getOrDefault(item, 0) + x);
-//        this.weight = calculateWeight(items);
-//    }
+        if (items.containsKey(item)) {
+
+        }
+
+        this.weight -= item.getWeight();
 
 
-//    public List<Item> getItems() {
-//        return items;
-//    }
-//
-//    public void setItems(List<Item> items) {
-//        this.items = items;
-//    }
-
-//    public HashMap<CurrencyType, Integer> getCurrency() {
-//        return currency;
-//    }
-//
-//    public void setCurrency(HashMap<CurrencyType, Integer> currency) {
-//        this.currency = currency;
-//    }
+//        this.weight = calculateWeight(items);
+    }
 
     public Double getWeight() {
         return weight;
@@ -131,16 +97,18 @@ public class Inventory {
     }
 
 
-    public Double calculateWeight(Map<String, Item> mp) {
+    public Double calculateWeight(Map<Item, Integer> mp) {
         Double newWeight = 0.0;
         Iterator it = mp.entrySet().iterator();
         while (it.hasNext()) {
 
             Map.Entry pair = (Map.Entry)it.next();
-            String name = (String) pair.getKey();
-            Item item = (Item) pair.getValue();
+//            String name = (String) pair.getKey();
+//            Item item = (Item) pair.getValue();
+            Item item = (Item) pair.getKey();
+            Integer quantity = (Integer) pair.getValue();
 
-            newWeight += item.getWeight();
+            newWeight += item.getWeight() * quantity;
 //            it.remove();
         }
 
