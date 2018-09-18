@@ -44,9 +44,6 @@ public class Item {
     @Size(min = 3, message = "Description must be at least 3 characters long")
     private String description;
 
-    @ManyToMany(mappedBy = "items")
-    private List<Inventory> inventories;
-
 
 
     public Item() {
@@ -143,14 +140,6 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Inventory> getInventories() {
-        return inventories;
-    }
-
-    public void setInventories(List<Inventory> inventories) {
-        this.inventories = inventories;
     }
 
     @Override
