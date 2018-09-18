@@ -18,7 +18,7 @@ public class Inventory {
 //    private HashMap<CurrencyType, Integer> currency = new HashMap<>();
 
     @ElementCollection
-    @CollectionTable(joinColumns = @JoinColumn(name = "inventories_id"))
+    @CollectionTable(joinColumns = @JoinColumn(name = "inventory_id"))
     @MapKeyJoinColumn(name = "item_id")
     @Column(name = "count")
     private Map<Item, Integer> items = new HashMap<>();
