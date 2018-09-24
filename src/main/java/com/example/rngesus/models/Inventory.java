@@ -15,8 +15,6 @@ public class Inventory {
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
-//    private HashMap<CurrencyType, Integer> currency = new HashMap<>();
-
     @ElementCollection
     @CollectionTable(joinColumns = @JoinColumn(name = "inventory_id"))
     @MapKeyJoinColumn(name = "item_id")

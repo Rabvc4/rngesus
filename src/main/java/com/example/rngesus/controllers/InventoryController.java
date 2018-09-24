@@ -72,6 +72,7 @@ public class InventoryController {
             model.addAttribute("exchange", "Trade Offered");
         }
 
+
         model.addAttribute("character", playerCharacter);
         model.addAttribute("partnerInventory", partnerInventory);
         model.addAttribute("partnerName", partnerName);

@@ -1,6 +1,7 @@
 package com.example.rngesus.models.forms;
 
 import com.example.rngesus.models.Item;
+import com.example.rngesus.models.PlayerCharacter;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -14,47 +15,22 @@ public class TradeForm {
     private Integer partnerId;
 
     @NotNull
-    private ArrayList<Item> items;
+    private ArrayList<Item> transaction;
+
+    @NotNull
+    private ArrayList<Item> trader1Items;
+
+    @NotNull
+    private ArrayList<Item> trader2Items;
 
 
-
+    
     public TradeForm() {
 
     }
 
-    public TradeForm(@NotNull Integer characterId, @NotNull Integer partnerId, @NotNull ArrayList<Item> items) {
-        this.characterId = characterId;
-        this.partnerId = partnerId;
-        this.items = items;
+    public TradeForm(@NotNull PlayerCharacter character, @NotNull Integer partnerId, @NotNull ArrayList<Item> items) {
+
     }
 
-
-
-    public ArrayList<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
-    }
-
-    public void addItem(Item items) {
-        this.items.add(items);
-    }
-
-    public Integer getCharacterId() {
-        return characterId;
-    }
-
-    public void setCharacterId(Integer characterId) {
-        this.characterId = characterId;
-    }
-
-    public Integer getPartnerId() {
-        return partnerId;
-    }
-
-    public void setPartnerId(Integer partnerId) {
-        this.partnerId = partnerId;
-    }
 }
