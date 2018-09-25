@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -168,7 +167,7 @@ public class CreateController {
         User user = userDao.findByUsername(username).get(0);
 
         if (user != null) {
-            item.setCreatedBy(user);
+            item.setCreator(user);
         } else {
             return "redirect:/user/login";
         }
