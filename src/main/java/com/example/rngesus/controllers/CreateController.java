@@ -155,7 +155,7 @@ public class CreateController {
     }
 
     @RequestMapping(value = "item", method = RequestMethod.POST)
-    public String processCreateItem(Model model, @ModelAttribute @Valid Item item, Errors errors) {
+    public String processCreateItem(Model model, @ModelAttribute @Valid Item item, Errors errors, @CookieValue("user") String username) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Create Item");
@@ -163,6 +163,14 @@ public class CreateController {
             model.addAttribute("rarityTypes", RarityType.values());
 
             return "create/item";
+        }
+
+        User user = userDao.findByUsername(username).get(0);
+
+        if (user != null) {
+            item.setCreatedBy(user);
+        } else {
+            return "redirect:/user/login";
         }
 
         itemDao.save(item);
