@@ -19,7 +19,13 @@
                     <h4 th:text="${character.name}" class="border-bottom my-0 font-weight-normal">Character Inventory</h4>
                     <div>
                         <span th:text="${character.inventory.weight + ' lb.'}" class="my-0 mx-3">0</span>
-                        <span class="my-0 mx-3">$0</span>
+                    </div>
+                    <div>
+                        <div th:each="item : ${character.inventory.items}"
+                              th:if="${item.key.type == T(com.example.rngesus.models.enumerations.ItemType).CURRENCY}">
+                            <span th:class="'item ' + ${#strings.toLowerCase(item.key.name)}"><i class="fas fa-coins"></i></span>
+                            <span th:text="${item.value}" th:id="${item.key.id}">quantity</span>
+                        </div>
                     </div>
                 </div>
                 <table id="characterTable" class="table table-dark table-striped table-hover">
@@ -27,14 +33,18 @@
                         <tr>
                             <th>Name</th>
                             <th>Weight</th>
-                            <th>Cost</th>
+                            <th>Qty</th>
+                            <th>Value</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${character.inventory.items}" th:with="item=${item.key}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
-                            <td th:text="${item.name}">name</td>
-                            <td th:text="${item.weight + ' lb.'}">weight</td>
-                            <td th:text="'$' + ${item.value}">value</td>
+                        <tr th:each="item : ${character.inventory.items}"
+                            th:unless="${item.key.type == T(com.example.rngesus.models.enumerations.ItemType).CURRENCY}"
+                            th:class="'item ' + ${#strings.toLowerCase(item.key.rarity)}" th:id="${item.key.id}">
+                            <td th:text="${item.key.name}">name</td>
+                            <td th:text="${item.key.weight + ' lb.'}">weight</td>
+                            <td th:text="${item.value}">quantity</td>
+                            <td th:text="'$' + ${item.key.value}">value</td>
                         </tr>
                     </tbody>
                 </table>
@@ -56,11 +66,13 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Weight</th>
-                                    <th>Cost</th>
+                                    <th>Qty</th>
+                                    <th>Value</th>
                                 </tr>
                             </thead>
                             <tbody th:with="items = ${form.items}">
-                                <tr th:each="item, itemStat : ${items}" th:class="'buy border-warning item ' + ${#strings.toLowerCase(#strings.replace(name,' ','_'))}">
+                                <tr th:each="item, itemStat : ${items}"
+                                    th:class="'buy border-warning item ' + ${#strings.toLowerCase(#strings.replace(name,' ','_'))}">
                                     <td th:text="${items[__${itemStat.index}__].name}"></td>
                                     <input type="hidden" th:field="*{items[__${itemStat.index}__].id}" readonly />
                                     <td th:text="${items[__${itemStat.index}__].weight}"></td>
@@ -91,11 +103,15 @@
                         <tr>
                             <th>Name</th>
                             <th>Weight</th>
-                            <th>Cost</th>
+                            <th>Value</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="item : ${partnerInventory.items}" th:with="item=${item.key}" th:class="'item ' + ${#strings.toLowerCase(item.rarity)}" th:id="${item.id}">
+                        <tr th:each="item : ${partnerInventory.items}"
+                            th:unless="${item.key.type == T(com.example.rngesus.models.enumerations.ItemType).CURRENCY}"
+                            th:with="item=${item.key}"
+                            th:class="'item ' + ${#strings.toLowerCase(item.rarity)}"
+                            th:id="${item.id}">
                             <td th:text="${item.name}">name</td>
                             <td th:text="${item.weight + ' lb.'}">weight</td>
                             <td th:text="'$' + ${item.value}">value</td>

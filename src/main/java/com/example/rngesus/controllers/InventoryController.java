@@ -6,6 +6,7 @@ import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.InventoryDao;
 import com.example.rngesus.models.data.ItemDao;
+import com.example.rngesus.models.enumerations.ItemType;
 import com.example.rngesus.models.forms.TradeForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Key;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("inventory")
@@ -65,66 +63,65 @@ public class InventoryController {
             return "error";
         } else if (id == 0) {
             model.addAttribute("title", "Buy Items");
-            model.addAttribute("exchange", "Purchased Goods");
+            model.addAttribute("exchange", "Shopping Cart");
         } else {
             partnerName = partnerInventory.getPlayerCharacter().getName();
             model.addAttribute("title", "Trade Items");
             model.addAttribute("exchange", "Trade Offered");
         }
 
+//        List<Item> currencies = itemDao.getCurrency(characterId);
+//        Inventory nonCurrency = inventoryDao.getNonCurrency(characterId).get(0);
+
         model.addAttribute("character", playerCharacter);
+//        model.addAttribute("playerCurrency", currencies);
+//        model.addAttribute("playerItems", nonCurrency);
         model.addAttribute("partnerInventory", partnerInventory);
         model.addAttribute("partnerName", partnerName);
         TradeForm form = new TradeForm(characterId, id, new ArrayList<Item>());
         model.addAttribute("form", form);
 
-
         return "inventory/index";
 
-
     }
 
-    @RequestMapping(value="/{characterId}/trade", method=RequestMethod.POST)
-    public String processTrade(Model model, @PathVariable int characterId, @ModelAttribute @Valid TradeForm form, Errors errors) {
-
-        System.out.println("Trade Path Reached");
-
-        if (errors.hasErrors()) {
-            System.out.println("Form has errors");
-
-            Integer i = 0;
-
-            System.out.println("-------------- Begin Errors --------------");
-            for (ObjectError error : errors.getAllErrors()) {
-                i += 1;
-                System.out.println("Error" + i + ": " + error);
-            }
-            System.out.println("-------------- End Errors --------------");
 
 
-            model.addAttribute("title", "Manage Inventory");
+    @RequestMapping(value = "/{characterId}/add/{itemId}", method = RequestMethod.GET)
+    public String viewInventory(Model model, @PathVariable int characterId, @PathVariable int itemId, @RequestParam(defaultValue = "1") int qty) {
 
-            return "inventory/index";
+        Item item = itemDao.findById(itemId).orElseGet(null);
+        Inventory inventory = inventoryDao.findByPlayerCharacterId(characterId).get(0);
+
+        if (item == null) {
+        } else if(inventory == null) {
+        } else {
+            inventory.addItems(item, qty);
+            inventoryDao.save(inventory);
         }
-
-
-        System.out.println("No errors");
-        System.out.println("Inventory size: " + form.getItems().size());
-        Iterator it = form.getItems().iterator();
-        while (it.hasNext()) {
-            Item item = (Item)it.next();
-            System.out.println("Item ID: " + item.getId());
-            System.out.println("Item description: " + item.getDescription());
-//            System.out.println(pair.getKey() + " = " + pair.getValue());
-//            it.remove(); // avoids a ConcurrentModificationException
-        }
-
-        System.out.println("End of item loop");
-//        PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
-
-//        characterDao.save(playerCharacter);
 
         return "redirect:/inventory/" + characterId;
+
     }
+
+
+
+    @RequestMapping(value = "/{characterId}/weight", method = RequestMethod.GET)
+    public String verifyWeight(Model model, @PathVariable int characterId) {
+
+        Inventory inventory = inventoryDao.findByPlayerCharacterId(characterId).get(0);
+
+
+        if(inventory == null) {
+        } else {
+            inventory.calculateWeight();
+
+            inventoryDao.save(inventory);
+        }
+
+        return "redirect:/inventory/" + characterId;
+
+    }
+
 
 }

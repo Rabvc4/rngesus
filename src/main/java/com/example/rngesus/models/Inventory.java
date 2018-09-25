@@ -59,13 +59,24 @@ public class Inventory {
         for (Item item : items) {
             addItem(item);
         }
-//        this.weight = calculateWeight(this.items);
+//        this.weight = calculateWeight();
+    }
+
+    public void addItems(Item item, Integer integer) {
+
+//        TODO - Delete test code
+        System.out.println("Add Items Qty: " + integer);
+        System.out.println("Add Items getOrDefault: " + items.getOrDefault(item,0));
+        System.out.println("Add Items getOrDefault + Qty: " + items.getOrDefault(item,0) + integer);
+//        TODO - Delete test code
+        this.items.put(item, items.getOrDefault(item, 0) + integer);
+        this.weight += (item.getWeight() * integer);
     }
 
     public void removeItem(Item item) {
         this.items.remove(item);
         this.weight -= item.getWeight();
-//        this.weight = calculateWeight(items);
+//        calculateWeight();
     }
 
     public void removeItem(Item item, Integer integer) {
@@ -77,7 +88,7 @@ public class Inventory {
         this.weight -= item.getWeight();
 
 
-//        this.weight = calculateWeight(items);
+//        calculateWeight();
     }
 
     public Double getWeight() {
@@ -97,9 +108,9 @@ public class Inventory {
     }
 
 
-    public Double calculateWeight(Map<Item, Integer> mp) {
+    public void calculateWeight() {
         Double newWeight = 0.0;
-        Iterator it = mp.entrySet().iterator();
+        Iterator it = this.items.entrySet().iterator();
         while (it.hasNext()) {
 
             Map.Entry pair = (Map.Entry)it.next();
@@ -112,7 +123,7 @@ public class Inventory {
 //            it.remove();
         }
 
-        return newWeight;
+        this.weight = newWeight;
     }
 
 }
