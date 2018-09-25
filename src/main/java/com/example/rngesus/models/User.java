@@ -1,5 +1,6 @@
 package com.example.rngesus.models;
 
+import com.example.rngesus.models.enumerations.ItemType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -36,6 +37,10 @@ public class User {
     @OneToMany
     @JoinColumn(name = "user_id")
     private List<PlayerCharacter> playerCharacters = new ArrayList<>();
+
+    @OneToMany
+    @JoinColumn(name = "creator_id")
+    private List<Item> createdItems = new ArrayList<>();
 
     public User() { }
 
@@ -77,4 +82,21 @@ public class User {
         return playerCharacters;
     }
 
+    public List<Item> getCreatedItems() {
+        return createdItems;
+    }
+
+    public List<Item> getCreatedItemsByType(ItemType type) {
+
+        System.out.println("Created Items ran");
+        List<Item> itemsOfType = new ArrayList<>();
+
+        for (Item item : createdItems) {
+            if (item.getType() == type) {
+                itemsOfType.add(item);
+            }
+        }
+
+        return itemsOfType;
+    }
 }

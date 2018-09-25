@@ -1,10 +1,7 @@
 package com.example.rngesus.models.data;
 
-import com.example.rngesus.models.Inventory;
 import com.example.rngesus.models.Item;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
