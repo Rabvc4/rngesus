@@ -7,7 +7,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 public class Item {
@@ -44,7 +43,8 @@ public class Item {
     @Size(min = 3, message = "Description must be at least 3 characters long")
     private String description;
 
-    private User createdBy;
+    @ManyToOne
+    private User creator;
 
 
 
@@ -144,12 +144,12 @@ public class Item {
         this.description = description;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setCreatedBy(User createdBy) {
-        this.createdBy = createdBy;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     @Override
