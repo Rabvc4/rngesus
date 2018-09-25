@@ -3,6 +3,7 @@ package com.example.rngesus.controllers;
 import com.example.rngesus.models.Inventory;
 import com.example.rngesus.models.Item;
 import com.example.rngesus.models.PlayerCharacter;
+import com.example.rngesus.models.User;
 import com.example.rngesus.models.data.CharacterDao;
 import com.example.rngesus.models.data.InventoryDao;
 import com.example.rngesus.models.data.ItemDao;
@@ -70,8 +71,13 @@ public class InventoryController {
             model.addAttribute("exchange", "Trade Offered");
         }
 
-//        List<Item> currencies = itemDao.getCurrency(characterId);
-//        Inventory nonCurrency = inventoryDao.getNonCurrency(characterId).get(0);
+
+        User user = playerCharacter.getUser();
+        for (Item item : user.getCreatedItemsByType(ItemType.CURRENCY)) {
+            System.out.println(item.getName());
+        }
+
+
 
         model.addAttribute("character", playerCharacter);
 //        model.addAttribute("playerCurrency", currencies);
@@ -86,7 +92,7 @@ public class InventoryController {
     }
 
 
-
+//    TODO - delete helper functions
     @RequestMapping(value = "/{characterId}/add/{itemId}", method = RequestMethod.GET)
     public String viewInventory(Model model, @PathVariable int characterId, @PathVariable int itemId, @RequestParam(defaultValue = "1") int qty) {
 
@@ -122,6 +128,6 @@ public class InventoryController {
         return "redirect:/inventory/" + characterId;
 
     }
-
+//    TODO - delete helper functions
 
 }
