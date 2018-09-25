@@ -46,6 +46,7 @@ public class ItemController {
     }
 
 
+
     @ResponseBody
     @RequestMapping(value = "/details", method = RequestMethod.GET)
     public Item details(@RequestParam int id) {
