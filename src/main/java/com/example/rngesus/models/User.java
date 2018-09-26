@@ -87,8 +87,6 @@ public class User {
     }
 
     public List<Item> getCreatedItemsByType(ItemType type) {
-
-        System.out.println("Created Items ran");
         List<Item> itemsOfType = new ArrayList<>();
 
         for (Item item : createdItems) {
