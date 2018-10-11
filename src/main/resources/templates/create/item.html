@@ -41,6 +41,15 @@
             <textarea class="form-control" th:field="*{description}" notempty></textarea>
             <span th:errors="*{description}" class="error"></span>
         </div>
+
+        <div class="row form-group">
+            <div class="col-md-6 mb-3">
+                <label th:for="value">Value</label>
+                <input type="number" class="form-control" th:field="*{value}" id="value" placeholder="0" value="" />
+                <span th:errors="*{value}" class="error"></span>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-8 order-md-1">
                 <h4 class="mb-3">Dimensions</h4>
@@ -71,15 +80,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="row form-group">
-            <div class="col-md-6 mb-3">
-                <label th:for="value">Value</label>
-                <input type="number" class="form-control" th:field="*{value}" id="value" placeholder="0" value="" />
-                <span th:errors="*{value}" class="error"></span>
-            </div>
-        </div>
-
 
 
         <span class="error" th:text="${message}"></span>
