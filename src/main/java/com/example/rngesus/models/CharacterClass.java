@@ -1,11 +1,13 @@
 package com.example.rngesus.models;
 
 import com.example.rngesus.models.enumerations.HitDiceType;
+import com.example.rngesus.models.enumerations.SkillType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,15 +43,14 @@ public class CharacterClass {
     private String savingThrows;
 
     @NotNull
-    @Size(min=3, max=100)
-    private String skills;
+    private ArrayList<SkillType> skills;
 
     @ManyToMany(mappedBy = "classes")
     private List<PlayerCharacter> playerCharacters;
 
     public CharacterClass() { }
 
-    public CharacterClass(String name, HitDiceType hitDice, String armorProficiency, String weaponProficiency, String tools, String savingThrows, String skills) {
+    public CharacterClass(String name, HitDiceType hitDice, String armorProficiency, String weaponProficiency, String tools, String savingThrows, ArrayList<SkillType> skills) {
         this.name = name;
         this.hitDice = hitDice;
         this.armorProficiency = armorProficiency;
@@ -103,11 +104,11 @@ public class CharacterClass {
         this.savingThrows = savingThrows;
     }
 
-    public String getSkills() {
+    public ArrayList<SkillType> getSkills() {
         return skills;
     }
 
-    public void setSkills(String skills) {
+    public void setSkills(ArrayList<SkillType> skills) {
         this.skills = skills;
     }
 
