@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h1 th:text="${title}">Default Title</h1>
+
+    <div th:if="${class}" class="list-group">
+        <h3>Class Features</h3>
+            <div class="font-weight-bold list-group">Hit Points</div>
+            <div th:if="${class.hitDice}" class="list-group" th:text="'Hit Points: ' + ${class.hitDice}"></div>
+        <h3>Proficiencies</h3>
+            <div th:if="${class.skills}">
+                <div class="list-group" th:each="skill : ${class.skills}" th:text="${skill.name}"></div>
+            </div>
+    </div>
+
+
+
+
+
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>
