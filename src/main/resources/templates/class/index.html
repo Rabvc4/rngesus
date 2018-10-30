@@ -8,6 +8,14 @@
 
     <ul>
         <li th:each="class : ${classes}">
+            <a th:href="'/class/' + ${class.name}" th:text="${class.name}"></a>
+        </li>
+    </ul>
+
+    <h3>Characters by Class</h3>
+
+    <ul>
+        <li th:each="class : ${classes}">
             <a th:href="'/character/class?id=' + ${class.id}" th:text="${class.name}"></a>
         </li>
     </ul>
