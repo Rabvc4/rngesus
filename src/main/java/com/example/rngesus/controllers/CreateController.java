@@ -2,10 +2,7 @@ package com.example.rngesus.controllers;
 
 import com.example.rngesus.models.*;
 import com.example.rngesus.models.data.*;
-import com.example.rngesus.models.enumerations.HitDiceType;
-import com.example.rngesus.models.enumerations.ItemType;
-import com.example.rngesus.models.enumerations.RarityType;
-import com.example.rngesus.models.enumerations.SkillType;
+import com.example.rngesus.models.enumerations.*;
 import com.example.rngesus.models.forms.CreateCharacterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -101,6 +98,7 @@ public class CreateController {
         model.addAttribute("title", "Create Class");
         model.addAttribute("hitDiceTypes", HitDiceType.values());
         model.addAttribute("skillTypes", SkillType.values());
+        model.addAttribute("savingThrows", AbilityScoreType.values());
 
         return "create/class";
     }
