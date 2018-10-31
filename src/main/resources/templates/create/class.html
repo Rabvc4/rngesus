@@ -37,11 +37,18 @@
             <span th:errors="*{tools}" class="error"></span>
         </div>
         <div class="form-group">
-            <label th:for="savingThrows">Saving Throws</label>
-            <input class="form-control" th:field="*{savingThrows}" />
+            <label>Saving Throws</label>
+            <ul>
+                <li th:each="save : ${savingThrows}">
+                    <input type="checkbox" th:field="*{savingThrows}" th:value="${save}" />
+                    <label th:for="${#ids.prev('savingThrows')}"
+                           th:text="${save.name}">Heating</label>
+                </li>
+            </ul>
             <span th:errors="*{savingThrows}" class="error"></span>
         </div>
         <div class="form-group">
+            <label>Class Skills</label>
             <ul>
                 <li th:each="skill : ${skillTypes}">
                     <input type="checkbox" th:field="*{skills}" th:value="${skill}" />
@@ -49,6 +56,7 @@
                            th:text="${skill.name}">Heating</label>
                 </li>
             </ul>
+            <span th:errors="*{skills}" class="error"></span>
         </div>
         <span class="error" th:text="${message}"></span>
 
