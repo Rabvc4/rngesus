@@ -1,5 +1,6 @@
 package com.example.rngesus.models;
 
+import com.example.rngesus.models.enumerations.AbilityScoreType;
 import com.example.rngesus.models.enumerations.HitDiceType;
 import com.example.rngesus.models.enumerations.SkillType;
 import org.hibernate.annotations.GenericGenerator;
@@ -39,8 +40,7 @@ public class CharacterClass {
     private String tools;
 
     @NotNull
-    @Size(min=6, max=12)
-    private String savingThrows;
+    private ArrayList<AbilityScoreType> savingThrows;
 
     @NotNull
     private ArrayList<SkillType> skills;
@@ -50,7 +50,7 @@ public class CharacterClass {
 
     public CharacterClass() { }
 
-    public CharacterClass(String name, HitDiceType hitDice, String armorProficiency, String weaponProficiency, String tools, String savingThrows, ArrayList<SkillType> skills) {
+    public CharacterClass(String name, HitDiceType hitDice, String armorProficiency, String weaponProficiency, String tools, ArrayList<AbilityScoreType> savingThrows, ArrayList<SkillType> skills) {
         this.name = name;
         this.hitDice = hitDice;
         this.armorProficiency = armorProficiency;
@@ -96,11 +96,11 @@ public class CharacterClass {
         this.tools = tools;
     }
 
-    public String getSavingThrows() {
+    public ArrayList<AbilityScoreType> getSavingThrows() {
         return savingThrows;
     }
 
-    public void setSavingThrows(String savingThrows) {
+    public void setSavingThrows(ArrayList<AbilityScoreType> savingThrows) {
         this.savingThrows = savingThrows;
     }
 
@@ -110,6 +110,14 @@ public class CharacterClass {
 
     public void setSkills(ArrayList<SkillType> skills) {
         this.skills = skills;
+    }
+
+    public void addSkill(SkillType skill) {
+        this.skills.add(skill);
+    }
+
+    public void addSkills(ArrayList<SkillType> skills) {
+        this.skills.addAll(skills);
     }
 
     public HitDiceType getHitDice() {
