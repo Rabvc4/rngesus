@@ -99,6 +99,8 @@ public class CreateController {
         model.addAttribute("hitDiceTypes", HitDiceType.values());
         model.addAttribute("skillTypes", SkillType.values());
         model.addAttribute("savingThrows", AbilityScoreType.values());
+        model.addAttribute("armorProficiencies", ArmorProficiency.values());
+        model.addAttribute("weaponProficiencies", WeaponProficiency.values());
 
         return "create/class";
     }
@@ -110,6 +112,9 @@ public class CreateController {
             model.addAttribute("title", "Create Class");
             model.addAttribute("hitDiceTypes", HitDiceType.values());
             model.addAttribute("skillTypes", SkillType.values());
+            model.addAttribute("savingThrows", AbilityScoreType.values());
+            model.addAttribute("armorProficiencies", ArmorProficiency.values());
+            model.addAttribute("weaponProficiencies", WeaponProficiency.values());
 
             return "create/class";
         }
