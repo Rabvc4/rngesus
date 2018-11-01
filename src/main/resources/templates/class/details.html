@@ -9,15 +9,28 @@
 
     <div th:if="${class}" class="list-group">
         <h3>Class Features</h3>
+
         <div class="mb-3">
             <h5 class="font-weight-bold">Hit Points</h5>
+
             <div class="d-flex">
                 <span class="font-weight-bold">Hit Dice: </span>
                 <div th:if="${class.hitDice}" class="ml-1" th:text="${class.hitDice}"></div>
             </div>
+
         </div>
         <div class="mb-3">
+
             <h5 class="font-weight-bold">Proficiencies</h5>
+
+            <div th:if="${class.armorProficiency}" class="list-group flex-row text-center">
+                <label class="font-weight-bold">Armor: </label>
+                <div class="list-group ml-1" th:each="armor, index : ${class.armorProficiency}" th:text="!${index.last} ? ${armor.name} + ',': ${armor.name}"></div>
+            </div>
+            <div th:if="${class.weaponProficiency}" class="list-group flex-row text-center">
+                <label class="font-weight-bold">Weapons: </label>
+                <div class="list-group ml-1" th:each="weapon, index : ${class.weaponProficiency}" th:text="!${index.last} ? ${weapon.name} + ',': ${weapon.name}"></div>
+            </div>
             <div th:if="${class.savingThrows}" class="list-group flex-row text-center">
                 <label class="font-weight-bold">Saving Throws: </label>
                 <div class="list-group ml-1" th:each="save, index : ${class.savingThrows}" th:text="!${index.last} ? ${save.name} + ',': ${save.name}"></div>
