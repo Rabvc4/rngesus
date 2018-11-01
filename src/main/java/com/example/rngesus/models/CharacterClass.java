@@ -1,8 +1,6 @@
 package com.example.rngesus.models;
 
-import com.example.rngesus.models.enumerations.AbilityScoreType;
-import com.example.rngesus.models.enumerations.HitDiceType;
-import com.example.rngesus.models.enumerations.SkillType;
+import com.example.rngesus.models.enumerations.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -28,12 +26,10 @@ public class CharacterClass {
     private HitDiceType hitDice;
 
     @NotNull
-    @Size(min=3, max=100)
-    private String armorProficiency;
+    private ArrayList<ArmorProficiency> armorProficiency;
 
     @NotNull
-    @Size(min=3, max=100)
-    private String weaponProficiency;
+    private ArrayList<WeaponProficiency> weaponProficiency;
 
     @NotNull
     @Size(min=3, max=100)
@@ -50,7 +46,7 @@ public class CharacterClass {
 
     public CharacterClass() { }
 
-    public CharacterClass(String name, HitDiceType hitDice, String armorProficiency, String weaponProficiency, String tools, ArrayList<AbilityScoreType> savingThrows, ArrayList<SkillType> skills) {
+    public CharacterClass(String name, HitDiceType hitDice, ArrayList<ArmorProficiency> armorProficiency, ArrayList<WeaponProficiency> weaponProficiency, String tools, ArrayList<AbilityScoreType> savingThrows, ArrayList<SkillType> skills) {
         this.name = name;
         this.hitDice = hitDice;
         this.armorProficiency = armorProficiency;
@@ -72,19 +68,19 @@ public class CharacterClass {
         this.name = name;
     }
 
-    public String getArmorProficiency() {
+    public ArrayList<ArmorProficiency> getArmorProficiency() {
         return armorProficiency;
     }
 
-    public void setArmorProficiency(String armorProficiency) {
+    public void setArmorProficiency(ArrayList<ArmorProficiency> armorProficiency) {
         this.armorProficiency = armorProficiency;
     }
 
-    public String getWeaponProficiency() {
+    public ArrayList<WeaponProficiency> getWeaponProficiency() {
         return weaponProficiency;
     }
 
-    public void setWeaponProficiency(String weaponProficiency) {
+    public void setWeaponProficiency(ArrayList<WeaponProficiency> weaponProficiency) {
         this.weaponProficiency = weaponProficiency;
     }
 
