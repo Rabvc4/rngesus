@@ -2,7 +2,6 @@ package com.example.rngesus.models.enumerations;
 
 public enum ArmorProficiency {
 
-    NONE ("None"),
     LIGHT_ARMOR ("Light Armor"),
     MEDIUM_ARMOR ("Medium Armor"),
     HEAVY_ARMOR ("Heavy Armor"),
