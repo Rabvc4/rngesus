@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="bg-light">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2 th:text="${title}">Default Title</h2>
+        </div>
+
+        <form class="needs-validation" method="post" th:object="${classLevel}">
+            <div class="row">
+                <div class="col-md-8 order-md-1">
+                    <h4 class="mb-3">Base Class</h4>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label th:for="baseClass">Class</label>
+                            <select class="custom-select d-block w-100" name="baseClass" id="baseClass" required>
+                                <option value="" selected disabled>Please select</option>
+                                <option th:each="class : ${classes}"
+                                        th:value="${class.id}"
+                                        th:text="${class.name}"
+                                        th:selected="${class=='Please select'}">
+                                </option>
+                            </select>
+                            <span th:errors="*{baseClass}" class="error"></span>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label th:for="level">Level</label>
+                            <select class="custom-select d-block w-100" name="level" id="level" required>
+                                <option value="" selected disabled>-</option>
+                                <option th:each="level : ${levels}"
+                                        th:value="${level}"
+                                        th:text="${level.level}"
+                                        th:selected="${level=='-'}">
+                                </option>
+                            </select>
+                            <span th:errors="*{level}" class="error"></span>
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label th:for="features">Features</label>
+                            <input type="text" class="form-control" th:field="*{features}" id="features" placeholder="" value="" required />
+                            <span th:errors="*{features}" class="error"></span>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label th:for="proficiencyBonus">Proficiency Bonus</label>
+                            <select class="custom-select d-block w-50" name="proficiencyBonus" id="proficiencyBonus" required>
+                                <option value="" selected disabled>-</option>
+                                <option th:each="level : ${levels}"
+                                        th:value="${level}"
+                                        th:text="'+' + ${level.level}"
+                                        th:selected="${level=='-'}">
+                                </option>
+                            </select>
+                            <span th:errors="*{proficiencyBonus}" class="error"></span>
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+
+                    <h4 class="mb-3">Spells</h4>
+                    <div class="row">
+                        <div class="col-md-2 mb-3">
+                            <label th:for="proficiencyBonus">Cantrips</label>
+                            <select class="custom-select d-block w-100" name="proficiencyBonus" id="proficiencyBonus" required>
+                                <option value="" selected disabled>-</option>
+                                <option th:each="level : ${levels}"
+                                        th:value="${level}"
+                                        th:text="${level.level}"
+                                        th:selected="${level=='-'}">
+                                </option>
+                            </select>
+                            <span th:errors="*{proficiencyBonus}" class="error"></span>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label th:for="proficiencyBonus">1st</label>
+                            <select class="custom-select d-block w-100" name="proficiencyBonus" id="proficiencyBonus" required>
+                                <option value="" selected disabled>-</option>
+                                <option th:each="level : ${levels}"
+                                        th:value="${level}"
+                                        th:text="${level.level}"
+                                        th:selected="${level=='-'}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label th:for="proficiencyBonus">2nd</label>
+                            <select class="custom-select d-block w-100" name="proficiencyBonus" id="proficiencyBonus" required>
+                                <option value="" selected disabled>-</option>
+                                <option th:each="level : ${levels}"
+                                        th:value="${level}"
+                                        th:text="${level.level}"
+                                        th:selected="${level=='-'}">
+                                </option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label th:for="proficiencyBonus">3rd</label>
+                            <select class="custom-select d-block w-100" name="proficiencyBonus" id="proficiencyBonus" required>
+                                <option value="" selected disabled>-</option>
+                                <option th:each="level : ${levels}"
+                                        th:value="${level}"
+                                        th:text="${level.level}"
+                                        th:selected="${level=='-'}">
+                                </option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label th:for="proficiencyBonus">4th</label>
+                            <select class="custom-select d-block w-100" name="proficiencyBonus" id="proficiencyBonus" required>
+                                <option value="" selected disabled>-</option>
+                                <option th:each="level : ${levels}"
+                                        th:value="${level}"
+                                        th:text="${level.level}"
+                                        th:selected="${level=='-'}">
+                                </option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <label th:for="proficiencyBonus">5th</label>
+                            <select class="custom-select d-block w-100" name="proficiencyBonus" id="proficiencyBonus" required>
+                                <option value="" selected disabled>-</option>
+                                <option th:each="level : ${levels}"
+                                        th:value="${level}"
+                                        th:text="${level.level}"
+                                        th:selected="${level=='-'}">
+                                </option>
+                            </select>
+
+                        </div>
+                        <span th:errors="*{spells}" class="error"></span>
+                    </div>
+                    <hr class="mb-4">
+
+
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Create Class Level</button>
+
+
+                </div>
+            </div>
+
+
+
+
+        </form>
+
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+
+        </footer>
+
+    </div>
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>
