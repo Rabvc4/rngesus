@@ -4,6 +4,7 @@ import com.example.rngesus.models.CharacterClass;
 import com.example.rngesus.models.PlayerCharacter;
 import com.example.rngesus.models.Race;
 import com.example.rngesus.models.enumerations.AbilityScoreType;
+import com.example.rngesus.models.enumerations.ExperienceLevel;
 
 import javax.persistence.Embedded;
 import javax.validation.constraints.NotNull;
@@ -18,6 +19,9 @@ public class CreateCharacterForm {
 
     @NotNull
     private int classId;
+
+    @NotNull
+    private int level;
 
     @NotNull
     private int strength;
@@ -45,6 +49,10 @@ public class CreateCharacterForm {
     private Iterable<CharacterClass> classes;
 
     private AbilityScoreType[] abilities = AbilityScoreType.values();
+
+    private ExperienceLevel[] levels = ExperienceLevel.values();
+
+
 
     public CreateCharacterForm() {
     }
@@ -79,6 +87,14 @@ public class CreateCharacterForm {
         this.classId = classId;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public PlayerCharacter getPlayerCharacter() {
         return playerCharacter;
     }
@@ -101,6 +117,14 @@ public class CreateCharacterForm {
 
     public void setAbilities(AbilityScoreType[] abilities) {
         this.abilities = abilities;
+    }
+
+    public ExperienceLevel[] getLevels() {
+        return levels;
+    }
+
+    public void setLevels(ExperienceLevel[] levels) {
+        this.levels = levels;
     }
 
     public int getStrength() {
