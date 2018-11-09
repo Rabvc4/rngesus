@@ -40,6 +40,48 @@
                 <div class="list-group ml-1" th:each="skill, index : ${class.skills}" th:text="!${index.last} ? ${skill.name} + ',': ${skill.name}"></div>
             </div>
         </div>
+
+        <div class="mb-3">
+
+            <h5 class="font-weight-bold" th:text="${class.name} + ' Table'">Class Table</h5>
+
+            <table id="classTable" class="table table-light table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Level</th>
+                    <th>Proficiency Bonus</th>
+                    <th>Features</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="level : ${class.classLevels}" th:with="level=${level.value}">
+                    <td th:text="${level.level}">name</td>
+                    <td th:text="${level.proficiencyBonus}">weight</td>
+                    <td th:text="${level.features}">value</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!--<table id="classTable" class="table table-dark table-striped table-hover">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                    <!--<th>Level</th>-->
+                    <!--<th>Proficiency Bonus</th>-->
+                    <!--<th>Features</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr th:each="level : ${class.classLevels}" th:with="level=${level.key}" th:id="${level.id}">-->
+                    <!--<td th:text="${level.level}">name</td>-->
+                    <!--<td th:text="${level.proficiencyBonus}">weight</td>-->
+                    <!--<td th:text="${level.features}">value</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+            <!--</table>-->
+
+        </div>
+
+
     </div>
 
 
