@@ -28,6 +28,9 @@ public class CreateController {
     ClassDao classDao;
 
     @Autowired
+    ClassLevelDao classLevelDao;
+
+    @Autowired
     RaceDao raceDao;
 
     @Autowired
@@ -76,12 +79,16 @@ public class CreateController {
         PlayerCharacter newPlayerCharacter = form.getPlayerCharacter();
         User user = userDao.findByUsername(username).get(0);
         Race race = raceDao.findById(form.getRaceId()).orElse(null);
+
         CharacterClass aClass = classDao.findById(form.getClassId()).orElse(null);
+        ClassLevel classLevel = aClass.getClassLevels().get(form.getLevel());
+
+
         Inventory inventory = new Inventory();
 
         newPlayerCharacter.setUser(user);
         newPlayerCharacter.setRace(race);
-        newPlayerCharacter.addClass(aClass);
+        newPlayerCharacter.addClass(classLevel);
         newPlayerCharacter.setInventory(inventory);
         inventory.setPlayerCharacter(newPlayerCharacter);
 
@@ -121,7 +128,36 @@ public class CreateController {
 
         classDao.save(characterClass);
 
-        return "redirect:/class";
+        return "redirect:/create/classlevel";
+    }
+
+
+
+    @RequestMapping(value = "classlevel", method = RequestMethod.GET)
+    public String createClassLevel(Model model) {
+        model.addAttribute(new ClassLevel());
+        model.addAttribute("title", "Create Class Level");
+        model.addAttribute("levels", ExperienceLevel.values());
+        model.addAttribute("classes", classDao.findAll());
+
+        return "create/classlevel";
+    }
+
+    @RequestMapping(value = "classlevel", method = RequestMethod.POST)
+    public String processCreateClassLevel(Model model, @ModelAttribute @Valid ClassLevel classLevel, Errors errors) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Create Class Level");
+            model.addAttribute("levels", ExperienceLevel.values());
+            model.addAttribute("classes", classDao.findAll());
+
+
+            return "create/classlevel";
+        }
+
+        classLevelDao.save(classLevel);
+
+        return "redirect:/create/classlevel";
     }
 
 
