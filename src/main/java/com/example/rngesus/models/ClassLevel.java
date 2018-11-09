@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 
 @Entity
 public class ClassLevel {
@@ -15,8 +14,11 @@ public class ClassLevel {
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
+    private User user;
+
     @ManyToOne
-    private CharacterClass baseClass;
+    @JoinColumn(name="base_class_id")
+    public CharacterClass baseClass;
 
     @NotNull
     private Integer level;
@@ -27,7 +29,11 @@ public class ClassLevel {
     @NotNull
     private String features;
 
-    private ArrayList<Integer> spells;
+//    @ElementCollection
+//    @CollectionTable(joinColumns = @JoinColumn(name = "inventory_id"))
+//    @MapKeyJoinColumn(name = "item_id")
+//    @Column(name = "count")
+//    private Map<Spell, Integer> spells = new HashMap<>();
 
 
 
@@ -45,6 +51,14 @@ public class ClassLevel {
 
     public int getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public CharacterClass getBaseClass() {
@@ -79,12 +93,39 @@ public class ClassLevel {
         this.features = features;
     }
 
-    public ArrayList<Integer> getSpells() {
-        return spells;
-    }
-
-    public void setSpells(ArrayList<Integer> spells) {
-        this.spells = spells;
-    }
+//    public Map<Spell, Integer> getSpells() {
+//        return spells;
+//    }
+//
+//    public void addSpell(Spell spell) {
+//        this.spells.put(spell, spells.getOrDefault(spell, 0) + 1);
+//    }
+//
+//    public void addSpell(Iterable<Spell> spells) {
+//        for (Spell spell : spells) {
+//            addSpell(spell);
+//        }
+//    }
+//
+//    public boolean removeSpell(Spell spell) {
+//        if (spells.containsKey(spell)) {
+//            if (spells.get(spell) >= 1) {
+//                spells.remove(spell, 1);
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    public boolean removeSpells(Spell spell, Integer count) {
+//
+//        if (spells.containsKey(spell)) {
+//            if (spells.get(spell) >= count) {
+//                spells.remove(spell, count);
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
 }
