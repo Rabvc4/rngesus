@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+    <h1 th:text="${title}">Default Title</h1>
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <form method="post" style="max-width:600px;" th:object="${characterClass}">
+        <div class="form-group">
+            <label th:for="name">Name</label>
+            <input class="form-control" th:field="*{name}" />
+            <span th:errors="*{name}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="hitDice">Hit Dice</label>
+            <select class="form-control col-2" th:field="*{hitDice}">
+                <option th:each="hitDie : ${hitDiceTypes}"
+                        th:text="${hitDie}"
+                        th:value="${hitDie}"></option>
+            </select>
+            <span th:errors="*{hitDice}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label>Armor Proficiency</label>
+            <ul>
+                <li th:each="armor : ${armorProficiencies}">
+                    <input type="checkbox" th:field="*{armorProficiency}" th:value="${armor}" />
+                    <label th:for="${#ids.prev('armorProficiency')}"
+                           th:text="${armor.name}">Armor</label>
+                </li>
+            </ul>
+            <span th:errors="*{weaponProficiency}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label>Weapon Proficiency</label>
+            <ul>
+                <li th:each="weapon : ${weaponProficiencies}">
+                    <input type="checkbox" th:field="*{weaponProficiency}" th:value="${weapon}" />
+                    <label th:for="${#ids.prev('weaponProficiency')}"
+                           th:text="${weapon.pluralName}">Weapon</label>
+                </li>
+            </ul>
+            <span th:errors="*{weaponProficiency}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="tools">Tools</label>
+            <input class="form-control" th:field="*{tools}" />
+            <span th:errors="*{tools}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label>Saving Throws</label>
+            <ul>
+                <li th:each="save : ${savingThrows}">
+                    <input type="checkbox" th:field="*{savingThrows}" th:value="${save}" />
+                    <label th:for="${#ids.prev('savingThrows')}"
+                           th:text="${save.name}">Ability</label>
+                </li>
+            </ul>
+            <span th:errors="*{savingThrows}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label>Class Skills</label>
+            <ul>
+                <li th:each="skill : ${skillTypes}">
+                    <input type="checkbox" th:field="*{skills}" th:value="${skill}" />
+                    <label th:for="${#ids.prev('skills')}"
+                           th:text="${skill.name}">Skill</label>
+                </li>
+            </ul>
+            <span th:errors="*{skills}" class="error"></span>
+        </div>
+        <span class="error" th:text="${message}"></span>
+
+        <input class="btn btn-primary btn-lg btn-block" type="submit"  value="Create Class" />
+
+    </form>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+
+    </footer>
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>
