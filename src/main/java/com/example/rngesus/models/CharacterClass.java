@@ -7,7 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class CharacterClass {
@@ -41,8 +43,14 @@ public class CharacterClass {
     @NotNull
     private ArrayList<SkillType> skills;
 
+    @OneToMany(mappedBy="baseClass")
+    @MapKey(name="level")
+    public Map<Integer, ClassLevel> classLevels;
+
     @ManyToMany(mappedBy = "classes")
     private List<PlayerCharacter> playerCharacters;
+
+
 
     public CharacterClass() { }
 
@@ -124,8 +132,23 @@ public class CharacterClass {
         this.hitDice = hitDice;
     }
 
+    public Map<Integer, ClassLevel> getClassLevels() {
+        return classLevels;
+    }
+
+    public void setClassLevels(Map<Integer, ClassLevel> classLevels) {
+        this.classLevels = classLevels;
+    }
+
+    public void addClassLevel(ClassLevel classLevel) {
+        this.classLevels.put(classLevel.getLevel(),classLevel);
+    }
+
+    public void addClassLevels(Map<Integer, ClassLevel> classLevels) {
+        this.classLevels.putAll(classLevels);
+    }
+
     public List<PlayerCharacter> getPlayerCharacters() {
         return playerCharacters;
     }
-
 }
