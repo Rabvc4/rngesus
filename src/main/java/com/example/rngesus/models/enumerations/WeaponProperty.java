@@ -1,6 +1,6 @@
 package com.example.rngesus.models.enumerations;
 
-public enum WeaponProperties {
+public enum WeaponProperty {
 
     AMMUNITION ("Ammunition", "Simple Melee Weapons"),
     FINESSE ("Finesse", "Martial Melee Weapons"),
@@ -17,7 +17,7 @@ public enum WeaponProperties {
     private final String name;
     private final String description;
 
-    WeaponProperties(String name, String description) {
+    WeaponProperty(String name, String description) {
         this.name = name;
         this.description = description;
     }
