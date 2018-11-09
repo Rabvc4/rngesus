@@ -16,6 +16,13 @@ public enum DamageType {
     THUNDER ("Thunder", "Concussive"),
     FORCE ("Force", "Force");
 
+//    Shortbow
+//    Longbow
+//    One-Handed Melee Attacks
+//    Unarmed Attacks
+//    Natural Attacks
+//    Melee Weapon Attacks
+
     private final String name;
     private final String description;
 
