@@ -6,8 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class PlayerCharacter {
@@ -28,11 +27,15 @@ public class PlayerCharacter {
     @ManyToOne
     private Race race;
 
-//    TODO - Add levels to class, add prestige classes
-    @ManyToMany
-    private List<CharacterClass> classes = new ArrayList<CharacterClass>();
+    private Integer experience = 0;
 
-//    TODO - Make ability scores into their own class to clear up PlayerCharacter
+    @ElementCollection
+    @CollectionTable(joinColumns = @JoinColumn(name = "inventory_id"))
+    @MapKeyJoinColumn(name = "item_id")
+    @Column(name = "classes")
+    private Map<CharacterClass, ClassLevel> classes = new HashMap<>();
+
+    private Integer currentLevel;
 
     @Embedded
     private AbilityScores abilityScores;
@@ -70,12 +73,16 @@ public class PlayerCharacter {
         this.race = race;
     }
 
-    public List<CharacterClass> getClasses() {
-        return classes;
+    public void addClass(ClassLevel classLevel) {
+        this.classes.put(classLevel.getBaseClass(), classLevel);
+        this.setCurrentLevel();
     }
 
-    public void addClass(CharacterClass aClass) {
-        this.classes.add(aClass);
+    public void addClasses(Iterable<ClassLevel> classLevels) {
+        for (ClassLevel classLevel : classLevels) {
+            this.classes.put(classLevel.getBaseClass(), classLevel);
+        }
+        this.setCurrentLevel();
     }
 
     public User getUser() {
@@ -164,6 +171,40 @@ public class PlayerCharacter {
 
     public void setCharisma(Charisma charisma) {
         this.abilityScores.setCharisma(charisma);
+    }
+
+    public Integer getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
+    }
+
+    public void addExperience(Integer experience) {
+        this.experience += experience;
+    }
+
+    public void subtractExperience(Integer experience) {
+        this.experience -= experience;
+    }
+
+    public Integer getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public Integer setCurrentLevel() {
+        Integer newLevel = 0;
+        Iterator it = this.classes.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            ClassLevel level = (ClassLevel) pair.getValue();
+
+            newLevel += level.getLevel();
+        }
+
+        this.currentLevel = newLevel;
+        return newLevel;
     }
 
     public Inventory getInventory() {
