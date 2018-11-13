@@ -7,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +40,7 @@ public class CharacterClass {
     private ArrayList<AbilityScoreType> savingThrows;
 
     @NotNull
+    @Column(columnDefinition = "BLOB")
     private ArrayList<SkillType> skills;
 
     @OneToMany(mappedBy="baseClass")
@@ -150,5 +150,23 @@ public class CharacterClass {
 
     public List<PlayerCharacter> getPlayerCharacters() {
         return playerCharacters;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Item)) return false;
+
+        CharacterClass characterClass = (CharacterClass) o;
+
+        if (getId() != characterClass.getId()) return false;
+        return getName().equals(characterClass.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getName().hashCode();
+        return result;
     }
 }
