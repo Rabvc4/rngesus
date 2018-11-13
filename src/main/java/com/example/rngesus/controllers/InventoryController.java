@@ -127,4 +127,19 @@ public class InventoryController {
         return "redirect:/inventory/" + characterId;
     }
 
+
+//    TODO - Delete this test path
+    @RequestMapping(value = "/{characterId}/add", method = RequestMethod.GET)
+    public String details(@PathVariable int characterId, @RequestParam int id) {
+        System.out.println("Add path accessed for character: " + characterId + "\nand item: " + id);
+        PlayerCharacter playerCharacter = characterDao.findById(characterId).orElseGet(null);
+        Item item = itemDao.findById(id).orElseGet(null);
+
+        playerCharacter.getInventory().addItem(item);
+
+        characterDao.save(playerCharacter);
+
+        return "redirect:/inventory/" + characterId;
+    }
+
 }
