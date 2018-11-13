@@ -29,10 +29,8 @@ public class PlayerCharacter {
 
     private Integer experience = 0;
 
-    @ElementCollection
-    @CollectionTable(joinColumns = @JoinColumn(name = "player_character_id"))
+    @ManyToMany
     @MapKeyJoinColumn(name = "character_class_id")
-    @JoinColumn(name = "classes_id")
     private Map<CharacterClass, ClassLevel> classes = new HashMap<>();
 
     private Integer currentLevel;
