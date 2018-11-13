@@ -33,6 +33,8 @@ public class Race {
     @Min(value = 5,message = "Houseflies have a walking speed of 5. Are you playing a game at the atomic level?")
     private Integer speed;
 
+//    TODO: add swim and flight speeds
+
 //    TODO: make trait object
     @NotNull
     @Length(min=1)
