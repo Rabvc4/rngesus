@@ -51,14 +51,16 @@
                             </select>
                             <span th:errors="*{classId}" class="error"></span>
 
-                            <select class="custom-select d-block w-50" name="levelId" id="levelId" required>
+                            <label th:for="level">Level</label>
+                            <select class="custom-select d-block w-50" name="level" id="level" required>
                                 <option value="" selected disabled>Please select</option>
-                                <option th:each="level : ${levels}"
-                                        th:value="${level.id}"
+                                <option th:each="level : ${form.levels}"
+                                        th:value="${level.level}"
                                         th:text="${level.level}"
                                         th:selected="${level=='Please select'}">
                                 </option>
                             </select>
+                            <span th:errors="*{level}" class="error"></span>
                         </div>
                     </div>
                     <hr class="mb-4">
