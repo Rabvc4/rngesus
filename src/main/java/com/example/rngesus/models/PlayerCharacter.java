@@ -30,9 +30,9 @@ public class PlayerCharacter {
     private Integer experience = 0;
 
     @ElementCollection
-    @CollectionTable(joinColumns = @JoinColumn(name = "inventory_id"))
-    @MapKeyJoinColumn(name = "item_id")
-    @Column(name = "classes")
+    @CollectionTable(joinColumns = @JoinColumn(name = "player_character_id"))
+    @MapKeyJoinColumn(name = "character_class_id")
+    @JoinColumn(name = "classes_id")
     private Map<CharacterClass, ClassLevel> classes = new HashMap<>();
 
     private Integer currentLevel;
@@ -44,6 +44,8 @@ public class PlayerCharacter {
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
 
+
+
     public PlayerCharacter() { }
 
     public PlayerCharacter(@NotNull @Size(min = 2, max = 50) String name, User user, Race race, AbilityScores abilityScores) {
@@ -52,6 +54,8 @@ public class PlayerCharacter {
         this.race = race;
         this.abilityScores = abilityScores;
     }
+
+
 
     public int getId() {
         return id;
@@ -71,6 +75,14 @@ public class PlayerCharacter {
 
     public void setRace(Race race) {
         this.race = race;
+    }
+
+    public Map<CharacterClass, ClassLevel> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Map<CharacterClass, ClassLevel> classes) {
+        this.classes = classes;
     }
 
     public void addClass(ClassLevel classLevel) {
