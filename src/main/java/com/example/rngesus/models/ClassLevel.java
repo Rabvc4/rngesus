@@ -14,8 +14,6 @@ public class ClassLevel {
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
-    private User user;
-
     @ManyToOne
     @JoinColumn(name="base_class_id")
     public CharacterClass baseClass;
@@ -26,7 +24,6 @@ public class ClassLevel {
     @NotNull
     private Integer proficiencyBonus;
 
-    @NotNull
     private String features;
 
 //    @ElementCollection
@@ -40,7 +37,7 @@ public class ClassLevel {
     public ClassLevel() {
     }
 
-    public ClassLevel(CharacterClass baseClass, @NotNull Integer level, @NotNull Integer proficiencyBonus, @NotNull String features) {
+    public ClassLevel(CharacterClass baseClass, @NotNull Integer level, @NotNull Integer proficiencyBonus, String features) {
         this.baseClass = baseClass;
         this.level = level;
         this.proficiencyBonus = proficiencyBonus;
@@ -51,14 +48,6 @@ public class ClassLevel {
 
     public int getId() {
         return id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public CharacterClass getBaseClass() {
@@ -128,4 +117,28 @@ public class ClassLevel {
 //        return false;
 //    }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ClassLevel)) return false;
+
+        ClassLevel that = (ClassLevel) o;
+
+        if (getId() != that.getId()) return false;
+        if (!getBaseClass().equals(that.getBaseClass())) return false;
+        if (!getLevel().equals(that.getLevel())) return false;
+        if (!getProficiencyBonus().equals(that.getProficiencyBonus())) return false;
+        return getFeatures() != null ? getFeatures().equals(that.getFeatures()) : that.getFeatures() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + getBaseClass().hashCode();
+        result = 31 * result + getLevel().hashCode();
+        result = 31 * result + getProficiencyBonus().hashCode();
+        result = 31 * result + (getFeatures() != null ? getFeatures().hashCode() : 0);
+        return result;
+    }
 }
