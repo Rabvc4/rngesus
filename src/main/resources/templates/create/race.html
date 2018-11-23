@@ -2,40 +2,53 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body class="container">
-    <h1 th:text="${title}">Default Title</h1>
 
     <nav th:replace="fragments :: navigation"></nav>
 
-    <form method="post" style="max-width:600px;" th:object="${race}">
-        <div class="form-group">
-            <label th:for="name">Name</label>
-            <input class="form-control" th:field="*{name}" />
-            <span th:errors="*{name}" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label th:for="size">Size</label>
-            <input class="form-control" th:field="*{size}" />
-            <span th:errors="*{size}" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label th:for="speed">Speed</label>
-            <input class="form-control" th:field="*{speed}" />
-            <span th:errors="*{speed}" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label th:for="traits">Traits</label>
-            <input class="form-control" th:field="*{traits}" />
-            <span th:errors="*{traits}" class="error"></span>
-        </div>
-        <div class="form-group">
-            <label th:for="languages">Languages</label>
-            <input class="form-control" th:field="*{languages}" />
-            <span th:errors="*{languages}" class="error"></span>
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2 th:text="${title}">Default Title</h2>
         </div>
 
-        <input class="btn btn-primary btn-lg btn-block" type="submit"  value="Create Race" />
+        <form method="post" style="max-width:600px;" th:object="${race}">
+            <div class="form-group">
+                <label th:for="name">Name</label>
+                <input class="form-control" th:field="*{name}" />
+                <span th:errors="*{name}" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label th:for="size">Size</label>
+                <select class="custom-select d-block w-25" name="size" id="size" required>
+                    <option value="" selected disabled>Please select</option>
+                    <option th:each="size : ${sizes}"
+                            th:value="${size}"
+                            th:text="${size.name}"
+                            th:selected="${size=='Please select'}">
+                    </option>
+                </select>
+                <span th:errors="*{size}" class="error"></span>
+            </div>
+            <div class="form-group w-25">
+                <label th:for="speed">Speed</label>
+                <input class="form-control" th:field="*{speed}" />
+                <span th:errors="*{speed}" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label th:for="traits">Traits</label>
+                <input class="form-control" th:field="*{traits}" />
+                <span th:errors="*{traits}" class="error"></span>
+            </div>
+            <div class="form-group">
+                <label th:for="languages">Languages</label>
+                <input class="form-control" th:field="*{languages}" />
+                <span th:errors="*{languages}" class="error"></span>
+            </div>
 
-    </form>
+            <input class="btn btn-primary btn-lg btn-block" type="submit"  value="Create Race" />
+
+        </form>
+
+    </div>
 
 
     <section th:replace="fragments :: scripts"></section>
