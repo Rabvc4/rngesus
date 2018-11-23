@@ -15,14 +15,14 @@
                 <div class="col-md-8 order-md-1">
                     <h4 class="mb-3">Base Class</h4>
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div th:if="${classes}" class="col-md-6 mb-3">
                             <label th:for="baseClass">Class</label>
                             <select class="custom-select d-block w-100" name="baseClass" id="baseClass" required>
                                 <option value="" selected disabled>Please select</option>
                                 <option th:each="class : ${classes}"
                                         th:value="${class.id}"
                                         th:text="${class.name}"
-                                        th:selected="${class=='Please select'}">
+                                        th:selected="${class==selected}">
                                 </option>
                             </select>
                             <span th:errors="*{baseClass}" class="error"></span>
@@ -140,6 +140,8 @@
                         <!--<span th:errors="*{spells}" class="error"></span>-->
                     <!--</div>-->
                     <!--<hr class="mb-4">-->
+
+                    <div th:replace="fragments :: classTable"></div>
 
 
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Create Class Level</button>
