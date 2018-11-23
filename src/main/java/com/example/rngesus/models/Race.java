@@ -1,5 +1,6 @@
 package com.example.rngesus.models;
 
+import com.example.rngesus.models.enumerations.SizeType;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
@@ -25,8 +26,7 @@ public class Race {
     private String name;
 
     @NotNull
-    @Size(min=1)
-    private String size;
+    private SizeType size;
 
     @NotNull
     @Max(value = 50,message = "Quit being lazy, well made characters can move faster than a railgun. Why does your BASE speed need to be so high?")
@@ -50,7 +50,7 @@ public class Race {
 
     public Race() { }
 
-    public Race(String name, String size, Integer speed, String traits, String languages) {
+    public Race(String name, SizeType size, Integer speed, String traits, String languages) {
         this.name = name;
         this.size = size;
         this.speed = speed;
@@ -70,11 +70,11 @@ public class Race {
         this.name = name;
     }
 
-    public String getSize() {
+    public SizeType getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(SizeType size) {
         this.size = size;
     }
 
