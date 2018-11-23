@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -134,11 +131,21 @@ public class CreateController {
 
 
     @RequestMapping(value = "classlevel", method = RequestMethod.GET)
-    public String createClassLevel(Model model) {
+    public String createClassLevel(Model model, @RequestParam(defaultValue = "0") int id) {
+
+        if (id == 0) {
+            model.addAttribute("selected", "Please select");
+        } else {
+            CharacterClass characterClass = classDao.findById(id).orElseGet(null);
+            model.addAttribute("selected", characterClass);
+            model.addAttribute("class", characterClass);
+        }
+
         model.addAttribute(new ClassLevel());
         model.addAttribute("title", "Create Class Level");
-        model.addAttribute("levels", ExperienceLevel.values());
         model.addAttribute("classes", classDao.findAll());
+        model.addAttribute("levels", ExperienceLevel.values());
+
 
         return "create/classlevel";
     }
@@ -150,6 +157,7 @@ public class CreateController {
             model.addAttribute("title", "Create Class Level");
             model.addAttribute("levels", ExperienceLevel.values());
             model.addAttribute("classes", classDao.findAll());
+            model.addAttribute("selected", classLevel.baseClass);
 
 
             return "create/classlevel";
@@ -157,7 +165,7 @@ public class CreateController {
 
         classLevelDao.save(classLevel);
 
-        return "redirect:/create/classlevel";
+        return "redirect:/create/classlevel/?id=" + classLevel.baseClass.getId();
     }
 
 
