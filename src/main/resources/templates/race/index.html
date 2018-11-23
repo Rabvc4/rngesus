@@ -8,6 +8,14 @@
 
     <ul>
         <li th:each="race : ${races}">
+            <a th:href="'/race/' + ${race.name}" th:text="${race.name}"></a>
+        </li>
+    </ul>
+
+    <h3>Characters by Race</h3>
+
+    <ul>
+        <li th:each="race : ${races}">
             <a th:href="@{/character/race(id=${race.id})}" th:text="${race.name}"></a>
         </li>
     </ul>

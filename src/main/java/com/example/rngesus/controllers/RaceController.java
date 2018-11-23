@@ -1,9 +1,11 @@
 package com.example.rngesus.controllers;
 
+import com.example.rngesus.models.Race;
 import com.example.rngesus.models.data.RaceDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,10 +22,23 @@ public class RaceController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model, @RequestParam(defaultValue = "0") int id) {
+
         model.addAttribute("title", "Races");
         model.addAttribute("races", raceDao.findAll());
+
         return "race/index";
     }
 
+
+
+    @RequestMapping(value = "{raceName}", method = RequestMethod.GET)
+    public String details(Model model, @PathVariable String raceName) {
+
+        Race race = raceDao.findByName(raceName).get(0);
+        model.addAttribute("title", race.getName());
+        model.addAttribute("race", race);
+
+        return "race/details";
+    }
 
 }

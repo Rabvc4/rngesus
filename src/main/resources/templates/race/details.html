@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h1 th:text="${title}">Default Title</h1>
+
+    <div class="list-group">
+        <h3 th:text="${race.name} + ' Traits'">Racial Traits</h3>
+
+        <div class="mb-3">
+
+            <div class="list-group mb-3">
+                <label class="font-weight-bold h5">Size</label>
+                <div class="list-group" th:text="'Their size is ' + ${race.size.name} + '.'"></div>
+            </div>
+
+            <div class="list-group mb-3">
+                <label class="font-weight-bold h5">Speed</label>
+                <div class="list-group" th:text="${race.name} + ' have a base walking speed of '+ ${race.speed} + ' feet.'"></div>
+            </div>
+
+
+            <!--<div class="list-group mb-3">-->
+                <!--<label class="font-weight-bold h5">Languages</label>-->
+                <!--<div class="list-group" th:each="language, index : ${race.languages}" th:text="!${index.last} ? ${skill.name} + ',': ${skill.name}"></div>-->
+            <!--</div>-->
+
+            <div class="list-group mb-3">
+                <label class="font-weight-bold h5">Languages</label>
+                <div class="list-group" th:text="${race.languages}"></div>
+            </div>
+
+            <div class="list-group mb-3">
+                <label class="font-weight-bold h5">Traits</label>
+                <div class="list-group" th:text="${race.traits}"></div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>
