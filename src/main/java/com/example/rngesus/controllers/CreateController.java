@@ -166,6 +166,7 @@ public class CreateController {
     public String createRace(Model model) {
         model.addAttribute(new Race());
         model.addAttribute("title", "Create Race");
+        model.addAttribute("sizes", SizeType.values());
 
         return "create/race";
     }
@@ -175,6 +176,7 @@ public class CreateController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Create Race");
+            model.addAttribute("sizes", SizeType.values());
 
             return "create/race";
         }
