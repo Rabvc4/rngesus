@@ -95,6 +95,13 @@ $(function(){
     });
 });
 
-$(function capitalize(string){
-
-});
+//$(function(){
+//    $('#baseClass').on('change', function() {
+//        event.preventDefault();
+//        var href = '/class/details/?id=' + $(this).val();
+//
+//        $.get(href, function(characterClass, status){
+//            alert( characterClass.name )
+//        });
+//    });
+//});
