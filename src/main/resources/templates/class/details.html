@@ -41,7 +41,15 @@
             </div>
         </div>
 
-        <div th:replace="fragments :: classTable"></div>
+
+        <div th:switch="${class.classLevels}">
+            <div th:case="${class.classLevels.size() == 20}" th:replace="fragments :: classTable"></div>
+            <div th:case="${class.classLevels.size() < 20}">
+                <div th:if="${class.classLevels.size()}" th:replace="fragments :: classTable"></div>
+                <div th:unless="${class.classLevels.size()}"><a th:href="@{/create/classlevel/(id=${class.id})}" class="btn btn-danger my-2">Create Class Levels</a></div>
+            </div>
+            <a th:case="*" th:href="@{/create/classlevel/(id=${class.id})}" class="btn btn-danger my-2">Create Class Levels</a>
+        </div>
 
 
     </div>
