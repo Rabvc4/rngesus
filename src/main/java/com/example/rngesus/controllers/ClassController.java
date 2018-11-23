@@ -45,4 +45,12 @@ public class ClassController {
         return "class/details";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public CharacterClass details(@RequestParam int id) {
+
+        return classDao.findById(id).orElseGet(null);
+    }
+
+
 }
