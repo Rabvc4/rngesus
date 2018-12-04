@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="bg-light">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2 th:text="${title}">Default Title</h2>
+        </div>
+
+        <form class="needs-validation" method="post" th:action="@{/create/trait}" th:object="${form}">
+            <div class="row">
+                <div class="col-md-8 order-md-1">
+                    <div class="row">
+                        <div class="col-md-7 mb-3">
+                            <label th:for="trait.name">Name</label>
+                            <input type="text" class="form-control" th:field="*{trait.name}" id="traitId" placeholder="" value="" required />
+                            <span th:errors="*{trait.name}" class="error"></span>
+                            <input type="hidden" name="raceId" th:value="*{race.id}" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label th:for="description">Description</label>
+                            <textarea type="text" class="form-control" th:field="*{trait.description}" id="description" placeholder="" value="" required />
+                            <span th:errors="*{trait.description}" class="error"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label th:for="summary">Summary</label>
+                            <input type="text" class="form-control" th:field="*{trait.summary}" id="summary" placeholder="" value="" required />
+                            <span th:errors="*{trait.summary}" class="error"></span>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label th:for="${#ids.next('trait.hideInBuilder')}">Hide in Builder</label>
+                            <input type="checkbox" th:field="*{trait.hideInBuilder}" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label th:for="${#ids.next('trait.hideInSheet')}">Hide in Sheet</label>
+                            <input type="checkbox" th:field="*{trait.hideInSheet}" />
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Create Trait</button>
+
+                </div>
+
+            </div>
+        </form>
+
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+
+        </footer>
+
+    </div>
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>
