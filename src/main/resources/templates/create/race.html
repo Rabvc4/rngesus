@@ -28,21 +28,20 @@
                 </select>
                 <span th:errors="*{size}" class="error"></span>
             </div>
-            <div class="form-group w-25">
-                <label th:for="speed">Speed</label>
-                <input class="form-control" th:field="*{speed}" />
-                <span th:errors="*{speed}" class="error"></span>
-            </div>
+
             <div class="form-group">
-                <label th:for="traits">Traits</label>
-                <input class="form-control" th:field="*{traits}" />
-                <span th:errors="*{traits}" class="error"></span>
+                <label th:for="introduction">Introduction</label>
+                <textarea class="form-control" th:field="*{introduction}" notempty></textarea>
+                <span th:errors="*{introduction}" class="error"></span>
             </div>
+
             <div class="form-group">
-                <label th:for="languages">Languages</label>
-                <input class="form-control" th:field="*{languages}" />
-                <span th:errors="*{languages}" class="error"></span>
+                <label th:for="description">Description</label>
+                <textarea class="form-control" th:field="*{description}" notempty></textarea>
+                <span th:errors="*{description}" class="error"></span>
             </div>
+
+            <hr class="mb-4">
 
             <input class="btn btn-primary btn-lg btn-block" type="submit"  value="Create Race" />
 
