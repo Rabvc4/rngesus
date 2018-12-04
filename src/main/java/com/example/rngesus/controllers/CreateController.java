@@ -4,6 +4,7 @@ import com.example.rngesus.models.*;
 import com.example.rngesus.models.data.*;
 import com.example.rngesus.models.enumerations.*;
 import com.example.rngesus.models.forms.CreateCharacterForm;
+import com.example.rngesus.models.forms.CreateTraitForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Iterator;
 
 @Controller
 @RequestMapping("create")
@@ -38,6 +40,16 @@ public class CreateController {
 
     @Autowired
     InventoryDao inventoryDao;
+
+    @Autowired
+    TraitDao traitDao;
+
+    @Autowired
+    ModifierDao modifierDao;
+
+    @Autowired
+    ModifierSubTypeDao modifierSubTypeDao;
+
 
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -175,6 +187,7 @@ public class CreateController {
         model.addAttribute(new Race());
         model.addAttribute("title", "Create Race");
         model.addAttribute("sizes", SizeType.values());
+        model.addAttribute("abilities", AbilityScoreType.values());
 
         return "create/race";
     }
@@ -185,6 +198,7 @@ public class CreateController {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Create Race");
             model.addAttribute("sizes", SizeType.values());
+            model.addAttribute("abilities", AbilityScoreType.values());
 
             return "create/race";
         }
@@ -220,6 +234,86 @@ public class CreateController {
         itemDao.save(item);
 
         return "redirect:/item";
+    }
+
+
+
+    @RequestMapping(value = "trait/{raceId}", method = RequestMethod.GET)
+    public String createTrait(Model model, @PathVariable int raceId) {
+
+        Race race = raceDao.findById(raceId).orElse(null);
+
+        if (race != null) {
+            Trait trait = new Trait();
+            model.addAttribute("form", new CreateTraitForm(trait, race));
+            model.addAttribute("title", "Add Racial Trait to " + race.getName());
+
+            return "create/trait";
+        }
+
+        model.addAttribute("title", "That Race Doesn't Exist");
+        model.addAttribute("message", "That race either no longer exists or it never existed.");
+
+        return "error";
+
+
+    }
+
+    @RequestMapping(value = "trait", method = RequestMethod.POST)
+    public String processCreateTrait(Model model, @ModelAttribute @Valid CreateTraitForm form, Errors errors) {
+
+        for (Iterator<ObjectError> iterator = errors.getAllErrors().iterator(); iterator.hasNext(); ) {
+            ObjectError error = iterator.next();
+            System.out.println(error);
+        }
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Racial Trait to " + form.getRace().getName());
+            model.addAttribute("message", "Please correct the errors before continuing");
+
+            return "create/trait";
+        }
+
+        Trait newTrait = form.getTrait();
+        Race race = raceDao.findById(form.getRaceId()).orElse(null);
+        newTrait.addRace(race);
+
+        traitDao.save(newTrait);
+
+        return "redirect:/race";
+    }
+
+
+
+    @RequestMapping(value = "modifier", method = RequestMethod.GET)
+    public String createModifier(Model model) {
+        model.addAttribute(new Modifier());
+        model.addAttribute("title", "Create Modifier");
+        model.addAttribute("modifierType", ModifierType.values());
+        model.addAttribute("abilityScoreTypes", AbilityScoreType.values());
+//        TODO - Query the server for ModifierSubTypes belonging to each ModifierType
+        model.addAttribute("dieTypes", DieType.values());
+        model.addAttribute("durations", DurationType.values());
+
+        return "create/modifier";
+    }
+
+    @RequestMapping(value = "modifier", method = RequestMethod.POST)
+    public String processCreateModifier(Model model, @ModelAttribute @Valid Modifier modifier, Errors errors) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Create Modifier");
+            model.addAttribute("modifierType", ModifierType.values());
+            model.addAttribute("abilityScoreTypes", AbilityScoreType.values());
+            model.addAttribute("dieTypes", DieType.values());
+            model.addAttribute("durations", DurationType.values());
+
+            return "create/modifier";
+        }
+
+        modifierDao.save(modifier);
+
+        return "redirect:/modifier";
     }
 
 }
