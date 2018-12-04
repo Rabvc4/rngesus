@@ -2,7 +2,6 @@ package com.example.rngesus.models;
 
 import com.example.rngesus.models.enumerations.SizeType;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -29,34 +28,33 @@ public class Race {
     private SizeType size;
 
     @NotNull
-    @Max(value = 50,message = "Quit being lazy, well made characters can move faster than a railgun. Why does your BASE speed need to be so high?")
-    @Min(value = 5,message = "Houseflies have a walking speed of 5. Are you playing a game at the atomic level?")
-    private Integer speed;
-
-//    TODO: add swim and flight speeds
-
-//    TODO: make trait object
-    @NotNull
-    @Length(min=1)
-    private String traits;
+    @Size(min=2, max=128, message="Give us a rough idea about them.")
+    private String introduction;
 
     @NotNull
-    @Size(min=2, max=100)
-    private String languages;
+    @Size(min=2, max=500, message="Come on, say SOMETHING about them.")
+    private String description;
+
+    @ManyToMany(mappedBy="races")
+    private List<Trait> traits;
 
     @OneToMany
     @JoinColumn(name = "race_id")
     private List<PlayerCharacter> playerCharacters = new ArrayList<>();
 
-    public Race() { }
 
-    public Race(String name, SizeType size, Integer speed, String traits, String languages) {
+
+    public Race() {
+    }
+
+    public Race(String name, SizeType size, String introduction, String description) {
         this.name = name;
         this.size = size;
-        this.speed = speed;
-        this.traits = traits;
-        this.languages = languages;
+        this.introduction = introduction;
+        this.description = description;
     }
+
+
 
     public int getId() {
         return id;
@@ -78,28 +76,36 @@ public class Race {
         this.size = size;
     }
 
-    public Integer getSpeed() {
-        return speed;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setSpeed(Integer speed) {
-        this.speed = speed;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
-    public String getTraits() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Trait> getTraits() {
         return traits;
     }
 
-    public void setTraits(String traits) {
+    public void addTrait(Trait trait) {
+        this.traits.add(trait);
+    }
+
+    public void addTraits(List<Trait> traits) {
+        this.traits.addAll(traits);
+    }
+
+    public void setTraits(List<Trait> traits) {
         this.traits = traits;
-    }
-
-    public String getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(String languages) {
-        this.languages = languages;
     }
 
     public List<PlayerCharacter> getPlayerCharacters() {
