@@ -1,6 +1,6 @@
 package com.example.rngesus.models.enumerations;
 
-public enum DiceType {
+public enum DieType {
 
     D4 (4),
     D6 (6),
@@ -11,7 +11,7 @@ public enum DiceType {
 
     private final Integer dieType;
 
-    DiceType(Integer dieType) {
+    DieType(Integer dieType) {
         this.dieType = dieType;
     }
 
