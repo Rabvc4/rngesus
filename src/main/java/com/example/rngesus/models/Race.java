@@ -32,14 +32,14 @@ public class Race {
     private String introduction;
 
     @NotNull
-    @Size(min=2, max=500, message="Come on, say SOMETHING about them.")
+    @Size(min=2, max=512, message="Come on, say SOMETHING about them.")
     private String description;
 
     @ManyToMany(mappedBy="races")
     private List<Trait> traits;
 
     @OneToMany
-    @JoinColumn(name = "race_id")
+    @JoinColumn(name="race_id")
     private List<PlayerCharacter> playerCharacters = new ArrayList<>();
 
 
