@@ -29,7 +29,7 @@
             </div>
         </div>
             <div th:if="${race.traits} and ${race.traits.size()}" th:each="trait : ${race.traits}" class="list-group mb-3">
-                <label class="font-weight-bold h5" th:text="${trait.name}">Trait Name</label>
+                <label class="font-weight-bold h5"><a th:href="@{'/trait/details/' + ${trait.id}}" th:text="${trait.name}">Trait Name</a></label>
                 <div class="list-group" th:text="${trait.description}"></div>
             </div>
         </div>
