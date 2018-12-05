@@ -205,7 +205,7 @@ public class CreateController {
 
         raceDao.save(race);
 
-        return "redirect:/race";
+        return "redirect:/race?id=" + race.getId();
     }
 
 
