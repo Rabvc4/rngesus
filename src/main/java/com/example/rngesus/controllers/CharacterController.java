@@ -34,11 +34,17 @@ public class CharacterController {
 
 
     @RequestMapping(value = "")
-    public String index(Model model, @RequestParam(defaultValue = "0") int id, @CookieValue("user") String username) {
+    public String index(Model model, @CookieValue("user") String username) {
 
         if(username != null) {
-            User user = userDao.findByUsername(username).get(0);
-            model.addAttribute("characters", characterDao.findByUserId(user.getId()));
+            try {
+                User user = userDao.findByUsername(username).get(0);
+                List<PlayerCharacter> characters = user.getPlayerCharacters();
+                model.addAttribute("characters", characters);
+            } catch(IndexOutOfBoundsException exception) {
+                return "redirect:/user/logout";
+            }
+
             model.addAttribute("title", "My Characters");
 
             return "character/index";
