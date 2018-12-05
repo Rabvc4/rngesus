@@ -1,10 +1,11 @@
 package com.example.rngesus.models;
 
-import com.example.rngesus.models.enumerations.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,42 +18,32 @@ public class Modifier {
     private int id;
 
     @NotNull
+    @Size(min=3, max=30)
     private String name;
 
     @NotNull
-    private ModifierType modifierType;
+    @Size(min = 3, max = 128, message = "This should be easy after writing the description. Just give us the bullet points.")
+    private String summary;
 
     @NotNull
-    @ManyToOne
-    private ModifierSubType modifierSubType;
-
-    private AbilityScoreType abilityScore;
-
-    private Integer diceCount;
-
-    private DieType dieType;
-
-    private Integer fixedValue;
-
-    private String details;
-
-    private Integer interval;
-
-    private DurationType durationType;
+    @Size(min = 3, max = 1000, message = "Description must be at least 3 characters long and no more than 1000")
+    private String description;
 
     @ManyToMany
-    private List<Trait> traits;
+    @JoinTable(name="trait_modifiers")
+    private List<Trait> traits = new ArrayList<>();
 
 
 
     public Modifier() {
     }
 
-    public Modifier(@NotNull String name, @NotNull ModifierType modifierType, @NotNull ModifierSubType modifierSubType) {
+    public Modifier(@NotNull @Size(min = 3, max = 30) String name, @NotNull @Size(min = 3, max = 128, message = "This should be easy after writing the description. Just give us the bullet points.") String summary, @NotNull @Size(min = 3, max = 1000, message = "Description must be at least 3 characters long and no more than 1000") String description) {
         this.name = name;
-        this.modifierType = modifierType;
-        this.modifierSubType = modifierSubType;
+        this.summary = summary;
+        this.description = description;
     }
+
 
 
     public int getId() {
@@ -67,75 +58,35 @@ public class Modifier {
         this.name = name;
     }
 
-    public ModifierType getModifierType() {
-        return modifierType;
+    public String getSummary() {
+        return summary;
     }
 
-    public void setModifierType(ModifierType modifierType) {
-        this.modifierType = modifierType;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
-    public ModifierSubType getModifierSubType() {
-        return modifierSubType;
+    public String getDescription() {
+        return description;
     }
 
-    public void setModifierSubType(ModifierSubType modifierSubType) {
-        this.modifierSubType = modifierSubType;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public AbilityScoreType getAbilityScore() {
-        return abilityScore;
+    public List<Trait> getTraits() {
+        return traits;
     }
 
-    public void setAbilityScore(AbilityScoreType abilityScore) {
-        this.abilityScore = abilityScore;
+    public void addTrait(Trait trait) {
+        this.traits.add(trait);
     }
 
-    public Integer getDiceCount() {
-        return diceCount;
+    public void addTraits(List<Trait> traits) {
+        this.traits.addAll(traits);
     }
 
-    public void setDiceCount(Integer diceCount) {
-        this.diceCount = diceCount;
-    }
-
-    public DieType getDieType() {
-        return dieType;
-    }
-
-    public void setDieType(DieType dieType) {
-        this.dieType = dieType;
-    }
-
-    public Integer getFixedValue() {
-        return fixedValue;
-    }
-
-    public void setFixedValue(Integer fixedValue) {
-        this.fixedValue = fixedValue;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public Integer getInterval() {
-        return interval;
-    }
-
-    public void setInterval(Integer interval) {
-        this.interval = interval;
-    }
-
-    public DurationType getDurationType() {
-        return durationType;
-    }
-
-    public void setDurationType(DurationType durationType) {
-        this.durationType = durationType;
+    public void setTraits(List<Trait> traits) {
+        this.traits = traits;
     }
 }
