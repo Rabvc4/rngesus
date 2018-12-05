@@ -5,6 +5,7 @@ import com.example.rngesus.models.data.TraitDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,21 +21,21 @@ public class TraitController {
 
 
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String index(Model model, @RequestParam(defaultValue = "0") int id) {
+    @RequestMapping(value = "details/{traitId}", method = RequestMethod.GET)
+    public String index(Model model, @PathVariable int traitId) {
 
-        if (id != 0) {
-            Trait trait = traitDao.findById(id).orElseGet(null);
+        if (traitId != 0) {
+            Trait trait = traitDao.findById(traitId).orElse(null);
             if (trait != null) {
-                model.addAttribute("title", trait.getName() + " Trait");
+                model.addAttribute("title", trait.getName());
                 model.addAttribute("trait", trait);
 
-                return "traits/details";
+                return "trait/details";
             }
         }
 
         model.addAttribute("title", "That isn't a trait...");
-        model.addAttribute("message", "Quit being weird.");
+        model.addAttribute("message", "Quit being weird and just make it yourself.");
 
         return "error";
     }
