@@ -24,17 +24,17 @@
 
                     <div class="row">
                         <div class="col-md-12 mb-3">
-                            <label th:for="description">Description</label>
-                            <textarea type="text" class="form-control" th:field="*{trait.description}" id="description" placeholder="" value="" required />
-                            <span th:errors="*{trait.description}" class="error"></span>
+                            <label th:for="summary">Summary</label>
+                            <input type="text" class="form-control" th:field="*{trait.summary}" id="summary" placeholder="" value="" required />
+                            <span th:errors="*{trait.summary}" class="error"></span>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-12 mb-3">
-                            <label th:for="summary">Summary</label>
-                            <input type="text" class="form-control" th:field="*{trait.summary}" id="summary" placeholder="" value="" required />
-                            <span th:errors="*{trait.summary}" class="error"></span>
+                            <label th:for="description">Description</label>
+                            <textarea type="text" class="form-control" th:field="*{trait.description}" id="description" placeholder="" value="" required />
+                            <span th:errors="*{trait.description}" class="error"></span>
                         </div>
                     </div>
 
