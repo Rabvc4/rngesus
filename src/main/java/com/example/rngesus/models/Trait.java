@@ -31,8 +31,8 @@ public class Trait {
 
     private ArrayList<String> options;
 
-    @ManyToMany(mappedBy = "traits")
-    private List<Modifier> modifiers = new ArrayList<>();
+    @ManyToMany(mappedBy="traits")
+    private List<Modifier> modifiers;
 
     private ArrayList<String> spells;
 
@@ -45,6 +45,7 @@ public class Trait {
     private Boolean hideInSheet = false;
 
     @ManyToMany
+    @JoinTable(name="racial_traits")
     private List<Race> races = new ArrayList<>();
 
 
@@ -52,14 +53,17 @@ public class Trait {
     public Trait() {
     }
 
-    public Trait(String name, String description, String summary, List<Race> races) {
+    public Trait(String name, String description, String summary) {
         this.name = name;
         this.description = description;
         this.summary = summary;
-        this.races = races;
     }
 
 
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
