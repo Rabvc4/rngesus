@@ -16,7 +16,7 @@ public class ClassLevel {
 
     @ManyToOne
     @JoinColumn(name="base_class_id")
-    public CharacterClass baseClass;
+    private CharacterClass baseClass;
 
     @NotNull
     private Integer level;
