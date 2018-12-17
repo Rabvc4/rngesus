@@ -1,10 +1,11 @@
 package com.example.rngesus.models;
 
-import com.example.rngesus.models.enumerations.ModifierType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,35 +19,36 @@ public class ModifierSubType {
     private int id;
 
     @NotNull
+    @Size(min=3, max=32)
     private String name;
 
     @NotNull
-    private ArrayList<ModifierType> modifierTypes;
+    @Size(min=3, max=280, message="Please give us a short description of the purpose of this modifier type, no more than 280 characters")
+    private String description;
 
-    @NotNull
     @OneToMany
-    @JoinColumn(name = "modifier_id")
     private List<Modifier> modifiers = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "type_subtypes")
+    @JsonBackReference
+    private List<ModifierType> types = new ArrayList<>();
 
 
 
     public ModifierSubType() {
     }
 
-    public ModifierSubType(@NotNull String name, @NotNull ArrayList<ModifierType> modifierTypes, @NotNull List<Modifier> modifiers) {
+    public ModifierSubType(String name, String description, List<ModifierType> types) {
         this.name = name;
-        this.modifierTypes = modifierTypes;
-        this.modifiers = modifiers;
+        this.description = description;
+        this.types = types;
     }
 
 
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -57,20 +59,12 @@ public class ModifierSubType {
         this.name = name;
     }
 
-    public List<ModifierType> getModifierTypes() {
-        return modifierTypes;
+    public String getDescription() {
+        return description;
     }
 
-    public void addModifierType(ModifierType modifierType) {
-        this.modifierTypes.add(modifierType);
-    }
-
-    public void addModifierTypes(List<ModifierType> modifierTypes) {
-        this.modifierTypes.addAll(modifierTypes);
-    }
-
-    public void setModifierTypes(ArrayList<ModifierType> modifierTypes) {
-        this.modifierTypes = modifierTypes;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<Modifier> getModifiers() {
@@ -79,5 +73,40 @@ public class ModifierSubType {
 
     public void setModifiers(List<Modifier> modifiers) {
         this.modifiers = modifiers;
+    }
+
+    public List<ModifierType> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<ModifierType> types) {
+        this.types = types;
+    }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ModifierSubType)) return false;
+
+        ModifierSubType that = (ModifierSubType) o;
+
+        if (getId() != that.getId()) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
+        return getDescription() != null ? getDescription().equals(that.getDescription()) : that.getDescription() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
