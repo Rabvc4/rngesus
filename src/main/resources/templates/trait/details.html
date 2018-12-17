@@ -10,7 +10,7 @@
     <div th:text="${trait.description}"></div>
 
     <div>
-        <a th:href="@{'/create/modifier' + ${trait.id}}" th:text="${'Add Modifier to ' + trait.name}"></a>
+        <a th:href="@{'/create/modifier/' + ${trait.id}}" th:text="${'Add Modifier to ' + trait.name}"></a>
 
         <ul th:if="${trait.modifiers} and ${trait.modifiers.size()}">
             <li th:each="modifier : ${trait.modifiers}">
