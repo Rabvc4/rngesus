@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+<body>
 
     <nav th:replace="fragments :: navigation"></nav>
 
@@ -37,7 +37,7 @@
 
             <div class="form-group">
                 <label th:for="description">Description</label>
-                <textarea class="form-control" th:field="*{description}" notempty></textarea>
+                <textarea rows=10 class="form-control" th:field="*{description}" notempty></textarea>
                 <span th:errors="*{description}" class="error"></span>
             </div>
 
