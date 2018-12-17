@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h1 th:text="${title}">Default Title</h1>
+
+    <div th:text="${type.description}"></div>
+
+    <div>
+        <ul th:if="${type.subTypes} and ${type.subTypes.size()}">
+            <li th:each="subType : ${type.subTypes}">
+                <a th:href="@{/modifier/subtype/(id=${type.id})}" th:text="${subType.name}"></a>
+            </li>
+        </ul>
+        <a th:href="@{/create/modifier-subtype}" th:text="${'Create ' + {type.name}}" class="btn btn-primary my-2">Create</a>
+    </div>
+
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>
