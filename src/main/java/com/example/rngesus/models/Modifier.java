@@ -1,5 +1,8 @@
 package com.example.rngesus.models;
 
+import com.example.rngesus.models.enumerations.AbilityScoreType;
+import com.example.rngesus.models.enumerations.DieType;
+import com.example.rngesus.models.enumerations.DurationType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -17,17 +20,23 @@ public class Modifier {
     @Column(name = "id", updatable = false, nullable = false)
     private int id;
 
-    @NotNull
-    @Size(min=3, max=30)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name="type_id", nullable=false)
+    private ModifierType type;
 
-    @NotNull
-    @Size(min = 3, max = 128, message = "This should be easy after writing the description. Just give us the bullet points.")
-    private String summary;
+    @ManyToOne
+    @JoinColumn(name="sub_type_id", nullable=false)
+    private ModifierSubType subType;
 
-    @NotNull
-    @Size(min = 3, max = 1000, message = "Description must be at least 3 characters long and no more than 1000")
-    private String description;
+    private AbilityScoreType abilityScoreType;
+
+    private Integer diceCount;
+
+    private DieType dieType;
+
+    private Integer fixedValue;
+
+    private DurationType durationType;
 
     @ManyToMany
     @JoinTable(name="trait_modifiers")
@@ -38,10 +47,9 @@ public class Modifier {
     public Modifier() {
     }
 
-    public Modifier(@NotNull @Size(min = 3, max = 30) String name, @NotNull @Size(min = 3, max = 128, message = "This should be easy after writing the description. Just give us the bullet points.") String summary, @NotNull @Size(min = 3, max = 1000, message = "Description must be at least 3 characters long and no more than 1000") String description) {
-        this.name = name;
-        this.summary = summary;
-        this.description = description;
+    public Modifier(ModifierType type, ModifierSubType subType) {
+        this.type = type;
+        this.subType = subType;
     }
 
 
@@ -50,28 +58,60 @@ public class Modifier {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public ModifierType getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(ModifierType type) {
+        this.type = type;
     }
 
-    public String getSummary() {
-        return summary;
+    public ModifierSubType getSubType() {
+        return subType;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setSubType(ModifierSubType subType) {
+        this.subType = subType;
     }
 
-    public String getDescription() {
-        return description;
+    public AbilityScoreType getAbilityScoreType() {
+        return abilityScoreType;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAbilityScoreType(AbilityScoreType abilityScoreType) {
+        this.abilityScoreType = abilityScoreType;
+    }
+
+    public Integer getDiceCount() {
+        return diceCount;
+    }
+
+    public void setDiceCount(Integer diceCount) {
+        this.diceCount = diceCount;
+    }
+
+    public DieType getDieType() {
+        return dieType;
+    }
+
+    public void setDieType(DieType dieType) {
+        this.dieType = dieType;
+    }
+
+    public Integer getFixedValue() {
+        return fixedValue;
+    }
+
+    public void setFixedValue(Integer fixedValue) {
+        this.fixedValue = fixedValue;
+    }
+
+    public DurationType getDurationType() {
+        return durationType;
+    }
+
+    public void setDurationType(DurationType durationType) {
+        this.durationType = durationType;
     }
 
     public List<Trait> getTraits() {
