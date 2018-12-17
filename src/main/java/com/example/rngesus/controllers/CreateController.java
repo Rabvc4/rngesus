@@ -4,6 +4,7 @@ import com.example.rngesus.models.*;
 import com.example.rngesus.models.data.*;
 import com.example.rngesus.models.enumerations.*;
 import com.example.rngesus.models.forms.CreateCharacterForm;
+import com.example.rngesus.models.forms.CreateModifierForm;
 import com.example.rngesus.models.forms.CreateTraitForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,9 @@ public class CreateController {
 
     @Autowired
     ModifierDao modifierDao;
+
+    @Autowired
+    ModifierTypeDao modifierTypeDao;
 
     @Autowired
     ModifierSubTypeDao modifierSubTypeDao;
@@ -169,7 +173,7 @@ public class CreateController {
             model.addAttribute("title", "Create Class Level");
             model.addAttribute("levels", ExperienceLevel.values());
             model.addAttribute("classes", classDao.findAll());
-            model.addAttribute("selected", classLevel.baseClass);
+            model.addAttribute("selected", classLevel.getBaseClass());
 
 
             return "create/classlevel";
@@ -177,7 +181,7 @@ public class CreateController {
 
         classLevelDao.save(classLevel);
 
-        return "redirect:/create/classlevel/?id=" + classLevel.baseClass.getId();
+        return "redirect:/create/classlevel/?id=" + classLevel.getBaseClass().getId();
     }
 
 
@@ -280,40 +284,106 @@ public class CreateController {
 
         traitDao.save(newTrait);
 
-        return "redirect:/race";
+        return "redirect:/race/?id=" + race.getId();
     }
 
 
 
-    @RequestMapping(value = "modifier", method = RequestMethod.GET)
-    public String createModifier(Model model) {
-        model.addAttribute(new Modifier());
-        model.addAttribute("title", "Create Modifier");
-        model.addAttribute("modifierType", ModifierType.values());
-        model.addAttribute("abilityScoreTypes", AbilityScoreType.values());
-//        TODO - Query the server for ModifierSubTypes belonging to each ModifierType
-        model.addAttribute("dieTypes", DieType.values());
-        model.addAttribute("durations", DurationType.values());
+    @RequestMapping(value = "modifier/{traitId}", method = RequestMethod.GET)
+    public String createModifier(Model model, @PathVariable int traitId) {
 
-        return "create/modifier";
-    }
+        Trait trait = traitDao.findById(traitId).orElse(null);
 
-    @RequestMapping(value = "modifier", method = RequestMethod.POST)
-    public String processCreateModifier(Model model, @ModelAttribute @Valid Modifier modifier, Errors errors) {
-
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Create Modifier");
-            model.addAttribute("modifierType", ModifierType.values());
-            model.addAttribute("abilityScoreTypes", AbilityScoreType.values());
-            model.addAttribute("dieTypes", DieType.values());
-            model.addAttribute("durations", DurationType.values());
+        if (trait != null) {
+            Modifier modifier = new Modifier();
+            Iterable<ModifierType> modifierTypes = modifierTypeDao.findAll();
+            model.addAttribute("form", new CreateModifierForm(modifier, trait, modifierTypes));
+            model.addAttribute("title", "Add Modifier to " + trait.getName());
 
             return "create/modifier";
         }
 
-        modifierDao.save(modifier);
+        model.addAttribute("title", "That Trait Doesn't Exist");
+        model.addAttribute("message", "That trait either no longer exists or it never existed.");
 
-        return "redirect:/modifier";
+        return "error";
     }
 
+    @RequestMapping(value = "modifier", method = RequestMethod.POST)
+    public String processCreateModifier(Model model, @ModelAttribute @Valid CreateModifierForm form, Errors errors) {
+
+        for (Iterator<ObjectError> iterator = errors.getAllErrors().iterator(); iterator.hasNext(); ) {
+            ObjectError error = iterator.next();
+            System.out.println(error);
+        }
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Modifier to " + form.getTrait().getName());
+            model.addAttribute("message", "Please correct the errors before continuing");
+
+            return "create/modifier";
+        }
+
+        Modifier newModifier = form.getModifier();
+        Trait trait = traitDao.findById(form.getTraitId()).orElse(null);
+        newModifier.addTrait(trait);
+
+        modifierDao.save(newModifier);
+
+        return "redirect:/trait/" + newModifier.getId();
+    }
+
+
+
+    @RequestMapping(value = "modifier-type", method = RequestMethod.GET)
+    public String createModifierType(Model model) {
+
+        ModifierType modifierType = new ModifierType();
+        model.addAttribute("type", modifierType);
+        model.addAttribute("title", "Create Modifier Type");
+
+        return "create/modifier-type";
+    }
+
+    @RequestMapping(value = "modifier-type", method = RequestMethod.POST)
+    public String processCreateModifierType(Model model, @ModelAttribute @Valid ModifierType modifierType, Errors errors) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Create Modifier Type");
+
+            return "create/modifier-type";
+        }
+
+        modifierTypeDao.save(modifierType);
+
+        return "redirect:/modifier/type/?id=" + modifierType.getId();
+    }
+
+
+
+    @RequestMapping(value = "modifier-subtype", method = RequestMethod.GET)
+    public String createModifierSubType(Model model) {
+
+        ModifierSubType modifierSubType = new ModifierSubType();
+        model.addAttribute("subType", modifierSubType);
+        model.addAttribute("title", "Create Modifier Subtype");
+        model.addAttribute("types", modifierTypeDao.findAll());
+
+        return "create/modifier-subtype";
+    }
+
+    @RequestMapping(value = "modifier-subtype", method = RequestMethod.POST)
+    public String processCreateModifierSubType(Model model, @ModelAttribute @Valid ModifierSubType modifierSubType, Errors errors) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Create Modifier Subtype");
+            model.addAttribute("types", modifierTypeDao.findAll());
+
+            return "create/modifier-subtype";
+        }
+
+        modifierSubTypeDao.save(modifierSubType);
+
+        return "redirect:/modifier/subtype/?id=" + modifierSubType.getId();
+    }
 }
