@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+    <h1 th:text="${title}">Default Title</h1>
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <ul>
+        <li th:each="type : ${types}">
+            <a th:href="@{/modifier/type/(id=${type.id})}" th:text="${type.name}"></a>
+        </li>
+    </ul>
+
+    <p><a th:href="@{/create/modifier-type}">Create Modifier Type</a></p>
+
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>
