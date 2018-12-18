@@ -342,8 +342,7 @@ public class CreateController {
     @RequestMapping(value = "modifier-type", method = RequestMethod.GET)
     public String createModifierType(Model model) {
 
-        ModifierType modifierType = new ModifierType();
-        model.addAttribute("type", modifierType);
+        model.addAttribute(new ModifierType());
         model.addAttribute("title", "Create Modifier Type");
 
         return "create/modifier-type";
