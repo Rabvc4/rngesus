@@ -21,18 +21,21 @@ public class Race {
     private int id;
 
     @NotNull
-    @Size(min=2, max=50)
+    @Size(min=2, message = "That name is too short")
+    @Size(max=32, message = "Names for races cannot exceed 32 characters")
     private String name;
 
     @NotNull
     private SizeType size;
 
     @NotNull
-    @Size(min=2, max=128, message="Give us a rough idea about them.")
+    @Size(min=10, message="Give them a brief introduction")
+    @Size(max=128, message="Introductions cannot exceed 128 characters")
     private String introduction;
 
     @NotNull
-    @Size(min=2, max=512, message="Come on, say SOMETHING about them.")
+    @Size(min=10, message="At least tell us something about this mysterious race of yours")
+    @Size(max=512, message="Descriptions cannot exceed 512 characters")
     private String description;
 
     @ManyToMany(mappedBy="races")
