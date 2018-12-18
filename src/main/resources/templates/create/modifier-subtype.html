@@ -29,9 +29,9 @@
                 <div th:errors="*{types}" class="error"></div>
                 <ul>
                     <li th:each="type : ${types}">
-                        <input type="checkbox" th:field="*{types}" th:value="${type.id}" required />
+                        <input type="checkbox" th:field="*{types}" th:value="${type.id}" />
                         <label th:for="${#ids.prev('types')}"
-                               th:text="${type.name}">Armor</label>
+                               th:text="${type.name}">Type</label>
                     </li>
                 </ul>
             </div>
