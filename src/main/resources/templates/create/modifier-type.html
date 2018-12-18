@@ -10,16 +10,17 @@
             <h2 th:text="${title}">Default Title</h2>
         </div>
 
-        <form method="post" style="max-width:600px;" th:object="${type}">
+        <form method="post" style="max-width:600px;" th:object="${modifierType}">
             <div class="form-group">
                 <label th:for="name">Name</label>
-                <input class="form-control" th:field="*{name}" />
-                <span th:errors="*{name}" class="error"></span>
+                <div th:errors="*{name}" class="error"></div>
+                <input class="form-control" th:field="*{name}" required/>
             </div>
             <div class="form-group">
                 <label th:for="description">Description</label>
-                <textarea rows=4 class="form-control" th:field="*{description}" notempty></textarea>
-                <span th:errors="*{description}" class="error"></span>
+                <div th:errors="*{description}" class="error"></div>
+                <textarea rows=6 class="form-control" th:field="*{description}" required></textarea>
+                <span class="error" id="descCount"></span>
             </div>
 
             <hr class="mb-4">
