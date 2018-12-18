@@ -24,7 +24,7 @@ public class ModifierType {
     private String name;
 
     @NotNull
-    @Size(min=3, message="Please give us a short description of the purpose of this subtype")
+    @Size(min=3, message="Tell us the purpose of this new type")
     @Size(max=512, message="Descriptions cannot exceed 512 characters")
     private String description;
 
