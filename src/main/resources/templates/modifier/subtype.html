@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+<body>
 
     <nav th:replace="fragments :: navigation"></nav>
 
-    <h1 th:text="${title}">Default Title</h1>
+    <main class="container">
 
-    <div class="list-group">
-        <div class="list-group-item" th:text="${subType.description}" />
-        <ul>
-            <li th:each="type : ${subType.types}">
-                <a th:href="@{/modifier/type/(id=${type.id})}" th:text="${type.name}"></a>
+        <h1 th:text="${title}" class="pt-3">Default Title</h1>
+
+        <ul class="list-inline mb-3">
+            <li th:each="type : ${subType.types}" class="list-inline-item">
+                <a th:href="@{/modifier/type/(id=${type.id})}" th:text="${type.name}" class="btn btn-danger btn-sm"></a>
             </li>
         </ul>
-    </div>
+
+
+        <div class="p-3 bg-light" th:text="${subType.description}"></div>
+
+    </main>
+
+
 
     <section th:replace="fragments :: scripts"></section>
 
