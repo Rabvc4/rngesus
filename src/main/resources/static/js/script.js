@@ -108,10 +108,10 @@ $(function(){
 
 $(function(){
     $('#typeId').on('change', function() {
+        var html = '<option value="">Please select</option>';
+        $("#subTypeId").html(html);
         var href = '/modifier/details/?type=' + $(this).val();
         $.get(href, function(result, status){
-
-            var html = '<option value="">Please select</option>';
             $.each(result, function(i, field){
                 html += '<option value="' + field.id + '">'
                 + field.name + '</option>';
@@ -121,16 +121,28 @@ $(function(){
     });
 });
 
-//$(function(){
-//    $('#typeId').on('change', function() {
-//        var href = '/modifier/details/?type=' + $(this).val();
-//        $.getJSON(href, function(result){
-//            var html = '<option value="">Please Select</option>';
-//            $.each(result, function(i, field){
-//                html += '<option value="' + field.name + '">'
-//                + field.name + '</option>';
-//            });
-//            $("#subTypeId").html(html);
-//        });
-//    });
-//});
+$(function(){
+    $('#description').keyup(function() {
+        var count = $(this).val().length;
+        if (count == 0) {
+            $("#descCount").text('');
+        } else {
+            var maxLength = 512;
+            var count = maxLength-count;
+            $("#descCount").text(count);
+        }
+    });
+});
+
+$(function(){
+    $('#introduction').keyup(function() {
+        var count = $(this).val().length;
+        if (count == 0) {
+            $("#introCount").text('');
+        } else {
+            var maxLength = 128;
+            var count = maxLength-count;
+            $("#introCount").text(count);
+        }
+    });
+});
