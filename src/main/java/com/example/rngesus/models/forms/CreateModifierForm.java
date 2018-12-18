@@ -3,7 +3,6 @@ package com.example.rngesus.models.forms;
 import com.example.rngesus.models.Modifier;
 import com.example.rngesus.models.ModifierType;
 import com.example.rngesus.models.Trait;
-import com.example.rngesus.models.enumerations.AbilityScoreType;
 import com.example.rngesus.models.enumerations.DieType;
 import com.example.rngesus.models.enumerations.DurationType;
 
@@ -24,23 +23,27 @@ public class CreateModifierForm {
     @NotNull
     private int subTypeId;
 
+    private Integer diceCount;
+
+    private DieType dieType;
+
+    private Integer fixedValue;
+
+    private Integer durationInterval;
+
+    private DurationType durationType;
+
     @Embedded
     private Modifier modifier;
 
     @Embedded
     private Trait trait;
 
-//    private Iterable<ModifierSubType> modifierSubTypes;
-
     private Iterable<ModifierType> modifierTypes;
-
-    private AbilityScoreType[] abilities = AbilityScoreType.values();
 
     private DieType[] dieTypes = DieType.values();
 
     private DurationType[] durationTypes = DurationType.values();
-
-    // TODO: 12/6/18 fixedValue and modifierSubType will need a solution
 
 
 
@@ -52,6 +55,7 @@ public class CreateModifierForm {
         this.trait = trait;
         this.modifierTypes = modifierTypes;
     }
+
 
 
     public int getModifierId() {
@@ -86,6 +90,46 @@ public class CreateModifierForm {
         this.subTypeId = subTypeId;
     }
 
+    public Integer getDiceCount() {
+        return diceCount;
+    }
+
+    public void setDiceCount(Integer diceCount) {
+        this.diceCount = diceCount;
+    }
+
+    public DieType getDieType() {
+        return dieType;
+    }
+
+    public void setDieType(DieType dieType) {
+        this.dieType = dieType;
+    }
+
+    public Integer getFixedValue() {
+        return fixedValue;
+    }
+
+    public void setFixedValue(Integer fixedValue) {
+        this.fixedValue = fixedValue;
+    }
+
+    public Integer getDurationInterval() {
+        return durationInterval;
+    }
+
+    public void setDurationInterval(Integer durationInterval) {
+        this.durationInterval = durationInterval;
+    }
+
+    public DurationType getDurationType() {
+        return durationType;
+    }
+
+    public void setDurationType(DurationType durationType) {
+        this.durationType = durationType;
+    }
+
     public Modifier getModifier() {
         return modifier;
     }
@@ -108,14 +152,6 @@ public class CreateModifierForm {
 
     public void setModifierTypes(Iterable<ModifierType> modifierTypes) {
         this.modifierTypes = modifierTypes;
-    }
-
-    public AbilityScoreType[] getAbilities() {
-        return abilities;
-    }
-
-    public void setAbilities(AbilityScoreType[] abilities) {
-        this.abilities = abilities;
     }
 
     public DieType[] getDieTypes() {
