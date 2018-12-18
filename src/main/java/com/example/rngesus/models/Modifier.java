@@ -1,13 +1,10 @@
 package com.example.rngesus.models;
 
-import com.example.rngesus.models.enumerations.AbilityScoreType;
 import com.example.rngesus.models.enumerations.DieType;
 import com.example.rngesus.models.enumerations.DurationType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +25,13 @@ public class Modifier {
     @JoinColumn(name="sub_type_id", nullable=false)
     private ModifierSubType subType;
 
-    private AbilityScoreType abilityScoreType;
-
     private Integer diceCount;
 
     private DieType dieType;
 
     private Integer fixedValue;
+
+    private Integer durationInterval;
 
     private DurationType durationType;
 
@@ -74,14 +71,6 @@ public class Modifier {
         this.subType = subType;
     }
 
-    public AbilityScoreType getAbilityScoreType() {
-        return abilityScoreType;
-    }
-
-    public void setAbilityScoreType(AbilityScoreType abilityScoreType) {
-        this.abilityScoreType = abilityScoreType;
-    }
-
     public Integer getDiceCount() {
         return diceCount;
     }
@@ -104,6 +93,14 @@ public class Modifier {
 
     public void setFixedValue(Integer fixedValue) {
         this.fixedValue = fixedValue;
+    }
+
+    public Integer getDurationInterval() {
+        return durationInterval;
+    }
+
+    public void setDurationInterval(Integer durationInterval) {
+        this.durationInterval = durationInterval;
     }
 
     public DurationType getDurationType() {
