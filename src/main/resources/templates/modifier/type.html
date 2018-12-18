@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+<body>
 
     <nav th:replace="fragments :: navigation"></nav>
 
-    <h1 th:text="${title}">Default Title</h1>
+    <main class="container bg-light">
 
-    <div th:text="${type.description}"></div>
+        <h1 th:text="${title}" class="py-3">Default Title</h1>
 
-    <div>
-        <ul th:if="${type.subTypes} and ${type.subTypes.size()}">
+        <div class="mb-3" th:text="${type.description}"></div>
+
+        <ul class="mb-3" th:if="${type.subTypes} and ${type.subTypes.size()}">
             <li th:each="subType : ${type.subTypes}">
-                <a th:href="@{/modifier/subtype/(id=${type.id})}" th:text="${subType.name}"></a>
+                <div>
+                    <a th:href="@{/modifier/subtype/(id=${subType.id})}" th:text="${subType.name}"></a>:
+                    <span th:text="${subType.description}"></span>
+                </div>
             </li>
         </ul>
-        <a th:href="@{/create/modifier-subtype}" th:text="${'Create ' + {type.name}}" class="btn btn-primary my-2">Create</a>
-    </div>
+        <a th:href="@{/create/modifier-subtype}" th:text="${'Create ' + {type.name}}" class="btn btn-danger my-2">Create</a>
+    </main>
 
 
 
