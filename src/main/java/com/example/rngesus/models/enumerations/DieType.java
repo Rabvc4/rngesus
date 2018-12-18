@@ -9,14 +9,14 @@ public enum DieType {
     D12 (12),
     D20 (20);
 
-    private final Integer dieType;
+    private final Integer sides;
 
-    DieType(Integer dieType) {
-        this.dieType = dieType;
+    DieType(Integer sides) {
+        this.sides = sides;
     }
 
-    public Integer getDieType() {
-        return dieType;
+    public Integer getSides() {
+        return sides;
     }
 
 }
