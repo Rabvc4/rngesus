@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -19,16 +20,19 @@ public class ModifierSubType {
     private int id;
 
     @NotNull
-    @Size(min=3, max=32)
+    @Size(min=2, message = "That name is too short")
+    @Size(max=32, message = "Subtype names cannot be longer than 32 characters")
     private String name;
 
     @NotNull
-    @Size(min=3, max=280, message="Please give us a short description of the purpose of this modifier type, no more than 280 characters")
+    @Size(min=3, message="Please give us a short description of the purpose of this subtype")
+    @Size(max=512, message="Descriptions cannot exceed 512 characters")
     private String description;
 
     @OneToMany
     private List<Modifier> modifiers = new ArrayList<>();
 
+    @Size(min=1, message = "You must select at least one type for your subtype")
     @ManyToMany
     @JoinTable(name = "type_subtypes")
     @JsonBackReference
