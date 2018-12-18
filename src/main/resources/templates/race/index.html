@@ -2,23 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body class="container">
-    <h1 th:text="${title}">Default Title</h1>
 
     <nav th:replace="fragments :: navigation"></nav>
 
-    <ul>
-        <li th:each="race : ${races}">
-            <a th:href="'/race/' + ${race.name}" th:text="${race.name}"></a>
-        </li>
-    </ul>
+    <div class="row">
+        <h1 th:text="${title}">Default Title</h1>
+        <ul>
+            <li th:each="race : ${races}">
+                <a th:href="'/race/' + ${race.name}" th:text="${race.name}"></a>
+            </li>
+        </ul>
+    </div>
 
-    <h3>Characters by Race</h3>
-
-    <ul>
-        <li th:each="race : ${races}">
-            <a th:href="@{/character/race(id=${race.id})}" th:text="${race.name}"></a>
-        </li>
-    </ul>
+    <div class="row">
+        <h3>Characters by Race</h3>
+        <ul>
+            <li th:each="race : ${races}">
+                <a th:href="@{/character/race(id=${race.id})}" th:text="${race.name}"></a>
+            </li>
+        </ul>
+    </div>
 
     <p><a href="/create/race">Create Race</a></p>
 
