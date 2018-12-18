@@ -14,13 +14,14 @@
             <div class="form-group">
                 <label th:for="name">Name</label>
                 <div th:errors="*{name}" class="error"></div>
-                <input class="form-control" th:field="*{name}" />
+                <input class="form-control" th:field="*{name}" required />
             </div>
 
             <div class="form-group">
                 <label th:for="description">Description</label>
                 <div th:errors="*{description}" class="error"></div>
-                <textarea rows=4 class="form-control" th:field="*{description}"></textarea>
+                <textarea rows=6 class="form-control" th:field="*{description}" required></textarea>
+                <span class="error" id="descCount"></span>
             </div>
 
             <div class="form-group">
@@ -28,7 +29,7 @@
                 <div th:errors="*{types}" class="error"></div>
                 <ul>
                     <li th:each="type : ${types}">
-                        <input type="checkbox" th:field="*{types}" th:value="${type.id}" />
+                        <input type="checkbox" th:field="*{types}" th:value="${type.id}" required />
                         <label th:for="${#ids.prev('types')}"
                                th:text="${type.name}">Armor</label>
                     </li>
