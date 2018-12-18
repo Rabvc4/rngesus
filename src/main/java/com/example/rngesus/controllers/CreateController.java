@@ -309,8 +309,8 @@ public class CreateController {
         return "error";
     }
 
-    @RequestMapping(value = "modifier", method = RequestMethod.POST)
-    public String processCreateModifier(Model model, @ModelAttribute @Valid CreateModifierForm form, Errors errors) {
+    @RequestMapping(value = "modifier/{traitId}", method = RequestMethod.POST)
+    public String processCreateModifier(Model model, @PathVariable int traitId, @ModelAttribute @Valid CreateModifierForm form, Errors errors) {
 
         for (Iterator<ObjectError> iterator = errors.getAllErrors().iterator(); iterator.hasNext(); ) {
             ObjectError error = iterator.next();
@@ -325,12 +325,16 @@ public class CreateController {
         }
 
         Modifier newModifier = form.getModifier();
-        Trait trait = traitDao.findById(form.getTraitId()).orElse(null);
+        Trait trait = traitDao.findById(traitId).orElse(null);
+        ModifierType type = modifierTypeDao.findById(form.getTypeId()).orElse(null);
+        ModifierSubType subType = modifierSubTypeDao.findById(form.getSubTypeId()).orElse(null);
         newModifier.addTrait(trait);
+        newModifier.setType(type);
+        newModifier.setSubType(subType);
 
         modifierDao.save(newModifier);
 
-        return "redirect:/trait/" + newModifier.getId();
+        return "redirect:/trait/details/" + trait.getId();
     }
 
 
@@ -364,8 +368,7 @@ public class CreateController {
     @RequestMapping(value = "modifier-subtype", method = RequestMethod.GET)
     public String createModifierSubType(Model model) {
 
-        ModifierSubType modifierSubType = new ModifierSubType();
-        model.addAttribute("subType", modifierSubType);
+        model.addAttribute(new ModifierSubType());
         model.addAttribute("title", "Create Modifier Subtype");
         model.addAttribute("types", modifierTypeDao.findAll());
 
