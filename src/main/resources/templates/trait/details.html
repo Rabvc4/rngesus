@@ -10,13 +10,13 @@
     <div th:text="${trait.description}"></div>
 
     <div>
-        <a th:href="@{'/create/modifier/' + ${trait.id}}" th:text="${'Add Modifier to ' + trait.name}"></a>
-
         <ul th:if="${trait.modifiers} and ${trait.modifiers.size()}">
             <li th:each="modifier : ${trait.modifiers}">
-                <a th:href="@{'/modifier/' + ${modifier.id}}" th:text="${modifier.name}"></a>
+                <div th:text="${modifier.subType.name}"></div>
+                <!--<a th:href="@{'/modifier/' + ${modifier.id}}" th:text="${modifier}"></a>-->
             </li>
         </ul>
+        <a th:href="@{'/create/modifier/' + ${trait.id}}" th:text="${'Add Modifier to ' + trait.name}"></a>
     </div>
 
 
