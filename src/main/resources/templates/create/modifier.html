@@ -10,9 +10,10 @@
             <h2 th:text="${title}">Default Title</h2>
         </div>
 
-        <form class="needs-validation" method="post" th:action="@{/create/modifier}" th:object="${form}">
+        <form class="needs-validation" method="post" th:object="${form}">
             <div class="row">
                 <div class="col-md-8 order-md-1">
+
                     <div class="row">
                         <div class="form-group m-3">
                             <label th:for="typeId">Modifier Type</label>
@@ -29,10 +30,57 @@
                         <div class="form-group m-3">
                             <label th:for="subType">Modifier Subtype</label>
                             <select class="custom-select d-block" name="subTypeId" id="subTypeId" required>
-                                <option value="" selected disabled>-</option>
-                                <option value=""></option>
                             </select>
                             <span th:errors="*{subTypeId}" class="error"></span>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <div class="row">
+                        <div class="form-group m-3">
+                            <label th:for="diceCount">Number of Dice</label>
+                            <input type="number" class="form-control" th:field="*{modifier.diceCount}" id="diceCount" />
+                            <span th:errors="*{diceCount}" class="error"></span>
+                        </div>
+                        <div class="form-group m-3">
+                            <label th:for="dieType">Die Type</label>
+                            <select class="custom-select d-block" name="dieType" id="dieType" th:field="*{modifier.dieType}">
+                                <option value="">-</option>
+                                <option th:each="die : ${form.dieTypes}"
+                                        th:value="${die}"
+                                        th:text="${die}"
+                                        th:selected="${die==dieType} ?: '-'">
+                                </option>
+                            </select>
+                            <span th:errors="*{dieType}" class="error"></span>
+                        </div>
+                        <div class="form-group m-3">
+                            <label th:for="fixedValue">Fixed Value</label>
+                            <input type="number" class="form-control" th:field="*{modifier.fixedValue}" id="fixedValue" />
+                            <span th:errors="*{fixedValue}" class="error"></span>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <div class="row">
+                        <div class="form-group m-3">
+                            <label th:for="durationInterval">Interval</label>
+                            <input type="number" class="form-control" th:field="*{modifier.durationInterval}" id="durationInterval" />
+                            <span th:errors="*{modifier.durationInterval}" class="error"></span>
+                        </div>
+                        <div class="form-group m-3">
+                            <label th:for="durationType">Duration</label>
+                            <select class="custom-select d-block" name="durationType" id="durationType" th:field="*{modifier.durationType}">
+                                <option value="">If applicable</option>
+                                <option th:each="duration : ${form.durationTypes}"
+                                        th:value="${duration}"
+                                        th:text="${duration.name}"
+                                        th:selected="${die==dieType} ?: 'If applicable'">
+                                </option>
+                            </select>
+                            <span th:errors="*{durationType}" class="error"></span>
                         </div>
                     </div>
 
