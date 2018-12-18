@@ -10,21 +10,22 @@
             <h2 th:text="${title}">Default Title</h2>
         </div>
 
-        <form method="post" style="max-width:600px;" th:object="${subType}">
+        <form method="post" style="max-width:600px;" th:object="${modifierSubType}">
             <div class="form-group">
                 <label th:for="name">Name</label>
+                <div th:errors="*{name}" class="error"></div>
                 <input class="form-control" th:field="*{name}" />
-                <span th:errors="*{name}" class="error"></span>
             </div>
 
             <div class="form-group">
                 <label th:for="description">Description</label>
-                <textarea rows=4 class="form-control" th:field="*{description}" notempty></textarea>
-                <span th:errors="*{description}" class="error"></span>
+                <div th:errors="*{description}" class="error"></div>
+                <textarea rows=4 class="form-control" th:field="*{description}"></textarea>
             </div>
 
             <div class="form-group">
                 <label>Type(s)</label>
+                <div th:errors="*{types}" class="error"></div>
                 <ul>
                     <li th:each="type : ${types}">
                         <input type="checkbox" th:field="*{types}" th:value="${type.id}" />
@@ -32,7 +33,6 @@
                                th:text="${type.name}">Armor</label>
                     </li>
                 </ul>
-                <span th:errors="*{types}" class="error"></span>
             </div>
 
             <hr class="mb-4">
