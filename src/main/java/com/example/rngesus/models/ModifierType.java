@@ -19,11 +19,13 @@ public class ModifierType {
     private int id;
 
     @NotNull
-    @Size(min=3, max=32)
+    @Size(min=3, message = "That name is too short")
+    @Size(max=32, message = "Names cannot be longer than 32 characters")
     private String name;
 
     @NotNull
-    @Size(min=3, max=280, message="Please give us a short description of the purpose of this modifier type, no more than 280 characters")
+    @Size(min=3, message="Please give us a short description of the purpose of this subtype")
+    @Size(max=512, message="Descriptions cannot exceed 512 characters")
     private String description;
 
     @OneToMany
