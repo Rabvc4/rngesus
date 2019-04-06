@@ -105,3 +105,32 @@ $(function(){
 //        });
 //    });
 //});
+
+$(function(){
+    $('#typeId').on('change', function() {
+        var href = '/modifier/details/?type=' + $(this).val();
+        $.get(href, function(result, status){
+
+            var html = '<option value="">Please select</option>';
+            $.each(result, function(i, field){
+                html += '<option value="' + field.id + '">'
+                + field.name + '</option>';
+            });
+            $("#subTypeId").html(html);
+        });
+    });
+});
+
+//$(function(){
+//    $('#typeId').on('change', function() {
+//        var href = '/modifier/details/?type=' + $(this).val();
+//        $.getJSON(href, function(result){
+//            var html = '<option value="">Please Select</option>';
+//            $.each(result, function(i, field){
+//                html += '<option value="' + field.name + '">'
+//                + field.name + '</option>';
+//            });
+//            $("#subTypeId").html(html);
+//        });
+//    });
+//});

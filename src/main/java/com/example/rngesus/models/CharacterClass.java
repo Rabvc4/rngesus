@@ -45,7 +45,7 @@ public class CharacterClass {
 
     @OneToMany(mappedBy="baseClass")
     @MapKey(name="level")
-    public Map<Integer, ClassLevel> classLevels;
+    private Map<Integer, ClassLevel> classLevels;
 
     @ManyToMany(mappedBy = "classes")
     private List<PlayerCharacter> playerCharacters;

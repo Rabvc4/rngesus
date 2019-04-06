@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="bg-light">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2 th:text="${title}">Default Title</h2>
+        </div>
+
+        <form class="needs-validation" method="post" th:action="@{/create/modifier}" th:object="${form}">
+            <div class="row">
+                <div class="col-md-8 order-md-1">
+                    <div class="row">
+                        <div class="form-group m-3">
+                            <label th:for="typeId">Modifier Type</label>
+                            <select class="custom-select d-block" name="typeId" id="typeId" required>
+                                <option value="" selected disabled>Please select</option>
+                                <option th:each="type : ${form.modifierTypes}"
+                                        th:value="${type.id}"
+                                        th:text="${type.name}"
+                                        th:selected="${type=='Please select'}">
+                                </option>
+                            </select>
+                            <span th:errors="*{typeId}" class="error"></span>
+                        </div>
+                        <div class="form-group m-3">
+                            <label th:for="subType">Modifier Subtype</label>
+                            <select class="custom-select d-block" name="subTypeId" id="subTypeId" required>
+                                <option value="" selected disabled>-</option>
+                                <option value=""></option>
+                            </select>
+                            <span th:errors="*{subTypeId}" class="error"></span>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Create Modifier</button>
+
+                </div>
+
+            </div>
+        </form>
+
+
+        <footer class="my-5 pt-5 text-muted text-center text-small">
+
+        </footer>
+
+    </div>
+
+
+    <section th:replace="fragments :: scripts"></section>
+
+</body>
+</html>

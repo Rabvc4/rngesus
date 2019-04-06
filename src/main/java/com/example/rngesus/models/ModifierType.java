@@ -1,6 +1,6 @@
 package com.example.rngesus.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class ModifierSubType {
+public class ModifierType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -29,20 +29,18 @@ public class ModifierSubType {
     @OneToMany
     private List<Modifier> modifiers = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "type_subtypes")
-    @JsonBackReference
-    private List<ModifierType> types = new ArrayList<>();
+    @ManyToMany(mappedBy="types")
+    @JsonManagedReference
+    private List<ModifierSubType> subTypes;
 
 
 
-    public ModifierSubType() {
+    public ModifierType() {
     }
 
-    public ModifierSubType(String name, String description, List<ModifierType> types) {
+    public ModifierType(String name, String description) {
         this.name = name;
         this.description = description;
-        this.types = types;
     }
 
 
@@ -67,6 +65,14 @@ public class ModifierSubType {
         this.description = description;
     }
 
+    public void addModifier(Modifier modifier) {
+        this.modifiers.add(modifier);
+    }
+
+    public void addModifiers(List<Modifier> modifiers) {
+        this.modifiers.addAll(modifiers);
+    }
+
     public List<Modifier> getModifiers() {
         return modifiers;
     }
@@ -75,38 +81,44 @@ public class ModifierSubType {
         this.modifiers = modifiers;
     }
 
-    public List<ModifierType> getTypes() {
-        return types;
+    public List<ModifierSubType> getSubTypes() {
+        return subTypes;
     }
 
-    public void setTypes(List<ModifierType> types) {
-        this.types = types;
+    public void addModifierSubType(ModifierSubType modifierSubType) {
+        this.subTypes.add(modifierSubType);
     }
 
+    public void addModifierSubTypes(List<ModifierSubType> modifierSubTypes) {
+        this.subTypes.addAll(modifierSubTypes);
+    }
 
+    public void setSubTypes(List<ModifierSubType> subTypes) {
+        this.subTypes = subTypes;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ModifierSubType)) return false;
+        if (!(o instanceof ModifierType)) return false;
 
-        ModifierSubType that = (ModifierSubType) o;
+        ModifierType that = (ModifierType) o;
 
         if (getId() != that.getId()) return false;
-        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
-        return getDescription() != null ? getDescription().equals(that.getDescription()) : that.getDescription() == null;
+        if (!getName().equals(that.getName())) return false;
+        if (!getDescription().equals(that.getDescription())) return false;
+        if (getModifiers() != null ? !getModifiers().equals(that.getModifiers()) : that.getModifiers() != null)
+            return false;
+        return getSubTypes() != null ? getSubTypes().equals(that.getSubTypes()) : that.getSubTypes() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getId();
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getDescription().hashCode();
+        result = 31 * result + (getModifiers() != null ? getModifiers().hashCode() : 0);
+        result = 31 * result + (getSubTypes() != null ? getSubTypes().hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 }

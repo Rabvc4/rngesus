@@ -7,12 +7,12 @@
     <nav th:replace="fragments :: navigation"></nav>
 
     <ul>
-        <li th:each="item : ${items}">
-            <a th:href="@{'/item/' + ${item.name}}" th:text="${item.name}"></a>
+        <li th:each="type : ${types}">
+            <a th:href="@{/modifier/type/(id=${type.id})}" th:text="${type.name}"></a>
         </li>
     </ul>
 
-    <a th:href="@{/create/item}" class="btn btn-primary my-2">Create Item</a>
+    <p><a th:href="@{/create/modifier-type}">Create Modifier Type</a></p>
 
 
 
